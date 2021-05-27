@@ -1,5 +1,5 @@
 # CPSC_455_Project
-## Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b)
+## Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
 ## Project Description
 - Who is it for?
