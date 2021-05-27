@@ -41,3 +41,12 @@
 5. sorting feature for reviews
 
 ## Prototypes
+- Login Page
+- Registration Page
+- Home/Landing Page
+- Shop Page
+- Service Page
+- News Page
+- My Cart Page
+- Set Up Store/Service Page
+- Message Page
