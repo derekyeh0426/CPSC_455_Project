@@ -10,10 +10,10 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 
 ## Project Task Requirements
 ### Minimal Requirements (will definitely complete)
-1. buy, sell, trade furniture
-2. individuals can set up their own service/store
-3. rate + comment services/stores
-4. login/register feature
+1. buy and sell furniture
+2. individuals can set up their own store
+3. rate stores
+4. login/register feature without security
 
 ### Standard Requirements (will most likely complete)
 1. sharing links on social media
@@ -25,6 +25,10 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 2. price matching feature
 3. search for location
 4. contactless drop off functionality
+5. login/register feature with security
+6. trade furniture
+7. individuals can set up their own service
+8. comment on stores/services
 
 ## Task Breakdown
 ### Break Down of Minimal Requirement #2:
@@ -36,10 +40,9 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 
 ### Break Down of Minimal Requirement #3:
 1. allow consumers to rate
-2. allow consumers to comment
-3. if bought from the store or used the service, then is a verified customer 
-4. upvote/downvote reviews
-5. sorting feature for reviews
+2. if bought from the store or used the service, then is a verified customer 
+3. upvote/downvote reviews
+4. sorting feature for reviews
 
 ## Prototypes
 - Login Page
