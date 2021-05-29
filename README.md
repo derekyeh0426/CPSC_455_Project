@@ -2,7 +2,7 @@
 ## Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
 ## Project Description
-Our web application called Fresh Furniture aims to facilitate furniture trading on the market. It will support selling, buying, and even loaning second-hand or newly made furniture. Users have the option of opening their own store to sell their pre-owned furniture or service to build customized or fix furniture. Otherwise, users can just shop or order a service. Our app will aid in reducing waste and provide affordable furniture.
+Fresh Furniture is a web application that aims to facilitate furniture trading on the market. It will support selling, buying, and even loaning second-hand or newly made furniture. Users have the option of opening their own store to sell their pre-owned furniture or service to build customized or fix furniture. Otherwise, users can just shop or order a service. Our app will aid in reducing waste and provide affordable furniture.
 
 Furthermore, our app will store personal data, such as the user's name and address and possibly financial data for payments. These specific data are selected and stored so that users do not have to re-enter these data every time they make a purchase. Other data such as store/service ratings from users will also be stored to promote those with great products and services.
 
