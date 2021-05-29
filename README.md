@@ -43,11 +43,28 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 
 ## Prototypes
 - Login Page
+![Login Page](https://user-images.githubusercontent.com/57734613/120066681-688b8480-c02c-11eb-9e3d-e7feabfae2b7.png)
+
 - Registration Page
+![Registration Page](https://user-images.githubusercontent.com/57734613/120066682-6d503880-c02c-11eb-98d7-3a0fd83cb395.png)
+
 - Home/Landing Page
+![Home_Landing Page](https://user-images.githubusercontent.com/57734613/120066685-7214ec80-c02c-11eb-916e-cfe2727379c1.png)
+
 - Shop Page
+![Shop Page](https://user-images.githubusercontent.com/57734613/120066688-77723700-c02c-11eb-8f43-4656f065e22a.png)
+
 - Service Page
+![Service Page](https://user-images.githubusercontent.com/57734613/120066694-7ccf8180-c02c-11eb-9dee-9687f367bf87.png)
+
 - News Page
+![News Page](https://user-images.githubusercontent.com/57734613/120066695-7fca7200-c02c-11eb-9e80-f884576765a7.png)
+
 - My Cart Page
+![My Cart Page](https://user-images.githubusercontent.com/57734613/120066696-82c56280-c02c-11eb-82d5-16054f8e8ca8.png)
+
 - Set Up Store/Service Page
+![Set Up Store_Service Page](https://user-images.githubusercontent.com/57734613/120066699-8658e980-c02c-11eb-9d05-88daec3bee48.png)
+
 - Message Page
+![Message Page](https://user-images.githubusercontent.com/57734613/120066702-88bb4380-c02c-11eb-9e4d-07063e3803c3.png)
