@@ -2,7 +2,11 @@
 ## Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
 ## Project Description
-This project (name still undecided) wants to facilitate furniture trading on the market. It supports selling, buying, and even loaning furniture. Our app will store personal data, such as name and address, as well as possible financial data to make payment; These specific data are selected and stored to ensure user won’t have to retype these data every time they make a purchase. Depending on the time we have, it will be cool to allow buyers to arrange visual meeting with the sellers to examine the condition of the products (designed to cope with situations in pandemic), on top of that maybe we can create functionality that supports contactless drop off of the product sold
+Our web application called Fresh Furniture aims to facilitate furniture trading on the market. It will support selling, buying, and even loaning second-hand or newly made furniture. Users have the option of opening their own store to sell their pre-owned furniture or service to build customized or fix furniture. Otherwise, users can just shop or order a service. Our app will aid in reducing waste and provide affordable furniture.
+
+Furthermore, our app will store personal data, such as the user's name and address and possibly financial data for payments. These specific data are selected and stored so that users do not have to re-enter these data every time they make a purchase. Other data such as store/service ratings from users will also be stored to promote those with great products and services.
+
+Depending on the time we have, it will be in our best interest to allow buyers to arrange a meeting with the sellers to examine the condition of the products (designed to cope with situations in the pandemic). On top of that, maybe we can create functionality that supports contactless drop off of the product(s) sold.
 
 ## Project Task Requirements
 ### Minimal Requirements (will definitely complete)
@@ -17,9 +21,10 @@ This project (name still undecided) wants to facilitate furniture trading on the
 3. news feed for sustainability/environmental topics
 
 ### Stretch Requirements (plan to complete at least 1)
-1. chat feature
+1. chat feature that allows meeting arragenment
 2. price matching feature
 3. search for location
+4. contactless drop off functionality
 
 ## Task Breakdown
 ### Break Down of Minimal Requirement #2:
