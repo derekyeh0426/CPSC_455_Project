@@ -2,11 +2,7 @@
 ## Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
 ## Project Description
-- Who is it for?
-- What will it do? (What "human activity" will it support?)
-- What type of data will it store?
-- What will users be able to do with this data?
-- What is some additional functionality you can add/remove based on time constraints?
+This project (name still undecided) wants to facilitate furniture trading on the market. It supports selling, buying, and even loaning furniture. Our app will store personal data, such as name and address, as well as possible financial data to make payment; These specific data are selected and stored to ensure user won’t have to retype these data every time they make a purchase. Depending on the time we have, it will be cool to allow buyers to arrange visual meeting with the sellers to examine the condition of the products (designed to cope with situations in pandemic), on top of that maybe we can create functionality that supports contactless drop off of the product sold
 
 ## Project Task Requirements
 ### Minimal Requirements (will definitely complete)
