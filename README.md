@@ -11,24 +11,25 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 ## Project Task Requirements
 ### Minimal Requirements (will definitely complete)
 1. buy and sell furniture
-2. individuals can set up their own store
+2. users can post furniture to sell on their account
 3. rate stores
 4. login/register feature without security
 
 ### Standard Requirements (will most likely complete)
-1. sharing links on social media
-2. provide delivery service
-3. news feed for sustainability/environmental topics
+1. provide delivery service
+2. price matching feature (filter)
+3. search for location (filter)
+4. type of furniture (filter)
 
 ### Stretch Requirements (plan to complete at least 1)
 1. chat feature that allows meeting arragenment
-2. price matching feature
-3. search for location
-4. contactless drop off functionality
-5. login/register feature with security
-6. trade furniture
-7. individuals can set up their own service
-8. comment on stores/services
+2. contactless drop off functionality
+3. login/register feature with security
+4. trade furniture
+5. individuals can set up their own service
+6. comment on stores/services
+7. individuals can set up their own store
+8. sharing links on social media
 
 ## Task Breakdown
 ### Break Down of Minimal Requirement #2:
@@ -59,9 +60,6 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 
 - Service Page
 ![Service Page](https://user-images.githubusercontent.com/57734613/120066694-7ccf8180-c02c-11eb-9dee-9687f367bf87.png)
-
-- News Page
-![News Page](https://user-images.githubusercontent.com/57734613/120066695-7fca7200-c02c-11eb-9e80-f884576765a7.png)
 
 - My Cart Page
 ![My Cart Page](https://user-images.githubusercontent.com/57734613/120066696-82c56280-c02c-11eb-82d5-16054f8e8ca8.png)
