@@ -17,6 +17,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/frontend/pfiniture/src/components/DisplayIndividualFurniture.js" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/frontend/pfiniture/src/components/DisplayAllFurniture.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="1thpIkoOhwElCeFHxskHZZwAggJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -50,6 +54,7 @@
       <workItem from="1623235550932" duration="1509000" />
       <workItem from="1623285481099" duration="922000" />
       <workItem from="1623456868377" duration="7254000" />
+      <workItem from="1623456868377" duration="6619000" />
     </task>
     <servers />
   </component>
