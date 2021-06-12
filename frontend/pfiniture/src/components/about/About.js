@@ -1,7 +1,7 @@
 import { Form, Button, Row, Col, Container, FormGroup, Image, Modal, ModalBody, Nav } from "react-bootstrap";
 import React from 'react';
 import "./About.css"
-import image from '../assets/FF_12.png';
+import image from '../../assets/FF_12.png';
 
 class About extends React.Component {
     constructor(props) {

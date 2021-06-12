@@ -1,5 +1,5 @@
-import React from 'react';
-import DisplayAllFurniture from "../components/DisplayAllFurniture";
+import React from 'react'
+import DisplayAllFurniture from './../components/landing/DisplayAllFurniture'
 
 function Landing() {
     return (
@@ -9,4 +9,4 @@ function Landing() {
     )
 }
 
-export default Landing;
+export default Landing
