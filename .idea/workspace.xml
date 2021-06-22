@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="43a478d1-c9ce-4ab0-b37c-9f9c18953949" name="Default Changelist" comment="Implement furniture router">
-      <change afterPath="$PROJECT_DIR$/backend/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/controllers/furniture.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/furniture.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/service/furniture.js" afterDir="false" />
+    <list default="true" id="43a478d1-c9ce-4ab0-b37c-9f9c18953949" name="Default Changelist" comment="Implement furniture api endpoint and mongoose">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routers/furniture.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +75,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624392279741</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implement furniture api endpoint and mongoose">
+      <created>1624398625819</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1624398625819</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,21 +103,26 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implement furniture router" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement furniture router" />
+    <MESSAGE value="Implement furniture api endpoint and mongoose" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement furniture api endpoint and mongoose" />
   </component>
   <component name="WindowStateProjectService">
     <state x="382" y="529" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1624392466230">
       <screen x="0" y="25" width="2560" height="1415" />
     </state>
     <state x="382" y="529" key="#com.intellij.fileTypes.FileTypeChooser/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624392466230" />
-    <state x="232" y="244" key="CommitChangelistDialog2" timestamp="1624392296345">
+    <state x="232" y="244" key="CommitChangelistDialog2" timestamp="1624399128046">
       <screen x="0" y="25" width="2560" height="1415" />
     </state>
-    <state x="232" y="244" key="CommitChangelistDialog2/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624392296345" />
+    <state x="232" y="244" key="CommitChangelistDialog2/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624399128046" />
     <state x="348" y="443" key="MultipleFileMergeDialog" timestamp="1624389965942">
       <screen x="0" y="25" width="2560" height="1415" />
     </state>
     <state x="348" y="443" key="MultipleFileMergeDialog/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624389965942" />
+    <state x="240" y="465" key="Vcs.Push.Dialog.v2" timestamp="1624399144211">
+      <screen x="0" y="25" width="2560" height="1415" />
+    </state>
+    <state x="240" y="465" key="Vcs.Push.Dialog.v2/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624399144211" />
     <state x="395" y="367" key="git4idea.branch.GitSmartOperationDialog" timestamp="1624389797467">
       <screen x="0" y="25" width="2560" height="1415" />
     </state>
