@@ -46,7 +46,7 @@ function Navbar() {
               <Button >About</Button>
             </Link>
             <Link
-              to={"/my-account"}
+              to={"/dashboard"}
             >
               <Button >My Account</Button>
             </Link>

@@ -6,7 +6,7 @@ import About from './components/about/About'
 import React from 'react'
 import Landing from './pages/Landing'
 import Dashboard from "./components/my-account/Dashboard"
-import {BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 
 function App() {
