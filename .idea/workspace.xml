@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="43a478d1-c9ce-4ab0-b37c-9f9c18953949" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/routers/furniture.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1thpIkoOhwElCeFHxskHZZwAggJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend" />
+      <recent name="C:\Users\yukie\WebstormProjects\CPSC_455_Project\frontend\pfiniture\src\components\registration" />
+      <recent name="C:\Users\yukie\WebstormProjects\CPSC_455_Project\frontend\pfiniture\src\components\about" />
+      <recent name="C:\Users\yukie\WebstormProjects\CPSC_455_Project\frontend\pfiniture\src\components\login" />
+      <recent name="C:\Users\yukie\WebstormProjects\CPSC_455_Project\frontend\pfiniture\src\components\landing" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="43a478d1-c9ce-4ab0-b37c-9f9c18953949" name="Default Changelist" comment="" />
+      <created>1623231097455</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623231097455</updated>
+      <workItem from="1623231101666" duration="4299000" />
+      <workItem from="1623235550932" duration="1509000" />
+      <workItem from="1623285481099" duration="922000" />
+      <workItem from="1623456868377" duration="7254000" />
+      <workItem from="1623456868377" duration="6619000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="232" y="244" key="CommitChangelistDialog2" timestamp="1624392214472">
+      <screen x="0" y="25" width="2560" height="1415" />
+    </state>
+    <state x="232" y="244" key="CommitChangelistDialog2/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624392214472" />
+    <state x="348" y="443" key="MultipleFileMergeDialog" timestamp="1624389965942">
+      <screen x="0" y="25" width="2560" height="1415" />
+    </state>
+    <state x="348" y="443" key="MultipleFileMergeDialog/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624389965942" />
+    <state x="395" y="367" key="git4idea.branch.GitSmartOperationDialog" timestamp="1624389797467">
+      <screen x="0" y="25" width="2560" height="1415" />
+    </state>
+    <state x="395" y="367" key="git4idea.branch.GitSmartOperationDialog/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624389797467" />
+    <state x="304" y="510" key="git4idea.merge.GitPullDialog" timestamp="1624389606297">
+      <screen x="0" y="25" width="2560" height="1415" />
+    </state>
+    <state x="304" y="510" key="git4idea.merge.GitPullDialog/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1624389606297" />
+  </component>
+</project>
