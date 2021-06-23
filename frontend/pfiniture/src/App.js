@@ -13,13 +13,10 @@ function App() {
   return (
       <BrowserRouter>
         <Navbar/>
-        <Route path="/" component={LogInForm}/> 
-        <Route path="/register" component={RegistrationForm}/>
+        <Route path="/" component={Landing}/>
         <Route path="/about" component={About}/>
-        <Route path="/home" component={Landing}/>
-        <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/my-account" />
-      </BrowserRouter>    
+        <Route path="/my-account" component={Dashboard}/>
+      </BrowserRouter>
   )
 }
 

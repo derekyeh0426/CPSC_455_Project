@@ -9,6 +9,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from 'react-router-dom'
 import { withTheme } from '@material-ui/styles';
 import { Container } from '@material-ui/core';
+import LogInForm from './login/LogInForm'
+import RegistrationForm from './registration/RegistrationForm'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +38,7 @@ function Navbar() {
             Fresh Furniture
           </Typography>
             <Link
-              to={"/home"}
+              to={"/"}
             >
               <Button >Home</Button>
             </Link>
@@ -53,12 +55,12 @@ function Navbar() {
             <Link
               to={"/login"}
             >
-              <Button >Login</Button>
+              <LogInForm/>
             </Link>
             <Link
               to={"/register"}
             >
-              <Button >Register</Button>
+              <RegistrationForm/>
             </Link>
         </Toolbar>
       </AppBar>
