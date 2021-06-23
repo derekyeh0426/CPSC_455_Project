@@ -11,24 +11,16 @@
     text-align: center;
 }
 
-.text_rotate{
-    width: 100%;
-    height: 150%;
-    transition: width 2s, height 2s, transform 2s;
-}
-
 #card_header{
     font-size:3vw;
-    color: Blue;
-}
-
-.text_rotate:hover{
-    width: 200%;
-    height: 200%;
-    transform: rotate(180deg);
+    color: rgb(64, 93, 191)
 }
 
 .about-image{
     width:5vw;
     height:5vw;
+}
+
+.about-center {
+    text-align: center;
 }
