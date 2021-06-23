@@ -8,18 +8,41 @@ import React from 'react'
 import Landing from './pages/Landing'
 import Dashboard from "./components/my-account/Dashboard"
 import Navbar from "./components/Navbar";
+import client from "../src/API/api"
+
+function testFunction(){
+  const test = {
+    name: 1,
+    price: 1
+  }
+
+  const test2 = {
+    id:2,
+    name: 1,
+    price: 1
+  }
+
+  client.furniture.updateFurnitureById({id:1, name:1, price:1}).then(res => {
+    console.log.apply(res.data);
+  });
+}
 
 function App() {
+
   return (
-      <div>
-        <Navbar/>
-        <LogInForm />
-        <RegistrationForm />
-        <About />
-        <Landing />
-        <Dashboard></Dashboard>
-      </div>
+    <div>
+      <button onClick={testFunction}>sadasd</button>
+      <Navbar />
+      <LogInForm />
+      <RegistrationForm />
+      <About />
+      <Landing />
+      <Dashboard></Dashboard>
+    </div>
   )
 }
+
+
+
 
 export default App

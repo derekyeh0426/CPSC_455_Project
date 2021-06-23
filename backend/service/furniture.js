@@ -1,12 +1,14 @@
 const Furniture = require('../models/furniture');
 
 const getAll = (req, res) => {
+    console.log("end point get all furnitures hit");
     Furniture
         .find({})
         .then(furniture => res.json(furniture));
 };
 
 const getById = (req, res) => {
+    console.log("end point get furniture by id hit")
     Furniture
         .findById(req.params.id)
         .then(furniture => {
@@ -20,12 +22,14 @@ const getById = (req, res) => {
 };
 
 const deleteAll = (req, res) => {
+    console.log("end point delete all furniture hit")
     Furniture
         .deleteMany({})
         .then(result => res.status(200).end());
 };
 
 const deleteById = (req, res) => {
+    console.log("end point delete furniture by id hit")
     Furniture
         .findByIdAndRemove(req.params.id)
         .then(result => {
@@ -39,6 +43,7 @@ const deleteById = (req, res) => {
 };
 
 const updateById = (req, res) => {
+    console.log("update Furniture by id hit")
     const { name, price } = req.body;
 
     const furniture = {
@@ -53,6 +58,7 @@ const updateById = (req, res) => {
 };
 
 const create = (req, res) => {
+    console.log("create new furniture end point hit")
     const { name, price } = req.body;
 
     const furniture = new Furniture({
