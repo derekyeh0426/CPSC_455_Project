@@ -13,9 +13,9 @@ function App() {
   return (
       <BrowserRouter>
         <Navbar/>
-        <Route path="/" component={Landing}/>
-        <Route path="/about" component={About}/>
-        <Route path="/my-account" component={Dashboard}/>
+        <Route exact path="/" component={Landing}/>
+        <Route exact path="/about" component={About}/>
+        <Route exact path="/my-account" component={Dashboard}/>
       </BrowserRouter>
   )
 }

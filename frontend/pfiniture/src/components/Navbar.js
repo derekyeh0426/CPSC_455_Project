@@ -7,8 +7,6 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from 'react-router-dom'
-import { withTheme } from '@material-ui/styles';
-import { Container } from '@material-ui/core';
 import LogInForm from './login/LogInForm'
 import RegistrationForm from './registration/RegistrationForm'
 
@@ -37,29 +35,19 @@ function Navbar() {
           <Typography variant="h6" className={classes.title}>
             Fresh Furniture
           </Typography>
-            <Link
-              to={"/"}
-            >
+            <Link to={"/"}>
               <Button >Home</Button>
             </Link>
-            <Link
-              to={"/about"}
-            >
+            <Link to={"/about"}>
               <Button >About</Button>
             </Link>
-            <Link
-              to={"/dashboard"}
-            >
-              <Button >My Account</Button>
+            <Link exact path to={"/my-account"}>
+              <Button>My Account</Button>
             </Link>
-            <Link
-              to={"/login"}
-            >
+            <Link to={"/login"}>
               <LogInForm/>
             </Link>
-            <Link
-              to={"/register"}
-            >
+            <Link to={"/register"}>
               <RegistrationForm/>
             </Link>
         </Toolbar>
