@@ -11,6 +11,8 @@ import Navbar from "./components/Navbar";
 import client from "../src/API/api"
 import GoogleLogIn from './components/login/GoogleLogIn'
 
+
+// this is for testing endpoints from the api
 function testFunction(){
   const test = {
     name: "dummy data",
