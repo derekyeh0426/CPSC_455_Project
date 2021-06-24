@@ -9,6 +9,7 @@ import Landing from './pages/Landing'
 import Dashboard from "./components/my-account/Dashboard"
 import Navbar from "./components/Navbar";
 import client from "../src/API/api"
+import GoogleLogIn from './components/login/GoogleLogIn'
 
 function testFunction(){
   const test = {
@@ -22,7 +23,12 @@ function testFunction(){
     price: 1
   }
 
-  client.furniture.getAllFurnitures().then(res => {
+  const testUser = {
+    name: "Derek",
+    email: "derekyeh0426@gmail.com"
+  }
+
+  client.user.addUsers(testUser).then(res => {
     console.log(res.data);
   });
 }
@@ -34,6 +40,7 @@ function App() {
       <button onClick={testFunction}>Test API end points</button>
       <Navbar />
       <LogInForm />
+      <GoogleLogIn/>
       <RegistrationForm />
       <About />
       <Landing />
