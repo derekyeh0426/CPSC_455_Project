@@ -14,7 +14,7 @@ export default class furnitureClient {
 
     static async getFurnitureById(id) {
         try {
-            const response = axios.get(baseUrl + `/api/v1/furnitures/:${id}`);
+            const response = axios.get(baseUrl + `/api/v1/furnitures/${id}`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -32,7 +32,7 @@ export default class furnitureClient {
 
     static async deleteFurnitureById(id) {
         try {
-            const response = axios.delete(baseUrl + `/api/v1/furnitures/:${id}`);
+            const response = axios.delete(baseUrl + `/api/v1/furnitures/${id}`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -41,7 +41,7 @@ export default class furnitureClient {
 
     static async updateFurnitureById({id, name, price}) {
         try {
-            const response = axios.put(baseUrl + `/api/v1/furnitures/:${id}`, {name, price});
+            const response = axios.put(baseUrl + `/api/v1/furnitures/${id}`, {name, price});
             return response
         } catch (e) {
             console.log(e.message())

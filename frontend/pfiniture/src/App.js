@@ -12,7 +12,7 @@ import client from "../src/API/api"
 
 function testFunction(){
   const test = {
-    name: 1,
+    name: "dummy data",
     price: 1
   }
 
@@ -22,8 +22,8 @@ function testFunction(){
     price: 1
   }
 
-  client.furniture.updateFurnitureById({id:1, name:1, price:1}).then(res => {
-    console.log.apply(res.data);
+  client.furniture.getAllFurnitures().then(res => {
+    console.log(res.data);
   });
 }
 
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div>
-      <button onClick={testFunction}>sadasd</button>
+      <button onClick={testFunction}>Test API end points</button>
       <Navbar />
       <LogInForm />
       <RegistrationForm />
