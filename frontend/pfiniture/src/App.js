@@ -10,6 +10,7 @@ import Dashboard from "./components/my-account/Dashboard"
 import Navbar from "./components/Navbar";
 import client from "../src/API/api"
 import GoogleLogIn from './components/login/GoogleLogIn'
+import GoogleLogOut from './components/login/GoogleLogOut'
 
 
 // this is for testing endpoints from the api
@@ -42,6 +43,7 @@ function App() {
       <button onClick={testFunction}>Test API end points</button>
       <Navbar />
       <LogInForm />
+      <GoogleLogOut/>
       <GoogleLogIn/>
       <RegistrationForm />
       <About />
