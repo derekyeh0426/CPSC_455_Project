@@ -4,6 +4,7 @@ import GoogleLogin from 'react-google-login';
 import logIn from '../../redux/users/userActions'
 import { connect } from 'react-redux'
 import client from '../../API/api'
+import './LogInForm.css'
 
 class GoogleLogIn extends React.Component {
     responseGoogle = (response) => {
@@ -26,9 +27,9 @@ class GoogleLogIn extends React.Component {
     render(){
         return(
             <div>
-                <GoogleLogin
+                <GoogleLogin className="google-login-button"
                 clientId = "897654971286-rgivsn5mcj4cs54e7j3v0fq6cm9a3dov.apps.googleusercontent.com"
-                buttonText = "Log in"
+                buttonText = "Log in with Google!"
                 onSuccess = {this.responseGoogle}
                 onFailure = {this.responseGoogle}
                 cookiePolicy = {'single_host_origin'}

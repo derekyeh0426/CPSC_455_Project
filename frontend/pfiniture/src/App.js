@@ -14,35 +14,34 @@ import store from './redux/store'
 import GoogleLogIn from './components/login/GoogleLogIn'
 
 // this is for testing endpoints from the api
-function testFunction(){
-  const test = {
-    name: "dummy data",
-    price: 1
-  }
-
-  const test2 = {
-    id:2,
-    name: 1,
-    price: 1
-  }
-
-  const testUser = {
-    name: "Derek",
-    email: "derekyeh0426@gmail.com"
-  }
-
-  client.user.getAllUsers().then(res => {
-    console.log(res.data);
-  });
-}
+// function testFunction(){
+//   const test = {
+//     name: "dummy data",
+//     price: 1
+//   }
+//
+//   const test2 = {
+//     id:2,
+//     name: 1,
+//     price: 1
+//   }
+//
+//   const testUser = {
+//     name: "Derek",
+//     email: "derekyeh0426@gmail.com"
+//   }
+//
+//   client.user.getAllUsers().then(res => {
+//     console.log(res.data);
+//   });
+// }
 
 function App() {
 
   return (
     <Provider store = {store}>
     <div>
-      <button onClick = {testFunction}>test API</button>
-      <GoogleLogIn/>
+      {/*<button onClick = {testFunction}>test API</button>*/}
       <BrowserRouter>
         <Navbar/>
         <Route exact path="/" component={Landing}/>

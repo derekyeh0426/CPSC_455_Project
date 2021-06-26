@@ -3,17 +3,41 @@ import React from 'react';
 import "./LogInForm.css"
 import { connect } from 'react-redux'
 import logIn from '../../redux/users/userActions'
+import GoogleLogIn from "./GoogleLogIn";
+import RegistrationForm from "../registration/RegistrationForm";
+import client from "../../API/api";
 
 class LogInForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            show: false, email: "", password: ""
         }
+    }
+
+    setEmail = (e) => {
+        this.setState( {email: e.target.value})
+    }
+
+    setPassword = (e) => {
+        this.setState( {password: e.target.value})
     }
 
     handleShow = () => {
         this.setState({ show: true })
+    }
+
+    handleSubmit = () => {
+        let email = this.state.email
+        let password = this.state.password
+        if (email === "" || password === "") {
+            alert("Please fill out your email/password")
+        }
+        // TODO check if password or email is incorrect
+        else {
+            alert("Logged in!")
+            this.handleClose()
+        }
     }
 
     handleClose = () => {
@@ -23,27 +47,31 @@ class LogInForm extends React.Component {
     render() {
         return (
             <div>
-                <Button variant="light" className="button-modal" onClick={this.handleShow}>
-                    Log In
+                <Button variant="outline-dark" className="login-reg-button" onClick={this.handleShow}>
+                    Login
                 </Button>
                 <Modal size="lg" show={this.state.show} scrollable={true} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Log In</Modal.Title>
-                    </Modal.Header>
-                    <ModalBody className = "myform">
-                        <div class="text_art">
-                            <div class="text_rotate">
-                                {/* <h5>{this.props.name} {this.props.email}</h5> */}
-                                <h5 id="card_header">Fresh Furniture</h5>
-                            </div>
-                        </div>
+                    <Modal.Header closeButton/>
+                    <ModalBody className="login-modal">
+                        {/* <h5>{this.props.name} {this.props.email}</h5> */}
+                        <Container className="center-component">
+                            <text className="card_header">Fresh Furniture Login</text>
+                        </Container>
+                        <Container className="center-component">
+                            <GoogleLogIn/>
+                        </Container>
+                        <br/>
+                        <br/>
                         <Form className="login-form">
                             <Form.Group as={Row} controlId="formPlaintextEmail">
                                 <Form.Label column sm="2">
                                     Email
                                 </Form.Label>
                                 <Col sm="10">
-                                    <Form.Control type="email" placeholder="email" />
+                                    <Form.Control
+                                        type="email"
+                                        onChange={this.setEmail}
+                                        placeholder="Email" />
                                 </Col>
                             </Form.Group>
 
@@ -52,26 +80,22 @@ class LogInForm extends React.Component {
                                     Password
                                 </Form.Label>
                                 <Col sm="10">
-                                    <Form.Control type="password" placeholder="Password" />
+                                    <Form.Control
+                                        type="password"
+                                        onChange={this.setPassword}
+                                        placeholder="Password" />
                                 </Col>
                             </Form.Group>
-                            <span className = "log-in-line">
-                                <Nav className="justify-content-center" activeKey="/home">
-                                    <text>Haven't sign up yet?</text>
-                                    <Nav.Item className = "reference">
-                                        <Nav.Link href="/home/">Sign up</Nav.Link>
-                                    </Nav.Item>
-                                </Nav>
-                            </span>
+                            <Container className="center-component">
+                                <Button variant="outline-dark" className="login-reg-button" onClick={this.handleSubmit}>
+                                    Login with FF
+                                </Button>
+                            </Container>
                         </Form>
                     </ModalBody>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
-                            Submit
-                        </Button>
+                        <text>Haven't registered yet?</text>
+                        <RegistrationForm/>
                     </Modal.Footer>
                 </Modal>
             </div>

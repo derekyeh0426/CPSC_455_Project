@@ -8,9 +8,10 @@ class About extends React.Component {
     render() {
         return (
             <div>
-                <div className="text_art">
-                    <img src={image} className="about-image"></img>
-                    <h5 id="card_header">Fresh Furniture</h5>
+                <div className="about-header">
+                    <img src={image} className="about-image" alt="FF Logo"/>
+                    <br/>
+                    <text className="card_header">Fresh Furniture</text>
                 </div>
                 <br />
                 <div className="about-center">
@@ -24,7 +25,7 @@ class About extends React.Component {
                     </Container>
                     <br />
                     <Container>
-                        Happy Shopping!
+                        Happy shopping!
                     </Container>
                 </div>
             </div>
