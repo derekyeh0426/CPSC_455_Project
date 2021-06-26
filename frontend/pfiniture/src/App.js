@@ -3,15 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import LogInForm from './components/login/LogInForm'
 import RegistrationForm from './components/registration/RegistrationForm'
 import About from './components/about/About'
-import { Nav } from 'react-bootstrap'
 import React from 'react'
 import Landing from './pages/Landing'
 import Dashboard from "./components/my-account/Dashboard"
-import Navbar from "./components/Navbar";
+import { BrowserRouter, Route } from 'react-router-dom';
+import Navbar from "./components/Navbar"
 import client from "../src/API/api"
-import GoogleLogIn from './components/login/GoogleLogIn'
-import GoogleLogOut from './components/login/GoogleLogOut'
-
 
 // this is for testing endpoints from the api
 function testFunction(){
@@ -39,17 +36,12 @@ function testFunction(){
 function App() {
 
   return (
-    <div>
-      <button onClick={testFunction}>Test API end points</button>
-      <Navbar />
-      <LogInForm />
-      <GoogleLogOut/>
-      <GoogleLogIn/>
-      <RegistrationForm />
-      <About />
-      <Landing />
-      <Dashboard></Dashboard>
-    </div>
+      <BrowserRouter>
+        <Navbar/>
+        <Route exact path="/" component={Landing}/>
+        <Route exact path="/about" component={About}/>
+        <Route exact path="/my-account" component={Dashboard}/>
+      </BrowserRouter>
   )
 }
 

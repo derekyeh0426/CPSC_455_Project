@@ -6,6 +6,11 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import { Link } from 'react-router-dom'
+import LogInForm from './login/LogInForm'
+import RegistrationForm from './registration/RegistrationForm'
+import GoogleLogIn from '../components/login/GoogleLogIn'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,11 +37,22 @@ function Navbar() {
           <Typography variant="h6" className={classes.title}>
             Fresh Furniture
           </Typography>
-          <Button color="inherit">Home</Button>
-          <Button color="inherit">Shop</Button>
-          <Button color="inherit">Services</Button>
-          <Button color="inherit">News</Button>
-          <Button color="inherit">My Account</Button>
+            <Link to={"/"}>
+              <Button >Home</Button>
+            </Link>
+            <Link to={"/about"}>
+              <Button >About</Button>
+            </Link>
+            <Link exact path to={"/my-account"}>
+              <Button>My Account</Button>
+            </Link>
+            <Link to={"/login"}>
+              {/* <LogInForm/> */}
+              <GoogleLogIn/>
+            </Link>
+            <Link to={"/register"}>
+              <RegistrationForm/>
+            </Link>
         </Toolbar>
       </AppBar>
     </div>
