@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { temporaryFurniture } from "./TemporaryFurniture"
+import client from "../../API/api";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function getUsers() {
+    client.user.getAllUsers().then(res => {
+        console.log(res.data)})
+}
+
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
@@ -47,63 +53,66 @@ function DisplayIndividualFurniture() {
         setExpanded(!expanded);
     }
     return (
-        <Grid container xs={12} spacing={1}>
-            {temporaryFurniture.map((furniture, index) => {
-                if (temporaryFurniture.length === 0) {
-                    return ""
-                } else {
-                    return (
-                        <Grid item xs key={index}>
-                            <Card className={classes.cardRoot}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        className={classes.media}
-                                        image={furniture.picture}
-                                        title={furniture.name}
-                                    />
-                                </CardActionArea>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                    ${furniture.price} • {furniture.name}
-                                </Typography>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                </Typography>
-                                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                    <CardContent>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Description: {furniture.description}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Type: {furniture.type}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Seller: {furniture.seller}
-                                        </Typography>
-                                    </CardContent>
-                                </Collapse>
-                                <IconButton
-                                    className={clsx(classes.expand, {
-                                        [classes.expandOpen]: expanded,
-                                    })}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </IconButton>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        View Seller's Profile
-                                    </Button>
-                                    <Button size="small" color="primary">
-                                        Add to Cart
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    )
-                }
-            })}
-        </Grid>
+        <div>
+            <Button onClick={getUsers}>Get Users</Button>
+            <Grid container xs={12} spacing={1}>
+                {temporaryFurniture.map((furniture, index) => {
+                    if (temporaryFurniture.length === 0) {
+                        return ""
+                    } else {
+                        return (
+                            <Grid item xs key={index}>
+                                <Card className={classes.cardRoot}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            className={classes.media}
+                                            image={furniture.picture}
+                                            title={furniture.name}
+                                        />
+                                    </CardActionArea>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                        ${furniture.price} • {furniture.name}
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                    </Typography>
+                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Description: {furniture.description}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Type: {furniture.type}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Seller: {furniture.seller}
+                                            </Typography>
+                                        </CardContent>
+                                    </Collapse>
+                                    <IconButton
+                                        className={clsx(classes.expand, {
+                                            [classes.expandOpen]: expanded,
+                                        })}
+                                        onClick={handleExpandClick}
+                                        aria-expanded={expanded}
+                                        aria-label="show more"
+                                    >
+                                        <ExpandMoreIcon />
+                                    </IconButton>
+                                    <CardActions>
+                                        <Button size="small" color="primary">
+                                            View Seller's Profile
+                                        </Button>
+                                        <Button size="small" color="primary">
+                                            Add to Cart
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        )
+                    }
+                })}
+            </Grid>
+        </div>
     )
 }
 

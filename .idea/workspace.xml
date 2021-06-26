@@ -3,17 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="43a478d1-c9ce-4ab0-b37c-9f9c18953949" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/about/About.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/about/About.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/about/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/about/About.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/login/GoogleLogIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/login/GoogleLogIn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/login/LogInForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/login/LogInForm.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/login/LogInForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/login/LogInForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/registration/RegistrationForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/registration/RegistrationForm.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/registration/RegistrationForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/registration/RegistrationForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pfiniture/src/components/landing/DisplayIndividualFurniture.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pfiniture/src/components/landing/DisplayIndividualFurniture.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
