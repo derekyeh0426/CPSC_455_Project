@@ -10,5 +10,6 @@ router.get('/', (req, res, next) => userService.getAll(req, res));
 
 router.post('/', (req, res, next) => userService.create(req, res));
 
+router.delete('/', (req, res, next) => userService.deleteAll(req, res));
 
 module.exports = router;

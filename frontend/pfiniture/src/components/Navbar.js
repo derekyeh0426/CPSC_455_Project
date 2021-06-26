@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import LogInForm from './login/LogInForm'
 import RegistrationForm from './registration/RegistrationForm'
 import GoogleLogIn from '../components/login/GoogleLogIn'
+import { connect } from 'react-redux'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,4 +60,13 @@ function Navbar() {
   );
 }
 
-export default Navbar
+function mapStateToProps(state) {
+  return {
+      isLogIn: state.isLogIn, name: state.name, email: state.email
+  }
+}
+
+
+export default connect(
+  mapStateToProps,
+)(Navbar)

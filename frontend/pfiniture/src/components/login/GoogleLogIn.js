@@ -44,10 +44,8 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps (dispatch) {
-    return {
-        logIn: () => dispatch(logIn())
-    }
+const mapDispatchToProps = {
+    logIn
 }
 
 export default connect(

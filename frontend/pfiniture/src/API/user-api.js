@@ -13,7 +13,14 @@ export default class userClient {
         }
     }
 
-
+    static async deleteAllUsers() {
+        try {
+            const response = axios.delete(baseUrl + `/api/v1/users/`);
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
 
     static async addUsers({name, email}) {
         try {

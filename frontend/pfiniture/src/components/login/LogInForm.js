@@ -33,7 +33,7 @@ class LogInForm extends React.Component {
                     <ModalBody className = "myform">
                         <div class="text_art">
                             <div class="text_rotate">
-                                <h5>{this.props.name} {this.props.email}</h5>
+                                {/* <h5>{this.props.name} {this.props.email}</h5> */}
                                 <h5 id="card_header">Fresh Furniture</h5>
                             </div>
                         </div>

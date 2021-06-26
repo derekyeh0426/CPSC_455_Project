@@ -6,6 +6,12 @@ const getAll = (req, res) => {
         .then(User => res.json(User));
 };
 
+const deleteAll = (req, res) => {
+    User
+        .deleteMany({})
+        .then(result => res.status(200).end());
+};
+
 const create = (req, res) => {
     const { name, email } = req.body;
 
@@ -21,5 +27,6 @@ const create = (req, res) => {
 
 module.exports = {
     getAll,
-    create
+    create,
+    deleteAll
 };

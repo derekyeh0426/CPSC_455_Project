@@ -1,5 +1,3 @@
-import { Log_In } from "./userTypes"
-
 const initialState = {
     name: null,
     email: null,
@@ -9,7 +7,7 @@ const initialState = {
 function userReducer(state = initialState, action) {
     console.log(action)
     switch(action.type) {
-        case Log_In: return {
+        case "Log_In": return {
             ...state,
             isLogIn: true,
             name: action.payload.name,
