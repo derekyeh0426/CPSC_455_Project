@@ -9,6 +9,9 @@ import Dashboard from "./components/my-account/Dashboard"
 import { BrowserRouter, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 import client from "../src/API/api"
+import { Provider } from 'react-redux'
+import store from './redux/store'
+import GoogleLogIn from './components/login/GoogleLogIn'
 
 // this is for testing endpoints from the api
 function testFunction(){
@@ -28,7 +31,7 @@ function testFunction(){
     email: "derekyeh0426@gmail.com"
   }
 
-  client.user.addUsers(testUser).then(res => {
+  client.user.getAllUsers().then(res => {
     console.log(res.data);
   });
 }
@@ -36,12 +39,18 @@ function testFunction(){
 function App() {
 
   return (
+    <Provider store = {store}>
+    <div>
+      <button onClick = {testFunction}>test API</button>
+      <GoogleLogIn/>
       <BrowserRouter>
         <Navbar/>
         <Route exact path="/" component={Landing}/>
         <Route exact path="/about" component={About}/>
         <Route exact path="/my-account" component={Dashboard}/>
       </BrowserRouter>
+    </div>
+    </Provider>
   )
 }
 

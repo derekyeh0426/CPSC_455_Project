@@ -47,8 +47,8 @@ function Navbar() {
               <Button>My Account</Button>
             </Link>
             <Link to={"/login"}>
-              {/* <LogInForm/> */}
-              <GoogleLogIn/>
+              <LogInForm/>
+              {/* <GoogleLogIn/> */}
             </Link>
             <Link to={"/register"}>
               <RegistrationForm/>

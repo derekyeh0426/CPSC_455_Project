@@ -1,6 +1,8 @@
 import { Form, Button, Row, Col, Container, FormGroup, Image, Modal, ModalBody, Nav } from "react-bootstrap";
 import React from 'react';
 import "./LogInForm.css"
+import { connect } from 'react-redux'
+import logIn from '../../redux/users/userActions'
 
 class LogInForm extends React.Component {
     constructor(props) {
@@ -31,6 +33,7 @@ class LogInForm extends React.Component {
                     <ModalBody className = "myform">
                         <div class="text_art">
                             <div class="text_rotate">
+                                <h5>{this.props.name} {this.props.email}</h5>
                                 <h5 id="card_header">Fresh Furniture</h5>
                             </div>
                         </div>
@@ -76,4 +79,19 @@ class LogInForm extends React.Component {
     }
 }
 
-export default LogInForm;
+function mapStateToProps(state) {
+    return {
+        isLogIn: state.isLogIn, name: state.name, email: state.email
+    }
+}
+
+function mapDispatchToProps (dispatch) {
+    return {
+        logIn: () => dispatch(logIn())
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LogInForm)
