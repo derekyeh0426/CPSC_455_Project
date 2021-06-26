@@ -53,7 +53,6 @@ class LogInForm extends React.Component {
                 <Modal size="lg" show={this.state.show} scrollable={true} onHide={this.handleClose}>
                     <Modal.Header closeButton/>
                     <ModalBody className="login-modal">
-                        {/* <h5>{this.props.name} {this.props.email}</h5> */}
                         <Container className="center-component">
                             <text className="card_header">Fresh Furniture Login</text>
                         </Container>
