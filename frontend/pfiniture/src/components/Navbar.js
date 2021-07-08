@@ -43,7 +43,7 @@ function Navbar() {
             <Link to={"/about"}>
               <Button className={classes.link}>About</Button>
             </Link>
-            <Link exact path to={"/my-account"}>
+            <Link exact path to={"/my-account/dashboard"}>
               <Button className={classes.link}>My Account</Button>
             </Link>
           <div className={classes.toolbarButtons}>
