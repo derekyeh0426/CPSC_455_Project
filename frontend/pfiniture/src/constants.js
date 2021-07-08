@@ -22,7 +22,7 @@ export const MY_ACCOUNT_VIEWS = {
         component: <Cart />
     },
     myFurnitures: {
-        title: "My Furnitures",
+        title: "My Furniture",
         icon: "fas fa-couch",
         component: <MyFurnitures />
     }

@@ -5,8 +5,7 @@ import RegistrationForm from './components/registration/RegistrationForm'
 import About from './components/about/About'
 import React from 'react'
 import Landing from './pages/Landing'
-import Dashboard from "./components/my-account/Dashboard"
-import MyFurnitures from "./components/my-account/MyFurnitures"
+import MyAccountDisplay from "./components/my-account/MyAccountDisplay"
 import { BrowserRouter, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 import { Provider } from 'react-redux'
@@ -21,8 +20,7 @@ function App() {
         <Navbar/>
         <Route exact path="/" component={Landing}/>
         <Route exact path="/about" component={About}/>
-        <Route exact path="/my-account/dashboard" component={Dashboard}/>
-        <Route exact path="/my-account/my-furnitures" component={MyFurnitures}/>
+        <Route exact path="/my-account" component={MyAccountDisplay}/>
       </BrowserRouter>
     </div>
     </Provider>
