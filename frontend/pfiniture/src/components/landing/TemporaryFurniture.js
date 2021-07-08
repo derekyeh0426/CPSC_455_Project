@@ -26,4 +26,49 @@ export var temporaryFurniture =
             "seller": "Daniel",
             "description": "black wooden desk for studying"
         },
+        {
+            "name": "Wooden Rocking Chair",
+            "price": "50",
+            "picture": "https://cdn-images.article.com/products/SKU15444/2890x1500/image63706." +
+                "jpg?fit=max&w=1920&q=80&fm=webp",
+            "type": "chair",
+            "seller": "Peter",
+            "description": "Rock and roll on a chair"
+        },
+        {
+            "name": "Wooden Rocking Chair",
+            "price": "50",
+            "picture": "https://cdn-images.article.com/products/SKU15444/2890x1500/image63706." +
+                "jpg?fit=max&w=1920&q=80&fm=webp",
+            "type": "chair",
+            "seller": "Peter",
+            "description": "Rock and roll on a chair"
+        },
+        {
+            "name": "Wooden Rocking Chair",
+            "price": "50",
+            "picture": "https://cdn-images.article.com/products/SKU15444/2890x1500/image63706." +
+                "jpg?fit=max&w=1920&q=80&fm=webp",
+            "type": "chair",
+            "seller": "Peter",
+            "description": "Rock and roll on a chair"
+        },
+        {
+            "name": "Wooden Rocking Chair",
+            "price": "50",
+            "picture": "https://cdn-images.article.com/products/SKU15444/2890x1500/image63706." +
+                "jpg?fit=max&w=1920&q=80&fm=webp",
+            "type": "chair",
+            "seller": "Peter",
+            "description": "Rock and roll on a chair"
+        },
+        {
+            "name": "Wooden Rocking Chair",
+            "price": "50",
+            "picture": "https://cdn-images.article.com/products/SKU15444/2890x1500/image63706." +
+                "jpg?fit=max&w=1920&q=80&fm=webp",
+            "type": "chair",
+            "seller": "Peter",
+            "description": "Rock and roll on a chair"
+        }
     ]

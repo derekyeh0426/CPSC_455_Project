@@ -6,26 +6,26 @@ const Sidebar = () => {
             <div className="sidebar-sticky">
                 <ul className="nav flex-column">
                     <li className="nav-item">
-                        <a className="nav-link active" href="#">
+                        <a className="nav-link active" href="">
                             <span style={{paddingRight: "6px"}}><i className="fas fa-home"></i></span>
                             Dashboard
                             <span className="sr-only">(current)</span>
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/orders">
                             <span style={{paddingRight: "6px"}}><i className="fas fa-barcode"></i></span>
                             Orders
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/cart">
                             <span style={{paddingRight: "6px"}}><i className="fas fa-shopping-cart"></i></span>
                             Cart
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/my-furniture">
                             <span style={{paddingRight: "6px"}}><i className="fas fa-couch"></i></span>
                             My Furnitures
                         </a>
