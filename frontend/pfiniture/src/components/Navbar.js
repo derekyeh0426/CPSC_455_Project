@@ -1,59 +1,68 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import {Toolbar, Button, IconButton }from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import LogInForm from './login/LogInForm'
 import RegistrationForm from './registration/RegistrationForm'
+import { connect } from 'react-redux'
+import image from "../assets/FF_12.png";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    background: `#c7e7e8`
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  link: {
+    flex: 1,
+    color: `#004aad`,
   },
-  title: {
-    flexGrow: 1,
+  logo: {
+    maxWidth: 60,
   },
+  toolbarButtons: {
+    display: 'flex',
+    marginLeft: 'auto',
+  }
 }));
 
 function Navbar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+    <div>
+      <AppBar className={classes.root} position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Fresh Furniture
-          </Typography>
+          <Link to={"/"}>
+          <img src={image} alt="FF Logo" className={classes.logo}/>
+          </Link>
             <Link to={"/"}>
-              <Button >Home</Button>
+              <Button className={classes.link}>Home</Button>
             </Link>
             <Link to={"/about"}>
-              <Button >About</Button>
+              <Button className={classes.link}>About</Button>
             </Link>
             <Link exact path to={"/my-account"}>
-              <Button>My Account</Button>
+              <Button className={classes.link}>My Account</Button>
             </Link>
-            <Link to={"/login"}>
+          <div className={classes.toolbarButtons}>
               <LogInForm/>
-            </Link>
-            <Link to={"/register"}>
               <RegistrationForm/>
-            </Link>
+          </div>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-export default Navbar
+function mapStateToProps(state) {
+  return {
+      isLogIn: state.isLogIn, name: state.name, email: state.email
+  }
+}
+
+
+export default connect(
+  mapStateToProps,
+)(Navbar)

@@ -1,9 +1,8 @@
-.text_art{
+.about-header{
     width:  50%;
     height: 50%;
     align-items: center;
     justify-content: center;
-    margin: 50px 550px;
     font-size:2vw;
     color:black;
     margin:auto;
@@ -11,9 +10,9 @@
     text-align: center;
 }
 
-#card_header{
-    font-size:3vw;
-    color: rgb(64, 93, 191)
+.card_header{
+    font-size: 3vw;
+    color: #004aad;
 }
 
 .about-image{
