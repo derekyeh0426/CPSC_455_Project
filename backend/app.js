@@ -10,6 +10,7 @@ app.use(cors());
 
 const furnitureRouter = require('./controllers/furniture');
 const userRouter = require('./controllers/user');
+const googleRouter = require('./controllers/google')
 
 
 mongoose
@@ -21,5 +22,6 @@ app.get('/', (req, res) => res.send('Hello World!'));
 
 app.use('/api/v1/furnitures', furnitureRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/auth/google', googleRouter);
 
 module.exports = app;
