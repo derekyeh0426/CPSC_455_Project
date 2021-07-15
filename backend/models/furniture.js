@@ -8,12 +8,7 @@ const furnitureSchema = new mongoose.Schema({
     price: {
         required: true,
         type: Number
-    },
-    // owner: {
-    //     // TODO: Change to required set to true after creating User schema.
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    // }
+    }
 });
 
 furnitureSchema.set('toJSON', {

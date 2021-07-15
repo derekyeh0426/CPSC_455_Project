@@ -12,7 +12,7 @@ const s3 = new aws.S3({
     accessKeyId: accessKeyId,
     secretAccessKey: secretKey,
     region: region
-})
+});
 
 const upload =  multer({
     storage: multerS3({
@@ -28,12 +28,39 @@ const upload =  multer({
     })
 });
 
+const deleteById = async (req, res, next) => {
+    const image = await Image.findById(req.params.id);
+
+    if (image === null) {
+        return res.status(404).end();
+    }
+
+    Image
+        .findByIdAndRemove(req.params.id)
+        .then(() => res.status(200).end())
+        .catch(err => res.status(404).json({ error: 'invalid id' }));
+
+    // FIXME
+    s3.deleteObject({
+        Bucket: bucketName,
+        Key: image.key
+    }, (err, data) => {
+        if (err) {
+            console.log(err)
+            return res.status(500).end();
+        }
+
+        return res.status(200).end();
+    });
+};
+
 const create = (req, res, next) => {
     const uploadArray = upload.array('photo', 3);
     uploadArray(req, res, next => {
         let jsonArray = [];
         req.files.forEach(file => {
             const image = new Image({
+                key: file.key,
                 imageUrl: file.location
             });
             image
@@ -41,10 +68,32 @@ const create = (req, res, next) => {
         })
         res.status(200).end();
     })
-}
+};
+
+const getById = (req, res) => {
+    Image
+        .findById(req.params.id)
+        .then(image => {
+            if (image === null) {
+                return res.status(404).json({ error: 'invalid id' });
+            }
+
+            return res.json(image);
+        })
+        .catch(err => res.status(500).end());
+};
+
+const getAll = (req, res) => {
+    Image
+        .find({})
+        .then(image => res.json(image));
+};
 
 module.exports = {
-    create
+    create,
+    getById,
+    getAll,
+    deleteById
 };
 
 
