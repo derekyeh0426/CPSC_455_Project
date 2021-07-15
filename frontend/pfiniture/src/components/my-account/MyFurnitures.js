@@ -40,6 +40,15 @@ function MyFurnitures() {
         })
     }, [])
 
+    const handleDelete = (e, id) => {
+        e.preventDefault();
+        client.furniture.deleteFurnitureById(id).then(() => {
+            client.furniture.getAllFurnitures().then(furnitures => {
+                setFurnitures(furnitures.data);
+            })
+        })
+    }
+
     return (
         <div className="grid-container">
             <Container>
@@ -82,7 +91,10 @@ function MyFurnitures() {
                                         <Button size="small" color="primary">
                                             Edit
                                         </Button>
-                                        <Button size="small" color="secondary">
+                                        <Button
+                                            size="small"
+                                            color="secondary"
+                                            onClick={(e) => { handleDelete(e, furniture.id) }}>
                                             Delete
                                         </Button>
                                     </CardActions>
