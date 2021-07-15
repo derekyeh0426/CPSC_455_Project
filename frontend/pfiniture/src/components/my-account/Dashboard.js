@@ -7,7 +7,7 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <h2>
-                    My Order
+                    My Orders
                 </h2>
                 <Table/>
             </div>
