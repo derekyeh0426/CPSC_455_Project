@@ -76,11 +76,11 @@ const updateById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    const { title, images, description, userId, furnitureId } = req.body;
+    const { title, images, description, user, furniture } = req.body;
 
-    const user = await User.findById(userId);
-    const furniture = await Furniture.findById(furnitureId);
-
+    const user = await User.findById(req.body.user);
+    const furniture = await Furniture.findById(req.body.furniture);
+    
     console.log(user);
     console.log(furniture);
 
