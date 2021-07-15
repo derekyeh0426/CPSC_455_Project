@@ -17,6 +17,7 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { temporaryFurniture } from "./TemporaryFurniture"
 import client from "../../API/api";
+import ImageUpload from '../ImageUpload';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,6 +56,7 @@ function DisplayIndividualFurniture() {
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
+            <ImageUpload />
             <Grid container xs={12} spacing={1}>
                 {temporaryFurniture.map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {
