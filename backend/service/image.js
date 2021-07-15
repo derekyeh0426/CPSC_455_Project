@@ -41,17 +41,17 @@ const deleteById = async (req, res, next) => {
         .catch(err => res.status(404).json({ error: 'invalid id' }));
 
     // FIXME
-    s3.deleteObject({
-        Bucket: bucketName,
-        Key: image.key
-    }, (err, data) => {
-        if (err) {
-            console.log(err)
-            return res.status(500).end();
-        }
-
-        return res.status(200).end();
-    });
+    // s3.deleteObject({
+    //     Bucket: bucketName,
+    //     Key: image.key
+    // }, (err, data) => {
+    //     if (err) {
+    //         console.log(err)
+    //         return res.status(500).end();
+    //     }
+    //
+    //     return res.status(200).end();
+    // });
 };
 
 const create = (req, res, next) => {

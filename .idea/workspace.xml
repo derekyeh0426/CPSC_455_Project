@@ -2,16 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43a478d1-c9ce-4ab0-b37c-9f9c18953949" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/controllers/listing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/listing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/service/listing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/furniture.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/furniture.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/mime/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/mime/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/service/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/service/image.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,6 +78,14 @@
       <workItem from="1623456868377" duration="7254000" />
       <workItem from="1623456868377" duration="6619000" />
     </task>
+    <task id="LOCAL-00001" summary="Implement listings endpoint and s3 upload">
+      <created>1626325576090</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1626325576092</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,7 +104,19 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implement listings endpoint and s3 upload" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement listings endpoint and s3 upload" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="1512" y="244" key="CommitChangelistDialog2" timestamp="1626325575316">
+      <screen x="0" y="25" width="2560" height="1415" />
+    </state>
+    <state x="1512" y="244" key="CommitChangelistDialog2/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1626325575316" />
+    <state x="1520" y="451" key="Vcs.Push.Dialog.v2" timestamp="1626325578557">
+      <screen x="0" y="25" width="2560" height="1415" />
+    </state>
+    <state x="1520" y="451" key="Vcs.Push.Dialog.v2/0.25.2560.1415/-1920.73.1920.1055@0.25.2560.1415" timestamp="1626325578557" />
     <state x="1585" y="349" width="670" height="676" key="search.everywhere.popup" timestamp="1626323030744">
       <screen x="0" y="25" width="2560" height="1415" />
     </state>
