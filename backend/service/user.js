@@ -25,8 +25,45 @@ const create = (req, res) => {
         .then(savedUser => res.json(savedUser));
 };
 
+const deleteById = (req, res) => {
+    User
+        .findByIdAndRemove(req.params.id)
+        .then(result => {
+            if (result === null) {
+                return res.status(404).end();
+            }
+
+            return res.status(200).end();
+        })
+        .catch(err => res.status(500));
+};
+
+const getByEmail = (req, res) => {
+    const { email } = req.body;
+    User.
+        find({Email: email})
+        .then(User => res.json(User))
+}
+
+const deleteByEmail = (req, res) => {
+    const { email } = req.body;
+    User
+        .findOneAndDelete({Email: email})
+        .then(result => {
+            if (result === null) {
+                return res.status(404).end();
+            }
+
+            return res.status(200).end();
+        })
+        .catch(err => res.status(500));
+};
+
 module.exports = {
     getAll,
     create,
-    deleteAll
+    deleteAll,
+    deleteById,
+    getByEmail,
+    deleteByEmail
 };
