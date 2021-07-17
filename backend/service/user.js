@@ -38,32 +38,23 @@ const deleteById = (req, res) => {
         .catch(err => res.status(500));
 };
 
-const getByEmail = (req, res) => {
-    const { email } = req.body;
-    User.
-        find({Email: email})
-        .then(User => res.json(User))
-}
-
-const deleteByEmail = (req, res) => {
-    const { email } = req.body;
+const getById = (req, res) => {
     User
-        .findOneAndDelete({Email: email})
-        .then(result => {
-            if (result === null) {
-                return res.status(404).end();
+        .findById(req.params.id)
+        .then(user => {
+            if (user === null) {
+                return res.status(404).json({ error: 'invalid id' });
             }
 
-            return res.status(200).end();
+            return res.json(user);
         })
-        .catch(err => res.status(500));
-};
+        .catch(err => res.status(500).end());
+}
 
 module.exports = {
     getAll,
     create,
     deleteAll,
     deleteById,
-    getByEmail,
-    deleteByEmail
+    getById
 };
