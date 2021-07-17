@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
-const furnitureSchema = new mongoose.Schema({
-    name: {
+const imageSchema = new mongoose.Schema({
+    key: {
         required: true,
         type: String
     },
-    price: {
+    imageUrl: {
         required: true,
-        type: Number
+        type: String
     }
 });
 
-furnitureSchema.set('toJSON', {
+imageSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
@@ -19,4 +19,4 @@ furnitureSchema.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('Furniture', furnitureSchema);
+module.exports = mongoose.model('Image', imageSchema);

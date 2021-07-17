@@ -46,6 +46,11 @@ function getUsers() {
         console.log(res.data)})
 }
 
+function getListings() {
+    client.listing.getAllListings().then(res => {
+        console.log(res.data)})
+}
+
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
@@ -55,6 +60,7 @@ function DisplayIndividualFurniture() {
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
+            <Button onClick={getListings}>Get Listings</Button>
             <Grid container xs={12} spacing={1}>
                 {temporaryFurniture.map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {
