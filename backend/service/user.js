@@ -25,8 +25,36 @@ const create = (req, res) => {
         .then(savedUser => res.json(savedUser));
 };
 
+const deleteById = (req, res) => {
+    User
+        .findByIdAndRemove(req.params.id)
+        .then(result => {
+            if (result === null) {
+                return res.status(404).end();
+            }
+
+            return res.status(200).end();
+        })
+        .catch(err => res.status(500));
+};
+
+const getById = (req, res) => {
+    User
+        .findById(req.params.id)
+        .then(user => {
+            if (user === null) {
+                return res.status(404).json({ error: 'invalid id' });
+            }
+
+            return res.json(user);
+        })
+        .catch(err => res.status(500).end());
+}
+
 module.exports = {
     getAll,
     create,
-    deleteAll
+    deleteAll,
+    deleteById,
+    getById
 };
