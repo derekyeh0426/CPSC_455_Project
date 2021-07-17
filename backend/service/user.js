@@ -31,9 +31,7 @@ async function create (req, res) {
     });
 
     user
-        .save().then(()=> {
-            req.session.userId = user.id
-        }).then(savedUser => res.json(savedUser));
+        .save().then(savedUser => res.json(savedUser));
 };
 
 const deleteById = (req, res) => {
