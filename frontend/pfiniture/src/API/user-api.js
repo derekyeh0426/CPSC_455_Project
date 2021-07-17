@@ -39,4 +39,13 @@ export default class userClient {
             console.log(e.message())
         }
     }
+
+    static async getUserById(id) {
+        try {
+            const response = axios.get(baseUrl + `/api/v1/users/${id}`);
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
 }
