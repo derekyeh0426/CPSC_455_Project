@@ -1,3 +1,4 @@
+//referenced from https://zoejoyuliao.medium.com/add-google-sign-in-and-sign-out-to-your-react-app-and-get-the-accesstoken-2ee16bfd8297
 import React from 'react';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
 import logIn from '../../redux/users/userActions'

@@ -60,7 +60,7 @@ class LogInForm extends React.Component {
                             <text className="card_header">Fresh Furniture Login</text>
                         </Container>
                         <Container className="center-component">
-                            <GoogleLogIn/>
+                            {/* <GoogleLogIn/> */}
                         </Container>
                         <br/>
                         <br/>
