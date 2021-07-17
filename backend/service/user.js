@@ -38,9 +38,23 @@ const deleteById = (req, res) => {
         .catch(err => res.status(500));
 };
 
+const getById = (req, res) => {
+    User
+        .findById(req.params.id)
+        .then(user => {
+            if (user === null) {
+                return res.status(404).json({ error: 'invalid id' });
+            }
+
+            return res.json(user);
+        })
+        .catch(err => res.status(500).end());
+}
+
 module.exports = {
     getAll,
     create,
     deleteAll,
-    deleteById
+    deleteById,
+    getById
 };
