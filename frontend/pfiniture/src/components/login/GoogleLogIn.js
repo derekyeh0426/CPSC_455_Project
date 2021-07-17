@@ -1,6 +1,7 @@
 import React from 'react';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
 import logIn from '../../redux/users/userActions'
+import userLogOutAction from '../../redux/users/userLogOutAction';
 import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
@@ -48,6 +49,7 @@ class GoogleLogIn extends React.Component {
 
     handleSuccessfulLogOut = (response) => {
         this.setState({accessToken: '', isLogined: false})
+        this.props.userLogOutAction();
     }
 
     handleLoginFailure(response) {
@@ -93,7 +95,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    logIn
+    logIn,
+    userLogOutAction
 }
 
 export default connect(

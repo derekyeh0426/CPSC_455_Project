@@ -13,6 +13,13 @@ function userReducer(state = initialState, action) {
             name: action.payload.name,
             email:action.payload.email
         }
+
+        case "Log_Out": return{
+            ...state,
+            isLogIn:false,
+            name:null,
+            email:null
+        }
         default: return state
     }
 }
