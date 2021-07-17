@@ -31,4 +31,12 @@ export default class userClient {
         }
     }
 
+    static async deleteUserById(id) {
+        try {
+            const response = axios.delete(baseUrl + `/api/v1/users/${id}`);
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
 }
