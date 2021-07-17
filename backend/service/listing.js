@@ -76,15 +76,15 @@ const updateById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    const { title, images, description, userId, furnitureId } = req.body;
+    const { title, images, description, user, furniture } = req.body;
 
-    const user = await User.findById(userId);
-    const furniture = await Furniture.findById(furnitureId);
+    const userObject = await User.findById(user);
+    const furnitureObject = await Furniture.findById(furniture);
+    
+    console.log(userObject);
+    console.log(furnitureObject);
 
-    console.log(user);
-    console.log(furniture);
-
-    if (user === null || furniture === null) {
+    if (userObject === null || furnitureObject === null) {
         return res.status(404).json({ error: 'invalid id' });
     }
 
@@ -92,16 +92,30 @@ const create = async (req, res) => {
         title: title,
         images: images,
         description: description,
-        user: user,
-        furniture: furniture,
+        user: userObject,
+        furniture: furnitureObject,
         createdDate: new Date(),
     });
 
     listing
         .save()
-        .then(() => {
-            // TODO: Add listings to the user.
-            res.status(200).end();
+        .then(savedListing => {
+            let listings = userObject.listings;
+
+            listings.push(savedListing.id);
+
+            userObject.listings = listings;
+
+            const newUser = {
+                id: userObject.id,
+                name: userObject.name,
+                email: userObject.email,
+                listings: userObject.listings
+            };
+
+            User
+                .findByIdAndUpdate(newUser.id, newUser, { new: true })
+                .then(() => res.status(200).end());
         })
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };

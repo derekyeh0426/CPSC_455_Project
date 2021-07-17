@@ -55,10 +55,7 @@ const deleteById = async (req, res, next) => {
 };
 
 const create = (req, res, next) => {
-    console.log(req)
-    console.log(res)
     const uploadArray = upload.array('photo', 3);
-    // console.log(uploadArray)
     uploadArray(req, res, next => {
         let jsonArray = [];
         req.files.forEach(file => {

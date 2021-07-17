@@ -10,14 +10,12 @@ import {
     Typography,
     CardActions,
     Button,
-    Container,
     IconButton,
     Collapse,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { temporaryFurniture } from "./TemporaryFurniture"
 import client from "../../API/api";
-import ImageUpload from '../ImageUpload';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,6 +46,10 @@ function getUsers() {
     })
 }
 
+function getListings() {
+    client.listing.getAllListings().then(res => {
+        console.log(res.data)})
+}
 
 function DisplayIndividualFurniture() {
     const classes = useStyles()
@@ -72,39 +74,18 @@ function DisplayIndividualFurniture() {
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
-            <ImageUpload />
-            {/* <form method="post" enctype="multipart/form-data">
-                    <label for="file">Choose a file</label>
-                    <input 
-                        type="file"
-                        name="photo" 
-                        onChange={event => setimageFile(event.target.files)} 
-                        />
-                <button onClick={event => uploadImage(event)}>Send the file</button>
-                </form> */}
-
-            {/* <form onSubmit={e => handleSubmit(e)} action="http://localhost:8080/api/v1/images" method="POST" enctype="multipart/form-data"> */}
-            {/* <form> */}
-                {/* <div class="form-group">
-                    <label for="featuredImage">Featured Image</label>
-                    <input 
-                        type="file" 
-                        name="photo"
-                        onChange={e => setimageFile(e.target.files)}
-                        />
-                </div> */}
-                {/* <button type="submit">Send the file</button> */}
-                {/* <input type="submit" value="Submit" 
-                /> */}
-            {/* </form> */}
-            <Grid container xs={12} spacing={1}>
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center">
                 {temporaryFurniture.map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {
                         return ""
                     } else {
                         return (
-                            <Grid item xs key={index}>
-                                <Card className={classes.cardRoot}>
+                            <div className="furniture-spacing">
+                                <Card key={index} className={classes.cardRoot}>
                                     <CardActionArea>
                                         <CardMedia
                                             className={classes.media}
@@ -131,13 +112,13 @@ function DisplayIndividualFurniture() {
                                         </CardContent>
                                     </Collapse>
                                     <IconButton
+                                        // TODO all cards expand when only want one card to expand
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
                                         onClick={handleExpandClick}
                                         aria-expanded={expanded}
-                                        aria-label="show more"
-                                    >
+                                        aria-label="show more">
                                         <ExpandMoreIcon />
                                     </IconButton>
                                     <CardActions>
@@ -149,7 +130,7 @@ function DisplayIndividualFurniture() {
                                         </Button>
                                     </CardActions>
                                 </Card>
-                            </Grid>
+                            </div>
                         )
                     }
                 })}
