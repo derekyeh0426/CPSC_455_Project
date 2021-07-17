@@ -10,7 +10,6 @@ import {
     Typography,
     CardActions,
     Button,
-    Container,
     IconButton,
     Collapse,
 } from '@material-ui/core'
@@ -60,15 +59,18 @@ function DisplayIndividualFurniture() {
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
-            <Button onClick={getListings}>Get Listings</Button>
-            <Grid container xs={12} spacing={1}>
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center">
                 {temporaryFurniture.map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {
                         return ""
                     } else {
                         return (
-                            <Grid item xs key={index}>
-                                <Card className={classes.cardRoot}>
+                            <div className="furniture-spacing">
+                                <Card key={index} className={classes.cardRoot}>
                                     <CardActionArea>
                                         <CardMedia
                                             className={classes.media}
@@ -95,13 +97,13 @@ function DisplayIndividualFurniture() {
                                         </CardContent>
                                     </Collapse>
                                     <IconButton
+                                        // TODO all cards expand when only want one card to expand
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
                                         onClick={handleExpandClick}
                                         aria-expanded={expanded}
-                                        aria-label="show more"
-                                    >
+                                        aria-label="show more">
                                         <ExpandMoreIcon />
                                     </IconButton>
                                     <CardActions>
@@ -113,7 +115,7 @@ function DisplayIndividualFurniture() {
                                         </Button>
                                     </CardActions>
                                 </Card>
-                            </Grid>
+                            </div>
                         )
                     }
                 })}
