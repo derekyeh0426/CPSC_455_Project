@@ -54,6 +54,9 @@ class LogInForm extends React.Component {
                     <Modal.Header closeButton/>
                     <ModalBody className="login-modal">
                         <Container className="center-component">
+                            <text className="card_header">who is currently log in: {this.props.name}</text>
+                            <br/>
+                            <br/>
                             <text className="card_header">Fresh Furniture Login</text>
                         </Container>
                         <Container className="center-component">
