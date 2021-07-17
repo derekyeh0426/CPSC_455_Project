@@ -1,7 +1,5 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import LogInForm from './components/login/LogInForm'
-import RegistrationForm from './components/registration/RegistrationForm'
 import About from './components/about/About'
 import React from 'react'
 import Landing from './pages/Landing'
@@ -11,6 +9,7 @@ import Navbar from "./components/Navbar"
 import { Provider } from 'react-redux'
 import store from './redux/store'
 import CheckOut from './components/payment/CheckOut'
+import GoogleLogin from './components/login/GoogleLogIn'
 
 function App() {
 
@@ -19,6 +18,7 @@ function App() {
     <div>
       <BrowserRouter>
         <CheckOut/>
+        <GoogleLogin/>
         <Navbar/>
         <Route exact path="/" component={Landing}/>
         <Route exact path="/about" component={About}/>
