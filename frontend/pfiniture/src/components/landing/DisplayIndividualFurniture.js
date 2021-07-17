@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 function getUsers() {
     client.user.getAllUsers().then(res => {
-        console.log(res.data)})
+        console.log(res.data)
+    })
 }
 
 
@@ -56,27 +57,46 @@ function DisplayIndividualFurniture() {
         setExpanded(!expanded);
     }
 
-    function uploadImage(event) {
-        event.preventDefault()
-        console.log(imageFile)
-        // client.image.addImage(imageFile).then(res => {
-        //     console.log(res.data)})
+    // function uploadImage(event) {
+    //     event.preventDefault()
+    //     console.log(imageFile[0])
+    //     let imageFileObject = imageFile[0];
+    //     client.image.addImage(imageFileObject).then(res => {
+    //         console.log(res.data)})
+    // }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
     }
 
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
             <ImageUpload />
-            <form enctype="multipart/form-data">
+            {/* <form method="post" enctype="multipart/form-data">
                     <label for="file">Choose a file</label>
                     <input 
-                        type="file" 
-                        id="file" n
-                        name="myFile" 
-                        onChange={event => setimageFile(event.target.value)} 
+                        type="file"
+                        name="photo" 
+                        onChange={event => setimageFile(event.target.files)} 
                         />
                 <button onClick={event => uploadImage(event)}>Send the file</button>
-                </form>
+                </form> */}
+
+            {/* <form onSubmit={e => handleSubmit(e)} action="http://localhost:8080/api/v1/images" method="POST" enctype="multipart/form-data"> */}
+            {/* <form> */}
+                {/* <div class="form-group">
+                    <label for="featuredImage">Featured Image</label>
+                    <input 
+                        type="file" 
+                        name="photo"
+                        onChange={e => setimageFile(e.target.files)}
+                        />
+                </div> */}
+                {/* <button type="submit">Send the file</button> */}
+                {/* <input type="submit" value="Submit" 
+                /> */}
+            {/* </form> */}
             <Grid container xs={12} spacing={1}>
                 {temporaryFurniture.map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {

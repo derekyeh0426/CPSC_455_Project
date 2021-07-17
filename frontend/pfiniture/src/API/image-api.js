@@ -29,14 +29,4 @@ export default class imageClient {
             console.log(e.message())
         }
     }
-
-    // TODO implement addImage api call
-    static async addImage({imageFile}) {
-        try {
-            const response = axios.post(baseUrl + "/api/v1/images/", {imageFile});
-            return response
-        } catch (e) {
-            console.log(e.message())
-        }
-    }
 }

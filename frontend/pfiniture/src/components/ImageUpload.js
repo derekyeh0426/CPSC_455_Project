@@ -1,22 +1,52 @@
-import React, { useState } from "react";
-import ImageUploader from "react-images-upload";
+import React from 'react';
+import { post } from 'axios';
+import { Button } from '@material-ui/core';
 
-const ImageUpload = props => {
-  const [pictures, setPictures] = useState([]);
+class ImageUpload extends React.Component {
 
-  const onDrop = picture => {
-    setPictures([...pictures, picture]);
-    console.log(picture)
-  };
-  return (
-    <ImageUploader
-      {...props}
-      withIcon={true}
-      onChange={onDrop}
-      imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-      maxFileSize={5242880}
-    />
-  );
-};
+  constructor(props) {
+    super(props);
+    this.state ={
+      file:null
+    }
+    this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.fileUpload = this.fileUpload.bind(this)
+  }
 
-export default ImageUpload;
+  onFormSubmit(e){
+    e.preventDefault()
+    this.fileUpload(this.state.file).then((response)=>{
+      console.log(response.data);
+    })
+  }
+
+  onChange(e) {
+    this.setState({file:e.target.files[0]})
+  }
+    
+  fileUpload(file){
+    const url = 'http://localhost:8080/api/v1/images';
+    const formData = new FormData();
+    formData.append('photo',file)
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    return  post(url, formData, config)
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.onFormSubmit}>
+        <input type="file" onChange={this.onChange} />
+        <Button type="submit">Upload</Button>
+      </form>
+   )
+  }
+}
+
+
+
+export default ImageUpload
