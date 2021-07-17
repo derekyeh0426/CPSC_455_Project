@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 
+const Client_ID = "897654971286-rgivsn5mcj4cs54e7j3v0fq6cm9a3dov.apps.googleusercontent.com"
+
 class GoogleLogIn extends React.Component {
     responseGoogle = (response) => {
         this.props.logIn(response.profileObj)
@@ -28,7 +30,7 @@ class GoogleLogIn extends React.Component {
         return(
             <div>
                 <GoogleLogin className="google-login-button"
-                clientId = "897654971286-rgivsn5mcj4cs54e7j3v0fq6cm9a3dov.apps.googleusercontent.com"
+                clientId = {Client_ID}
                 buttonText = "Log in with Google!"
                 onSuccess = {this.responseGoogle}
                 onFailure = {this.responseGoogle}
