@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 const getAll = (req, res) => {
     User
@@ -12,8 +14,16 @@ const deleteAll = (req, res) => {
         .then(result => res.status(200).end());
 };
 
-const create = (req, res) => {
-    const { name, email } = req.body;
+async function create (req, res) {
+    const { token } = req.body;
+    console.log(token);
+    console.log("end point hit");
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const { name, email} = ticket.getPayload(); 
 
     const user = new User({
         name: name,
@@ -21,8 +31,9 @@ const create = (req, res) => {
     });
 
     user
-        .save()
-        .then(savedUser => res.json(savedUser));
+        .save().then(()=> {
+            req.session.userId = user.id
+        }).then(savedUser => res.json(savedUser));
 };
 
 const deleteById = (req, res) => {
