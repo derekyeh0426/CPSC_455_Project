@@ -16,8 +16,6 @@ const deleteAll = (req, res) => {
 
 async function create (req, res) {
     const { token } = req.body;
-    console.log(token);
-    console.log("end point hit");
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.GOOGLE_CLIENT_ID
