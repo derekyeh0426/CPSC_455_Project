@@ -47,16 +47,36 @@ function getUsers() {
         console.log(res.data)})
 }
 
+
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
+    const [imageFile, setimageFile] = React.useState();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
+
+    function uploadImage(event) {
+        event.preventDefault()
+        console.log(imageFile)
+        // client.image.addImage(imageFile).then(res => {
+        //     console.log(res.data)})
+    }
+
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
             <ImageUpload />
+            <form enctype="multipart/form-data">
+                    <label for="file">Choose a file</label>
+                    <input 
+                        type="file" 
+                        id="file" n
+                        name="myFile" 
+                        onChange={event => setimageFile(event.target.value)} 
+                        />
+                <button onClick={event => uploadImage(event)}>Send the file</button>
+                </form>
             <Grid container xs={12} spacing={1}>
                 {temporaryFurniture.map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {
