@@ -6,6 +6,7 @@ import {
     Container
 } from '@material-ui/core'
 import DisplayMyFurnitures from './DisplayMyFurnitures';
+import ImageUpload from './ImageUpload';
 
 const useStyles = makeStyles((theme) => ({
     addFurnitureButton: {
@@ -21,6 +22,7 @@ function MyFurnitures() {
         <div className="grid-container">
             <Container>
                 <Button className={classes.addFurnitureButton} variant="outlined" color="primary">Add Furniture</Button>
+                <ImageUpload />
                 <DisplayMyFurnitures />
             </Container>
         </div>
