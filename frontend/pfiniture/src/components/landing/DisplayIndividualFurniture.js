@@ -45,6 +45,11 @@ function getUsers() {
         console.log(res.data)})
 }
 
+function getListings() {
+    client.listing.getAllListings().then(res => {
+        console.log(res.data)})
+}
+
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
