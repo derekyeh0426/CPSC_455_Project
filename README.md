@@ -13,7 +13,7 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 1. buy and sell furniture
 2. users can post furniture to sell on their account
 3. rate stores
-4. login/register feature without security
+4. login/register feature
 
 ### Standard Requirements (will most likely complete)
 1. provide delivery service
@@ -24,12 +24,11 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 ### Stretch Requirements (plan to complete at least 1)
 1. chat feature that allows meeting arragenment
 2. contactless drop off functionality
-3. login/register feature with security
-4. trade furniture
-5. individuals can set up their own service
-6. comment on stores/services
-7. individuals can set up their own store
-8. sharing links on social media
+3. trade furniture
+4. individuals can set up their own service
+5. comment on stores/services
+6. individuals can set up their own store
+7. sharing links on social media
 
 ## Task Breakdown
 ### Break Down of Minimal Requirement #2:
