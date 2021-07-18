@@ -4,9 +4,6 @@ import Order from './Order'
 const Table = () => {
     return (
         <>
-            <h2>
-                My Order
-            </h2>
             <div className="table-responsive">
                 <table className="table table-striped table-sm">
                     <thead>

@@ -10,7 +10,6 @@ import {
     Typography,
     CardActions,
     Button,
-    Container,
     IconButton,
     Collapse,
 } from '@material-ui/core'
@@ -43,26 +42,50 @@ const useStyles = makeStyles((theme) => ({
 
 function getUsers() {
     client.user.getAllUsers().then(res => {
+        console.log(res.data)
+    })
+}
+
+function getListings() {
+    client.listing.getAllListings().then(res => {
         console.log(res.data)})
 }
 
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
+    const [imageFile, setimageFile] = React.useState();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
+
+    // function uploadImage(event) {
+    //     event.preventDefault()
+    //     console.log(imageFile[0])
+    //     let imageFileObject = imageFile[0];
+    //     client.image.addImage(imageFileObject).then(res => {
+    //         console.log(res.data)})
+    // }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
+
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
-            <Grid container xs={12} spacing={1}>
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center">
                 {temporaryFurniture.map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {
                         return ""
                     } else {
                         return (
-                            <Grid item xs key={index}>
-                                <Card className={classes.cardRoot}>
+                            <div className="furniture-spacing">
+                                <Card key={index} className={classes.cardRoot}>
                                     <CardActionArea>
                                         <CardMedia
                                             className={classes.media}
@@ -89,13 +112,13 @@ function DisplayIndividualFurniture() {
                                         </CardContent>
                                     </Collapse>
                                     <IconButton
+                                        // TODO all cards expand when only want one card to expand
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
                                         onClick={handleExpandClick}
                                         aria-expanded={expanded}
-                                        aria-label="show more"
-                                    >
+                                        aria-label="show more">
                                         <ExpandMoreIcon />
                                     </IconButton>
                                     <CardActions>
@@ -107,7 +130,7 @@ function DisplayIndividualFurniture() {
                                         </Button>
                                     </CardActions>
                                 </Card>
-                            </Grid>
+                            </div>
                         )
                     }
                 })}

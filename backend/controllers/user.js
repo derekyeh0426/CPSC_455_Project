@@ -8,8 +8,13 @@ router.use((req, res, next) => {
 
 router.get('/', (req, res, next) => userService.getAll(req, res));
 
+router.get('/:id', (req, res, next) => userService.getById(req, res));
+
 router.post('/', (req, res, next) => userService.create(req, res));
 
 router.delete('/', (req, res, next) => userService.deleteAll(req, res));
+
+router.delete('/:id', (req, res, next) => userService.deleteById(req, res));
+
 
 module.exports = router;
