@@ -12,7 +12,7 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 ### Minimal Requirements (will definitely complete)
 1. buy and sell furniture
 2. users can post furniture to sell on their account
-3. rate stores
+3. rate sellers
 4. login/register feature
 
 ### Standard Requirements (will most likely complete)
@@ -26,7 +26,7 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 2. contactless drop off functionality
 3. trade furniture
 4. individuals can set up their own service
-5. comment on stores/services
+5. comment on stores/services 
 6. individuals can set up their own store
 7. sharing links on social media
 
