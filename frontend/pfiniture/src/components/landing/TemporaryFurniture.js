@@ -18,7 +18,7 @@ export var temporaryFurniture =
             "description": "glass side table"
         },
         {
-            "name": "Wooden Desk",
+            "name": "Metal Desk",
             "price": "40",
             "picture": "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1616167949-10-Cheap-Desks-gear-patrol" +
                 "-2.jpg",
@@ -36,7 +36,7 @@ export var temporaryFurniture =
             "description": "Rock and roll on a chair"
         },
         {
-            "name": "Wooden Rocking Chair",
+            "name": "Metal Rocking Chair",
             "price": "50",
             "picture": "https://cdn-images.article.com/products/SKU15444/2890x1500/image63706." +
                 "jpg?fit=max&w=1920&q=80&fm=webp",
@@ -45,7 +45,7 @@ export var temporaryFurniture =
             "description": "Rock and roll on a chair"
         },
         {
-            "name": "Wooden Rocking Chair",
+            "name": "Glass Rocking Chair",
             "price": "50",
             "picture": "https://cdn-images.article.com/products/SKU15444/2890x1500/image63706." +
                 "jpg?fit=max&w=1920&q=80&fm=webp",
