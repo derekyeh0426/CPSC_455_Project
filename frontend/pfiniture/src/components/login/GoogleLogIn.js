@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-import GOOGLE_CLIENT_ID from '../../googleID'
+import {GOOGLE_CLIENT_ID} from '../../googleID'
 
 
 class GoogleLogIn extends React.Component {
