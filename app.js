@@ -8,6 +8,7 @@ const path = require('path');
 
 app.use(express.json());
 app.use(cors());
+app.options('*', cors());
 
 const furnitureRouter = require('./controllers/furniture');
 const userRouter = require('./controllers/user');
