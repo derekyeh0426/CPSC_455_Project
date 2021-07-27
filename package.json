@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
+    "build": "cd frontend/pfiniture && npm run build",
+    "install-client": "cd frontend/pfiniture && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "dev": "nodemon index.js"
   },
   "author": "",
