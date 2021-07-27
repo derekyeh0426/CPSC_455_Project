@@ -3,7 +3,7 @@ import Orders from "./components/my-account/Orders";
 import Cart from "./components/my-account/Cart";
 import MyFurnitures from "./components/my-account/MyFurnitures";
 
-export const baseUrl = "http://localhost:8080"
+export const baseUrl = ""
 
 export const MY_ACCOUNT_VIEWS = {
     dashboard: {
