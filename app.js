@@ -25,7 +25,7 @@ app.use('/api/v1/images', imageRouter);
 app.use('/api/v1/listings', listingRouter);
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
+    app.use(express.static('frontend/pfiniture/build'));
 }
 
 app.get("*", function (req, res) {
