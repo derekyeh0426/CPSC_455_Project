@@ -1,7 +1,11 @@
-# CPSC_455_Project
-## Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
+## CPSC_455_Project: Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
-## Project Description
+## Fresh Furniture
+Fresh Furniture is a web application that supports selling and buying new or second-hand furniture through PayPal. Users can login with their Google accounts and add, edit, and delete their listings. They can also view their order history and rate sellers. 
+
+## Project Description (original idea)
+Note: Due to the time frame of our course, we realized our original idea would require more time for completion. Thus, we have changed it accordingly. 
+
 Fresh Furniture is a web application that aims to facilitate furniture trading on the market. It will support selling, buying, and even loaning second-hand or newly made furniture. Users have the option of opening their own store to sell their pre-owned furniture or service to build customized or fix furniture. Otherwise, users can just shop or order a service. Our app will aid in reducing waste and provide affordable furniture.
 
 Furthermore, our app will store personal data, such as the user's name, address, and login information. We will encrypt simple data such as passwords ourselves. Financial data for payments will not be stored because third party service(s) like PayPal will be used instead. These specific data are selected and stored so that users do not have to re-enter these data every time they make a purchase. Other data such as store/service ratings from users will also be stored to promote those with great products and services.
