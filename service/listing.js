@@ -5,12 +5,18 @@ const Furniture = require('../models/furniture');
 const getAll = (req, res) => {
     Listing
         .find({})
+        .populate('user')
+        .populate('furniture')
+        .populate('images')
         .then(listing => res.json(listing));
 };
 
 const getById = (req, res) => {
     Listing
         .findById(req.params.id)
+        .populate('user')
+        .populate('furniture')
+        .populate('images')
         .then(listing => {
             if (listing === null) {
                 return res.status(404).json({ error: 'invalid id' });
