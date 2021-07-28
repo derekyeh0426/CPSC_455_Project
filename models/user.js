@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Listing'
         }
-    ]
+    ],
+    rating: {
+        default: 0,
+        type: Number
+    }
 });
 
 userSchema.set('toJSON', {

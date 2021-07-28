@@ -16,5 +16,6 @@ router.delete('/', (req, res, next) => userService.deleteAll(req, res));
 
 router.delete('/:id', (req, res, next) => userService.deleteById(req, res));
 
+router.put('/:id', (req, res, next) => userService.updateById(req, res));
 
 module.exports = router;
