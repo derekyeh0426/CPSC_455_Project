@@ -35,7 +35,6 @@ const deleteById = async (req, res) => {
     }
 
     const user = listing.user;
-    const furniture = listing.furniture;
 
     Listing
         .findByIdAndRemove(req.params.id)
@@ -43,12 +42,13 @@ const deleteById = async (req, res) => {
             console.log(user);
 
             User
-                .findByIdAndRemove(user)
-                .then(() => {
-                    console.log(furniture);
+                .findById(user)
+                .then(userObject => {
+                    const newUser = JSON.parse(JSON.stringify(userObject));
+                    newUser.listings = newUser.listings.filter(listingId => listingId !== req.params.id);
 
-                    Furniture
-                        .findByIdAndRemove(furniture)
+                    User
+                        .findByIdAndUpdate(newUser.id, newUser, { new: true })
                         .then(() => res.status(200).end());
                 })
         })
