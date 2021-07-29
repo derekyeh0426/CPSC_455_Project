@@ -56,7 +56,7 @@ const deleteById = async (req, res) => {
 };
 
 const updateById = async (req, res) => {
-    const { title, images, description } = req.body;
+    const { title, images, description, type } = req.body;
 
     const listing = await Listing.findById(req.params.id);
 
@@ -67,12 +67,13 @@ const updateById = async (req, res) => {
     console.log(listing);
 
     const newListing = {
-        title: title,
-        images: images,
-        description: description,
+        title: title || listing.title,
+        images: images || listing.images,
+        description: description || listing.description,
         user: listing.user,
         furniture: listing.furniture,
         createdDate: listing.createdDate,
+        type: type || listing.type
     };
 
     Listing
@@ -82,7 +83,7 @@ const updateById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    const { title, images, description, user, furniture } = req.body;
+    const { title, images, description, user, furniture, type } = req.body;
 
     const userObject = await User.findById(user);
     const furnitureObject = await Furniture.findById(furniture);
@@ -94,6 +95,10 @@ const create = async (req, res) => {
         return res.status(404).json({ error: 'invalid id' });
     }
 
+    if (type === undefined) {
+        return res.status(404).json({ error: 'type missing' });
+    }
+
     const listing = new Listing({
         title: title,
         images: images,
@@ -101,6 +106,7 @@ const create = async (req, res) => {
         user: userObject,
         furniture: furnitureObject,
         createdDate: new Date(),
+        type: type
     });
 
     listing
