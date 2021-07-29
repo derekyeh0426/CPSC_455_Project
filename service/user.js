@@ -15,17 +15,30 @@ const deleteAll = (req, res) => {
 };
 
 async function create (req, res) {
-    const { token } = req.body;
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: process.env.GOOGLE_CLIENT_ID
-    });
+    let { token, name, email, location } = req.body;
 
-    const { name, email} = ticket.getPayload(); 
+    if (token !== undefined) {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+
+        name = ticket.getPayload().name;
+        email = ticket.getPayload().email;
+    }
+
+    // Check for email duplicates.
+    let users = await User.find({});
+    users = users.filter(user => user.email === email);
+
+    if (users.length > 0) {
+        return res.status(400).json({ error: 'duplicate email' });
+    }
 
     const user = new User({
         name: name,
-        email: email
+        email: email,
+        location: location || 'Vancouver'
     });
 
     user
@@ -59,7 +72,7 @@ const getById = (req, res) => {
 }
 
 const updateById = async (req, res) => {
-    const { rating } = req.body;
+    const { name, listings, rating, location } = req.body;
 
     const user = await User.findById(req.params.id);
 
@@ -70,10 +83,10 @@ const updateById = async (req, res) => {
     console.log(user);
 
     const newUser = {
-        name: user.name,
-        email: user.email,
-        listings: user.listings,
-        rating: rating > 10 ? 10 : rating
+        name: name || user.name,
+        listings: listings || user.listings,
+        rating: (rating > 10 ? 10 : rating) || user.rating,
+        location: location || user.location
     };
 
     User

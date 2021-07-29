@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     rating: {
         default: 0,
         type: Number
+    },
+    location: {
+        required: true,
+        type: String
     }
 });
 
