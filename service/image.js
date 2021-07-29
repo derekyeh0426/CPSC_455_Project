@@ -3,6 +3,7 @@ const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const Image = require('../models/image');
+const path = require('path');
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
 const accessKeyId = process.env.AWS_ACCESS_KEY;
@@ -23,9 +24,20 @@ const upload =  multer({
         },
         key: (req, file, cb) => {
             console.log(file)
-            cb(null, Date.now().toString())
+            cb(null, Date.now().toString() + path.extname(file.originalname))
         }
-    })
+    }),
+    fileFilter: (req, file, cb) => {
+        console.log(file.originalname);
+        const filetypes = /jpeg|jpg|png/;
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        const mimetype = filetypes.test(file.mimetype);
+        if (mimetype && extname) {
+            return cb(null, true);
+        } else {
+            return cb(new Error("images only"));
+        }
+    }
 });
 
 const deleteById = async (req, res, next) => {
@@ -40,24 +52,26 @@ const deleteById = async (req, res, next) => {
         .then(() => res.status(200).end())
         .catch(err => res.status(404).json({ error: 'invalid id' }));
 
-    // FIXME
-    // s3.deleteObject({
-    //     Bucket: bucketName,
-    //     Key: image.key
-    // }, (err, data) => {
-    //     if (err) {
-    //         console.log(err)
-    //         return res.status(500).end();
-    //     }
-    //
-    //     return res.status(200).end();
-    // });
+    s3.deleteObject({
+        Bucket: bucketName,
+        Key: image.key
+    }, (err, data) => {
+        if (err) {
+            console.log(err)
+            return res.status(500).end();
+        }
+    
+        return res.status(200).end();
+    });
 };
 
 const create = (req, res, next) => {
     const uploadArray = upload.array('photo', 3);
-    uploadArray(req, res, next => {
+    uploadArray(req, res, err => {
         let jsonArray = [];
+        if (err) {
+            res.status(404).end();
+        }
         req.files.forEach(file => {
             const image = new Image({
                 key: file.key,

@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Listing'
         }
-    ]
+    ],
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cart'
+    }
 });
 
 userSchema.set('toJSON', {
