@@ -28,10 +28,10 @@ export default class listingClient {
         }
     }
 
-    static async updateListingById({images, title, description, user, furniture, createdDate, id}) {
+    static async updateListingById({images, title, description, user, furniture, id}) {
         try {
             const response = axios.put(`/api/v1/listings/${id}`,
-            {images, title, description, user, furniture, createdDate});
+            {images, title, description, user, furniture});
             return response
         } catch (e) {
             console.log(e.message())
