@@ -15,17 +15,13 @@ const deleteAll = (req, res) => {
 };
 
 async function create (req, res) {
-    const { token } = req.body;
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: process.env.GOOGLE_CLIENT_ID
-    });
-
-    const { name, email} = ticket.getPayload(); 
+    const { name, email, cart, order } = req.body;
 
     const user = new User({
         name: name,
-        email: email
+        email: email,
+        cart: cart,
+        order: order
     });
 
     user
