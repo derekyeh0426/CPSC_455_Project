@@ -13,7 +13,7 @@ const furnitureRouter = require('./controllers/furniture');
 const userRouter = require('./controllers/user');
 const imageRouter = require('./controllers/image');
 const listingRouter = require('./controllers/listing');
-
+const cartRouter = require('./controllers/cart');
 mongoose
     .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then(result => console.log('connected to MongoDB'))
@@ -23,7 +23,7 @@ app.use('/api/v1/furnitures', furnitureRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/images', imageRouter);
 app.use('/api/v1/listings', listingRouter);
-
+app.use('/api/v1/carts', cartRouter);
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('frontend/pfiniture/build'));
 }
