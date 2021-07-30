@@ -42,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
 function getUsers() {
     client.user.getAllUsers().then(res => {
-        console.log(res.data)})
+        console.log(res.data)
+    })
 }
 
 function getListings() {
@@ -53,9 +54,23 @@ function getListings() {
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
+    const [imageFile, setimageFile] = React.useState();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
+
+    // function uploadImage(event) {
+    //     event.preventDefault()
+    //     console.log(imageFile[0])
+    //     let imageFileObject = imageFile[0];
+    //     client.image.addImage(imageFileObject).then(res => {
+    //         console.log(res.data)})
+    // }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
+
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
