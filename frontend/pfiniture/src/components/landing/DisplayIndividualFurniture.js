@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {
@@ -55,9 +55,16 @@ function getListings() {
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
+    const [listings, setListings] = useState(0);
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
+
+    useEffect(() => {
+        client.listing.getAllListings().then(listings => {
+            setListings(listings.data);
+        })
+    }, [listings])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -67,6 +74,10 @@ function DisplayIndividualFurniture() {
         <div>
             <Button onClick={getUsers}>Get Users</Button>
             <Button onClick={getListings}>Get Listings</Button>
+            {listings.length === 0
+            ? "no listings available"
+            : "listings available"
+            }
             <Grid
                 container
                 direction="row"
@@ -77,7 +88,7 @@ function DisplayIndividualFurniture() {
                         return ""
                     } else {
                         return (
-                            <div className="furniture-spacing">
+                            <div key={index} className="furniture-spacing">
                                 <Card key={index} className={classes.cardRoot}>
                                     <CardActionArea>
                                         <CardMedia
