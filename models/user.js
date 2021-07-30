@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     location: {
         required: true,
         type: String
+   },
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cart'
     }
 });
 
