@@ -91,29 +91,15 @@ function AddFurnitureForm() {
         })
     }
 
-    function onAddImage(event) {
+    function onAddImage() {
         setImageFiles([...imageFiles, selectedFile]);
     }
 
     function onFileChange(event) {
         const file = event.target.files[0];
-        //const url = URL.createObjectURL(file);
         setSelectedFile(file);
     }
 }
 
-function uploadImages(imageFiles) {
-    const url = 'http://localhost:8080/api/v1/images';
-    const formData = new FormData();
-    imageFiles.forEach(imageFile => {
-        formData.append('photo',imageFile);
-    })
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    }
-    return  post(url, formData, config)
-}
 
 export default AddFurnitureForm;

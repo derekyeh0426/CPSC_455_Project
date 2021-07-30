@@ -37,7 +37,6 @@ export default class imageClient {
             imageFiles.forEach(imageFile => {
                 formData.append('photo', imageFile);
             });
-            console.log("after for each");
             const config = {
                 headers: {
                     'content-type': 'multipart/form-data'
