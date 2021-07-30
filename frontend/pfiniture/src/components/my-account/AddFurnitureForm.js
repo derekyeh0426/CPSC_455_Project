@@ -20,7 +20,7 @@ function AddFurnitureForm() {
             <Modal.Header closeButton/>
             <ModalBody>
                 <Container className="center-component">
-                    <text className="card_header">Add Furniture</text>
+                    <text className="card_header">Add Listing</text>
                 </Container>
                 <Container className="center-component">
                 </Container>
