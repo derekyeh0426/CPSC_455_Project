@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import {
     Grid,
     Card,
@@ -14,9 +13,7 @@ import {
     Collapse,
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { temporaryFurniture } from "./TemporaryFurniture"
 import ViewSellerProfile from "./ViewSellerProfile"
-import client from "../../API/api";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
 function DisplayIndividualFurniture(props) {
     let listings = Array.from(props.allListings);
     const classes = useStyles()
-    const [expanded, setExpanded] = React.useState(false);
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+    const [expandedId, setExpandedId] = React.useState(-1);
+
+    const handleExpandClick = (index) => {
+        setExpandedId(expandedId === index ? -1 : index);
     }
 
     const getListings = (listing) => {
@@ -60,125 +58,61 @@ function DisplayIndividualFurniture(props) {
 
     return (
         <div>
-            {listings.length === 0
-            ? "no listings available"
-            :
-            // "listings available"
-            <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center">
-                {listings.map((listing, index) => (
-                    <div key={index} className="furniture-spacing">
-                                <Card key={index} className={classes.cardRoot}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.media}
-                                            // image={listing.picture}
-                                            title={listing.furniture.name}
-                                        />
-                                    </CardActionArea>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                        ${listing.furniture.price} • {listing.furniture.name} {console.log(listing.furniture.name)}
-                                    </Typography>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                    </Typography>
-                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Description: {listing.description}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Type: 
-                                                {/* {listing.type} */}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Seller: {listing.user.name}
-                                            </Typography>
-                                        </CardContent>
-                                    </Collapse>
-                                    <IconButton
-                                        // TODO all cards expand when only want one card to expand
-                                        className={clsx(classes.expand, {
-                                            [classes.expandOpen]: expanded,
-                                        })}
-                                        onClick={handleExpandClick}
-                                        aria-expanded={expanded}
-                                        aria-label="show more">
-                                        <ExpandMoreIcon />
-                                    </IconButton>
-                                    <CardActions>
-                                        <ViewSellerProfile />
-                                        <Button size="small" color="primary">
-                                            Add to Cart
-                                        </Button>
-                                        <Button onClick={() => getListings(listing)}>Get PropsListings</Button>
-                                    </CardActions>
-                                </Card>
-                            </div>
-                ))}
-            </Grid>
+            {listings.length === 0 
+                ? "Listings are currently unavailable"
+                :
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center">
+                    {listings.map((listing, index) => (
+                        <div key={index} className="furniture-spacing">
+                            <Card key={index} className={classes.cardRoot}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        className={classes.media}
+                                        // image={listing.images[0]}
+                                        title={listing.furniture.name}
+                                    />
+                                </CardActionArea>
+                                <Typography gutterBottom variant="h6" component="h2">
+                                    ${listing.furniture.price} • {listing.furniture.name}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h2">
+                                </Typography>
+                                <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
+                                    <CardContent>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Seller: {listing.user.name} ({listing.user.rating})
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Type:
+                                            {/* {listing.type} */}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            Description: {listing.description}
+                                        </Typography>
+                                    </CardContent>
+                                </Collapse>
+                                <IconButton
+                                    onClick={() => {handleExpandClick(index)}}
+                                        aria-expanded={expandedId === index}
+                                    aria-label="show more">
+                                    <ExpandMoreIcon />
+                                </IconButton>
+                                <CardActions>
+                                    <ViewSellerProfile />
+                                    <Button size="small" color="primary">
+                                        Add to Cart
+                                    </Button>
+                                    <Button onClick={() => getListings(listing)}>Get PropsListings</Button>
+                                </CardActions>
+                            </Card>
+                        </div>
+                    ))}
+                </Grid>
             }
-            {/* <Grid
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center">
-                {temporaryFurniture.map((furniture, index) => {
-                    if (temporaryFurniture.length === 0) {
-                        return ""
-                    } else {
-                        return (
-                            <div key={index} className="furniture-spacing">
-                                <Card key={index} className={classes.cardRoot}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.media}
-                                            image={furniture.picture}
-                                            title={furniture.name}
-                                        />
-                                    </CardActionArea>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                        ${furniture.price} • {furniture.name}
-                                    </Typography>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                    </Typography>
-                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Description: {furniture.description}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Type: {furniture.type}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Seller: {furniture.seller}
-                                            </Typography>
-                                        </CardContent>
-                                    </Collapse>
-                                    <IconButton
-                                        // TODO all cards expand when only want one card to expand
-                                        className={clsx(classes.expand, {
-                                            [classes.expandOpen]: expanded,
-                                        })}
-                                        onClick={handleExpandClick}
-                                        aria-expanded={expanded}
-                                        aria-label="show more">
-                                        <ExpandMoreIcon />
-                                    </IconButton>
-                                    <CardActions>
-                                        <ViewSellerProfile />
-                                        <Button size="small" color="primary">
-                                            Add to Cart
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </div>
-                        )
-                    }
-                })}
-            </Grid> */}
         </div>
     )
 }
