@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {
@@ -41,30 +41,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function getUsers() {
-    client.user.getAllUsers().then(res => {
-        console.log(res.data)
-    })
-}
-
-function getListings() {
-    client.listing.getAllListings().then(res => {
-        console.log(res.data)})
-}
-
-function DisplayIndividualFurniture() {
+function DisplayIndividualFurniture(props) {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
-    const [listings, setListings] = useState(0);
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
-
-    useEffect(() => {
-        client.listing.getAllListings().then(listings => {
-            setListings(listings.data);
-        })
-    }, [listings])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -72,9 +54,7 @@ function DisplayIndividualFurniture() {
 
     return (
         <div>
-            <Button onClick={getUsers}>Get Users</Button>
-            <Button onClick={getListings}>Get Listings</Button>
-            {listings.length === 0
+            {props.allListings.length === 0
             ? "no listings available"
             : "listings available"
             }
