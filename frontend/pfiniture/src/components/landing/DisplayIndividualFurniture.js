@@ -42,10 +42,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DisplayIndividualFurniture(props) {
+    let listings = Array.from(props.allListings);
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {
         setExpanded(!expanded);
+    }
+
+    const getListings = (listing) => {
+        console.log(listings)
+        console.log(listing)
     }
 
     const handleSubmit = (e) => {
@@ -54,11 +60,67 @@ function DisplayIndividualFurniture(props) {
 
     return (
         <div>
-            {props.allListings.length === 0
+            {listings.length === 0
             ? "no listings available"
-            : "listings available"
-            }
+            :
+            // "listings available"
             <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center">
+                {listings.map((listing, index) => (
+                    <div key={index} className="furniture-spacing">
+                                <Card key={index} className={classes.cardRoot}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            className={classes.media}
+                                            // image={listing.picture}
+                                            title={listing.furniture.name}
+                                        />
+                                    </CardActionArea>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                        ${listing.furniture.price} • {listing.furniture.name} {console.log(listing.furniture.name)}
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                    </Typography>
+                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Description: {listing.description}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Type: 
+                                                {/* {listing.type} */}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Seller: {listing.user.name}
+                                            </Typography>
+                                        </CardContent>
+                                    </Collapse>
+                                    <IconButton
+                                        // TODO all cards expand when only want one card to expand
+                                        className={clsx(classes.expand, {
+                                            [classes.expandOpen]: expanded,
+                                        })}
+                                        onClick={handleExpandClick}
+                                        aria-expanded={expanded}
+                                        aria-label="show more">
+                                        <ExpandMoreIcon />
+                                    </IconButton>
+                                    <CardActions>
+                                        <ViewSellerProfile />
+                                        <Button size="small" color="primary">
+                                            Add to Cart
+                                        </Button>
+                                        <Button onClick={() => getListings(listing)}>Get PropsListings</Button>
+                                    </CardActions>
+                                </Card>
+                            </div>
+                ))}
+            </Grid>
+            }
+            {/* <Grid
                 container
                 direction="row"
                 justifyContent="center"
@@ -116,7 +178,7 @@ function DisplayIndividualFurniture(props) {
                         )
                     }
                 })}
-            </Grid>
+            </Grid> */}
         </div>
     )
 }
