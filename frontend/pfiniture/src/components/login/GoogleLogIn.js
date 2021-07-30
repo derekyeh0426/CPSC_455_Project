@@ -54,12 +54,14 @@ class GoogleLogIn extends React.Component {
     }
 
     handleLoginFailure(response) {
-        alert('Failed to log in')
+        // alert('Failed to log in')
+        console.log('Failed to log in')
     }
 
 
     handleLogoutFailure(response) {
-        alert('Failed to log out')
+        // alert('Failed to log out')
+        console.log('Failed to log out')
     }
 
 

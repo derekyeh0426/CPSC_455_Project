@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { temporaryFurniture } from "./TemporaryFurniture"
+import ViewSellerProfile from "./ViewSellerProfile"
 import client from "../../API/api";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,18 +55,9 @@ function getListings() {
 function DisplayIndividualFurniture() {
     const classes = useStyles()
     const [expanded, setExpanded] = React.useState(false);
-    const [imageFile, setimageFile] = React.useState();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
-
-    // function uploadImage(event) {
-    //     event.preventDefault()
-    //     console.log(imageFile[0])
-    //     let imageFileObject = imageFile[0];
-    //     client.image.addImage(imageFileObject).then(res => {
-    //         console.log(res.data)})
-    // }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -74,6 +66,7 @@ function DisplayIndividualFurniture() {
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
+            <Button onClick={getListings}>Get Listings</Button>
             <Grid
                 container
                 direction="row"
@@ -122,9 +115,7 @@ function DisplayIndividualFurniture() {
                                         <ExpandMoreIcon />
                                     </IconButton>
                                     <CardActions>
-                                        <Button size="small" color="primary">
-                                            View Seller's Profile
-                                        </Button>
+                                        <ViewSellerProfile />
                                         <Button size="small" color="primary">
                                             Add to Cart
                                         </Button>
