@@ -102,7 +102,7 @@ function DisplayIndividualFurniture(props) {
                                     <ExpandMoreIcon />
                                 </IconButton>
                                 <CardActions>
-                                    <ViewSellerProfile />
+                                    <ViewSellerProfile userInfo={listing.user} />
                                     <Button size="small" color="primary">
                                         Add to Cart
                                     </Button>
