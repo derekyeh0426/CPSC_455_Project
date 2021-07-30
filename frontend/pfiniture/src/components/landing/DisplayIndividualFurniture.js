@@ -58,7 +58,7 @@ function DisplayIndividualFurniture() {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
-
+    const [searchTerm, setSearchTerm] = React.useState('');
     // function uploadImage(event) {
     //     event.preventDefault()
     //     console.log(imageFile[0])
@@ -79,7 +79,16 @@ function DisplayIndividualFurniture() {
                 direction="row"
                 justifyContent="center"
                 alignItems="center">
-                {temporaryFurniture.map((furniture, index) => {
+                 <div>
+                    <input type = "text" placeholder = "search...." onChange = {(event) => {setSearchTerm(event.target.value)}}></input>
+                </div>
+                {temporaryFurniture.filter((val)=> {
+                    if (searchTerm == ""){
+                        return val;
+                    } else if (val.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())){
+                        return val;
+                    }
+                }).map((furniture, index) => {
                     if (temporaryFurniture.length === 0) {
                         return ""
                     } else {
