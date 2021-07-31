@@ -1,4 +1,4 @@
-import { Form, Button, Row, Col, Container, Modal, ModalBody } from "react-bootstrap";
+import { Form, Button, Row, Col, Modal, ModalBody } from "react-bootstrap";
 import { useState } from "react";
 import client from "../../API/api";
 
@@ -12,18 +12,11 @@ export default function AddFurnitureForm() {
     return (
         <div>
             <Button variant="outline-dark" onClick={() => setShow(true)}>
-                Add Furniture
+                Add Listing
             </Button>
             <Modal size="lg" scrollable={true} show={show} onHide={() => setShow(false)}>
-                <Modal.Header closeButton />
+                <Modal.Header closeButton>Add Listing</Modal.Header>
                 <ModalBody>
-                    <Container className="center-component">
-                        <text className="card_header">Add Listing</text>
-                    </Container>
-                    <Container className="center-component">
-                    </Container>
-                    <br />
-                    <br />
                     <Form>
                         <Form.Group as={Row}>
                             <Form.Label column sm="2">
@@ -63,16 +56,20 @@ export default function AddFurnitureForm() {
 
                         {/* TODO Add Type Select Form */}
 
+                        <div className="add-image-container">
                         <input type="file" id="myFile" name="filename" onChange={onFileChange} />
-                        <Button onClick={onAddImage}> Add Image </Button>
+                        <Button variant="outline-dark" onClick={onAddImage}>Add Image</Button>
+                        </div>
                     </Form>
-                    <div>
+                    <div className="add-image-container">
                         {imageFiles.map((imageFile) => {
-                            return <img src={URL.createObjectURL(imageFile)} alt="furniture"/>
+                            return <img className="image-container" src={URL.createObjectURL(imageFile)} alt="furniture"/>
                         })}
                     </div>
-                    <Button onClick={onAddListing}> Add Listing </Button>
                 </ModalBody>
+                <Modal.Footer>
+                    <Button variant="outline-dark" onClick={onAddListing}>Add Listing</Button>
+                </Modal.Footer>
             </Modal>
         </div>
     );
@@ -89,7 +86,10 @@ export default function AddFurnitureForm() {
                     furniture: response.data.id,
                     user: "6104918f9a92da1084fb7438", //hardcoded for now 
                     type: "chair"
-                }).then((response) => console.log(response))
+                }).then((response) => {
+                    console.log(response);
+                    setShow(false);
+                })
             });
         })
     }

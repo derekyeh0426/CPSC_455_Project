@@ -6,3 +6,17 @@
 .furniture-spacing {
     margin: 5px;
 }
+
+.add-image-container {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container {
+    margin: 5px;
+    border: 1px solid black;
+    max-height: 300px;
+}
