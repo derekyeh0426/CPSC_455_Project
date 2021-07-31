@@ -26,6 +26,10 @@ const listingSchema = new mongoose.Schema({
     ],
     description: {
         type: String
+    },
+    type: {
+        required: true,
+        type: String
     }
 });
 

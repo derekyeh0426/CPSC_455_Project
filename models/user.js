@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
             ref: 'Listing'
         }
     ],
+    rating: {
+        default: 0,
+        type: Number
+    },
+    location: {
+        required: true,
+        type: String
+   },
     cart: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Cart'
