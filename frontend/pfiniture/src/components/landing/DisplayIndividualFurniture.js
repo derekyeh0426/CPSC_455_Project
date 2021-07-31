@@ -1,6 +1,9 @@
+import { Form, Row, Col, Container, FormGroup, Image, Modal, ModalBody, Nav } from "react-bootstrap";
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import RangeSlider from 'react-bootstrap-range-slider';
+import { Range } from 'react-range';
 import {
     Grid,
     Card,
@@ -48,7 +51,8 @@ function getUsers() {
 
 function getListings() {
     client.listing.getAllListings().then(res => {
-        console.log(res.data)})
+        console.log(res.data)
+    })
 }
 
 function DisplayIndividualFurniture() {
@@ -59,6 +63,8 @@ function DisplayIndividualFurniture() {
         setExpanded(!expanded);
     }
     const [searchTerm, setSearchTerm] = React.useState('');
+    const [typeTerm, setTypeTerm] = React.useState('');
+    const [value, setValue] = React.useState(0);
     // function uploadImage(event) {
     //     event.preventDefault()
     //     console.log(imageFile[0])
@@ -70,7 +76,9 @@ function DisplayIndividualFurniture() {
     const handleSubmit = (e) => {
         e.preventDefault()
     }
-
+    let temFurnitureType = [
+        "chair", "desk", "table", "all"
+    ]
     return (
         <div>
             <Button onClick={getUsers}>Get Users</Button>
@@ -79,73 +87,105 @@ function DisplayIndividualFurniture() {
                 direction="row"
                 justifyContent="center"
                 alignItems="center">
-                 <div>
-                    <input type = "text" placeholder = "search...." onChange = {(event) => {setSearchTerm(event.target.value)}}></input>
+                <div>
+                    <span>
+                        <input type="text" placeholder="search...." onChange={(event) => { setSearchTerm(event.target.value) }}></input>
+                        <Form.Control
+                            onClick={(event) => { setTypeTerm(event.target.value) }}
+                            as="select"
+                            single>
+                            <option>Filter by Furniture Type</option>
+                            {temFurnitureType.map((type) => {
+                                return <option
+                                    key={type}
+                                    value={type}
+                                    data-key={type}
+                                    default=''
+                                >
+                                    {type}
+                                </option>
+                            })}
+                        </Form.Control>
+                        {/* <RangeSlider
+                            value={value}
+                            onChange={(event) => { setValue(event.target.value) }}
+                        /> */}
+                    </span>
+
                 </div>
-                {temporaryFurniture.filter((val)=> {
-                    if (searchTerm == ""){
-                        return val;
-                    } else if (val.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())){
-                        return val;
-                    }
-                }).map((furniture, index) => {
-                    if (temporaryFurniture.length === 0) {
-                        return ""
-                    } else {
-                        return (
-                            <div className="furniture-spacing">
-                                <Card key={index} className={classes.cardRoot}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.media}
-                                            image={furniture.picture}
-                                            title={furniture.name}
-                                        />
-                                    </CardActionArea>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                        ${furniture.price} • {furniture.name}
-                                    </Typography>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                    </Typography>
-                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Description: {furniture.description}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Type: {furniture.type}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Seller: {furniture.seller}
-                                            </Typography>
-                                        </CardContent>
-                                    </Collapse>
-                                    <IconButton
-                                        // TODO all cards expand when only want one card to expand
-                                        className={clsx(classes.expand, {
-                                            [classes.expandOpen]: expanded,
-                                        })}
-                                        onClick={handleExpandClick}
-                                        aria-expanded={expanded}
-                                        aria-label="show more">
-                                        <ExpandMoreIcon />
-                                    </IconButton>
-                                    <CardActions>
-                                        <Button size="small" color="primary">
-                                            View Seller's Profile
-                                        </Button>
-                                        <Button size="small" color="primary">
-                                            Add to Cart
-                                        </Button>
-                                    </CardActions>
-                                </Card>
-                            </div>
-                        )
-                    }
-                })}
+                    {temporaryFurniture.filter((val) => {
+                        if (typeTerm == "" || typeTerm == "all") {
+                            if (searchTerm == "") {
+                                return val;
+                            } else if (val.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
+                                return val;
+                            }
+                        } else if (typeTerm == val.type) {
+                            console.log(temporaryFurniture.length);
+                            if (searchTerm == "") {
+                                return val;
+                            } else if (val.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
+                                return val;
+                            }
+                        }
+                    }).map((furniture, index) => {
+                        if (temporaryFurniture.length === 0) {
+                            return ""
+                        } else {
+                            return (
+                                <div className="furniture-spacing">
+                                    <Card key={index} className={classes.cardRoot}>
+                                        <CardActionArea>
+                                            <CardMedia
+                                                className={classes.media}
+                                                image={furniture.picture}
+                                                title={furniture.name}
+                                            />
+                                        </CardActionArea>
+                                        <Typography gutterBottom variant="h6" component="h2">
+                                            ${furniture.price} • {furniture.name}
+                                        </Typography>
+                                        <Typography gutterBottom variant="h6" component="h2">
+                                        </Typography>
+                                        <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                            <CardContent>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Description: {furniture.description}
+                                                </Typography>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Type: {furniture.type}
+                                                </Typography>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Seller: {furniture.seller}
+                                                </Typography>
+                                            </CardContent>
+                                        </Collapse>
+                                        <IconButton
+                                            // TODO all cards expand when only want one card to expand
+                                            className={clsx(classes.expand, {
+                                                [classes.expandOpen]: expanded,
+                                            })}
+                                            onClick={handleExpandClick}
+                                            aria-expanded={expanded}
+                                            aria-label="show more">
+                                            <ExpandMoreIcon />
+                                        </IconButton>
+                                        <CardActions>
+                                            <Button size="small" color="primary">
+                                                View Seller's Profile
+                                            </Button>
+                                            <Button size="small" color="primary">
+                                                Add to Cart
+                                            </Button>
+                                        </CardActions>
+                                    </Card>
+                                </div>
+                            )
+                        }
+                    })}
             </Grid>
         </div>
-    )
+            )
 }
 
-export default DisplayIndividualFurniture
+            export default DisplayIndividualFurniture

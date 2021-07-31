@@ -22,7 +22,6 @@ async function create (req, res) {
             idToken: token,
             audience: process.env.GOOGLE_CLIENT_ID
         });
-
         name = ticket.getPayload().name;
         email = ticket.getPayload().email;
     }
@@ -32,7 +31,7 @@ async function create (req, res) {
     users = users.filter(user => user.email === email);
 
     if (users.length > 0) {
-        return res.status(400).json({ error: 'duplicate email' });
+        return res.status(200).json(users[0]);
     }
 
     const user = new User({
