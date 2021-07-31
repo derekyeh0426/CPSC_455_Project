@@ -27,6 +27,7 @@ class GoogleLogIn extends React.Component {
         console.log(GOOGLE_CLIENT_ID);
         console.log(this.props.name);
         console.log(this.props.email);
+        
     }
 
     handleSuccessfulLogIn = (response) => {
