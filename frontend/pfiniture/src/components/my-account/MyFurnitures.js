@@ -1,5 +1,4 @@
 import React from 'react';
-import client from '../../API/api'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Button,

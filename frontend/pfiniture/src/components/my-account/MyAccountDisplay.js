@@ -1,5 +1,4 @@
 import React from 'react'
-import Table from './Table'
 import Sidebar from "./Sidebar"
 import { MY_ACCOUNT_VIEWS } from "../../constants"
 

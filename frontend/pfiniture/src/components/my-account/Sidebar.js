@@ -1,5 +1,5 @@
 import React from 'react'
-import {Nav} from "react-bootstrap"
+import { Nav } from "react-bootstrap"
 import { MY_ACCOUNT_VIEWS } from "../../constants"
 
 const Sidebar = (props) => {

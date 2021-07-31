@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { ReactReduxContext } from "react-redux";
 
 export default function Paypal() {
     const paypal = useRef()

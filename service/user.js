@@ -15,7 +15,7 @@ const deleteAll = (req, res) => {
 };
 
 async function create (req, res) {
-    let { token, name, email, location } = req.body;
+    let { token, name, email, location, cart, order } = req.body;
 
     if (token !== undefined) {
         const ticket = await client.verifyIdToken({
@@ -31,13 +31,16 @@ async function create (req, res) {
     let users = await User.find({});
     users = users.filter(user => user.email === email);
 
+    // User with the given email already exists, so return the user.
     if (users.length > 0) {
-        return res.status(400).json({ error: 'duplicate email' });
+        return res.status(200).json(users[0]);
     }
 
     const user = new User({
         name: name,
         email: email,
+        cart: cart,
+        order: order,
         location: location || 'Vancouver'
     });
 
