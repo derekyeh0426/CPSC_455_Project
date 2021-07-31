@@ -83,21 +83,28 @@ const updateById = async (req, res) => {
 };
 
 const create = async (req, res) => {
+    console.log("create")
     const { title, images, description, user, furniture, type } = req.body;
 
     const userObject = await User.findById(user);
     const furnitureObject = await Furniture.findById(furniture);
+
+    console.log("after user, furniture");
     
-    console.log(userObject);
-    console.log(furnitureObject);
+    // console.log(userObject);
+    // console.log(furnitureObject);
 
     if (userObject === null || furnitureObject === null) {
+        console.log("not found")
         return res.status(404).json({ error: 'invalid id' });
     }
 
     if (type === undefined) {
+        console.log("no type")
         return res.status(404).json({ error: 'type missing' });
     }
+
+    console.log("before creation")
 
     const listing = new Listing({
         title: title,
@@ -109,9 +116,12 @@ const create = async (req, res) => {
         type: type
     });
 
+    console.log("created listing")
+
     listing
         .save()
         .then(savedListing => {
+            
             let listings = userObject.listings;
 
             listings.push(savedListing.id);

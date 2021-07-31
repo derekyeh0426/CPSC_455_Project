@@ -68,8 +68,9 @@ const deleteById = async (req, res, next) => {
 const create = (req, res, next) => {
     const uploadArray = upload.array('photo', 3);
     uploadArray(req, res, err => {
-        let jsonArray = [];
+        let imagePromises = [];
         if (err) {
+            console.log(err)
             res.status(404).end();
         }
         req.files.forEach(file => {
@@ -77,10 +78,13 @@ const create = (req, res, next) => {
                 key: file.key,
                 imageUrl: file.location
             });
-            image
-                .save()
+            imagePromises.push(image.save())
         })
-        res.status(200).end();
+        Promise.all(imagePromises).then(savedImages => {
+            console.log("images saved");
+            res.json(savedImages)
+            res.status(200).end();
+        })
     })
 };
 

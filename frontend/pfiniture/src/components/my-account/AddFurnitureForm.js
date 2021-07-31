@@ -79,13 +79,15 @@ function AddFurnitureForm() {
 
     function onAddListing() {
         client.image.addImages(imageFiles).then((imageResponse) => {
+            console.log(imageResponse)
             client.furniture.addFurniture({name, price}).then((response) => {
                 client.listing.addListing({
                     title: name,
                     description: description,
                     images: imageResponse.data.map(({id}) => id),
                     furniture: response.data.id,
-                    user: "6101f84e3e9183bc40588c1d" //hardcoded for now
+                    user: "6104918f9a92da1084fb7438", //hardcoded for now 
+                    type: "chair"
                 }).then((response) => console.log(response))
             });
         })
