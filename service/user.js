@@ -31,8 +31,9 @@ async function create (req, res) {
     let users = await User.find({});
     users = users.filter(user => user.email === email);
 
+    // User with the given email already exists, so return the user.
     if (users.length > 0) {
-        return res.status(400).json({ error: 'duplicate email' });
+        return res.status(200).json(users[0]);
     }
 
     const user = new User({
