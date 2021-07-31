@@ -1,6 +1,7 @@
 const initialState = {
     name: null,
     email: null,
+    id: null,
     isLogIn: false
 }
 
@@ -11,14 +12,16 @@ function userReducer(state = initialState, action) {
             ...state,
             isLogIn: true,
             name: action.payload.name,
-            email:action.payload.email
+            email:action.payload.email,
+            id: action.payload.id
         }
 
         case "Log_Out": return{
             ...state,
             isLogIn:false,
             name:null,
-            email:null
+            email:null,
+            id: null
         }
         default: return state
     }

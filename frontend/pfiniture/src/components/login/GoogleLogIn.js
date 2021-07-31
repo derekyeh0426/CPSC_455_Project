@@ -9,6 +9,7 @@ import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
 require('dotenv').config()
 const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+// import { GOOGLE_CLIENT_ID } from '../../googleID'
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -25,7 +26,6 @@ class GoogleLogIn extends React.Component {
 
     componentDidMount(){
         console.log(REACT_APP_GOOGLE_CLIENT_ID);
-        console.log(this.state.googleLogin);
         console.log(this.props.name);
         console.log(this.props.email);
         
@@ -41,10 +41,15 @@ class GoogleLogIn extends React.Component {
             location: undefined
         }
 
+
         client.user.addUsers(newUser).then(res => {
-            console.log(res.data);
+            const reduxUser = {
+                name: response.profileObj.name,
+                email: response.profileObj.email,
+                id: res.data.id
+            }
+            this.props.logIn(reduxUser);    
             this.setState({ accessToken: newUser.token, isLogined: true });
-            console.log(this.state.isLogined);
             client.user.getAllUsers().then(res => {
                 console.log(res.data)
             })
