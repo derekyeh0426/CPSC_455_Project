@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DisplayMyFurnitures() {
+export default function DisplayMyListings() {
     const classes = useStyles()
     const [furnitures, setFurnitures] = useState('');
 

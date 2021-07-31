@@ -3,6 +3,7 @@ import {
     Container
 } from '@material-ui/core';
 import DisplayMyFurnitures from './DisplayMyFurnitures';
+import DisplayMyListings from './DisplayMyListings';
 import AddFurnitureForm from './AddFurnitureForm';
 
 export default function MyFurnitures() {
@@ -11,6 +12,7 @@ export default function MyFurnitures() {
             <Container>
                 <AddFurnitureForm />
                 <DisplayMyFurnitures />
+                <DisplayMyListings />
             </Container>
         </div>
     )

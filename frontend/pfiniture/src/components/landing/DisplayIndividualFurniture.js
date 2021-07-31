@@ -15,6 +15,7 @@ import {
 import { Form } from 'react-bootstrap'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
+import './DisplayAllFurniture.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {

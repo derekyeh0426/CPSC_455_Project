@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DisplayIndividualFurniture from "./DisplayIndividualFurniture"
 import client from "../../API/api";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     addListing: {
         bottom: '5%',
         right: '1.25%',

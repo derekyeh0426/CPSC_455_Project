@@ -8,10 +8,12 @@ import image from "../assets/FF_12.png";
 import CheckOut from './payment/CheckOut'
 import GoogleLogin from './login/GoogleLogIn'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    background: `#c7e7e8`
+    background: `#c7e7e8`,
+    top: 0,
+    position: 'fixed !important'
   },
   link: {
     flex: 1,
@@ -30,7 +32,7 @@ function Navbar() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{ paddingTop: 68}}>
       <AppBar className={classes.root} position="static">
         <Toolbar>
           <Link to={"/"}>
