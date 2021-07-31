@@ -15,13 +15,14 @@ const deleteAll = (req, res) => {
 };
 
 async function create (req, res) {
-    let { token, name, email, location } = req.body;
+    let { token, name, email, location, cart, order } = req.body;
 
     if (token !== undefined) {
         const ticket = await client.verifyIdToken({
             idToken: token,
             audience: process.env.GOOGLE_CLIENT_ID
         });
+
         name = ticket.getPayload().name;
         email = ticket.getPayload().email;
     }
@@ -30,6 +31,7 @@ async function create (req, res) {
     let users = await User.find({});
     users = users.filter(user => user.email === email);
 
+    // User with the given email already exists, so return the user.
     if (users.length > 0) {
         return res.status(200).json(users[0]);
     }
@@ -37,6 +39,8 @@ async function create (req, res) {
     const user = new User({
         name: name,
         email: email,
+        cart: cart,
+        order: order,
         location: location || 'Vancouver'
     });
 
