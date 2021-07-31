@@ -21,9 +21,13 @@ export default class userClient {
         }
     }
 
-    static async addUsers({name, email, token}) {
+    static async addUsers({name, email, token, location}) {
         try {
-            const response = axios.post(baseUrl + `/api/v1/users/`, {name, email, token});
+            console.log(name);
+            console.log(email);
+            console.log(token);
+            console.log(location);
+            const response = axios.post(baseUrl + `/api/v1/users/`, {name, email, token, location});
             return response
         } catch (e) {
             console.log(e.message())

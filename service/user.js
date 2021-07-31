@@ -71,10 +71,35 @@ const getById = (req, res) => {
         .catch(err => res.status(500).end());
 }
 
+const updateById = async (req, res) => {
+    const { name, listings, rating, location } = req.body;
+
+    const user = await User.findById(req.params.id);
+
+    if (user === null) {
+        return res.status(404).json({ error: 'invalid id' });
+    }
+
+    console.log(user);
+
+    const newUser = {
+        name: name || user.name,
+        listings: listings || user.listings,
+        rating: (rating > 10 ? 10 : rating) || user.rating,
+        location: location || user.location
+    };
+
+    User
+        .findByIdAndUpdate(req.params.id, newUser, { new: true })
+        .then(updatedUser => res.json(updatedUser))
+        .catch(err => res.status(400).json({ error: 'invalid id' }));
+};
+
 module.exports = {
     getAll,
     create,
     deleteAll,
     deleteById,
-    getById
+    getById,
+    updateById
 };

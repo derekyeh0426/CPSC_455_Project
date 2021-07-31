@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-import GOOGLE_CLIENT_ID from '../../googleID'
+import {GOOGLE_CLIENT_ID} from '../../googleID'
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -35,7 +35,8 @@ class GoogleLogIn extends React.Component {
         const newUser = {
             name: response.profileObj.name,
             email: response.profileObj.email,
-            token: response.tokenId
+            token: response.tokenId,
+            location: undefined
         }
 
         client.user.addUsers(newUser).then(res => {
