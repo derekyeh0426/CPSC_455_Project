@@ -32,19 +32,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DisplayMyListings() {
     const classes = useStyles()
-    const [furnitures, setFurnitures] = useState('');
+    const [listings, setListings] = useState('');
 
     useEffect(() => {
-        client.furniture.getAllFurnitures().then(furnitures => {
-            setFurnitures(furnitures.data);
+        client.listing.getAllListings().then(listings => {
+            setListings(listings.data);
         })
     }, [])
 
     const handleDelete = (e, id) => {
         e.preventDefault();
-        client.furniture.deleteFurnitureById(id).then(() => {
-            client.furniture.getAllFurnitures().then(furnitures => {
-                setFurnitures(furnitures.data);
+        client.listing.deleteListingById(id).then(() => {
+            client.listing.getAllListings().then(listings => {
+                setListings(listings.data);
             })
         })
     }
@@ -57,9 +57,9 @@ export default function DisplayMyListings() {
                     direction="row"
                     justifyContent="center"
                     alignItems="center">
-                    {furnitures.length === 0
+                    {listings.length === 0
                         ? ""
-                        : furnitures.map((furniture, index) => (
+                        : listings.map((listing, index) => (
                             <div key={index} className="furniture-spacing">
                                 <Card className={classes.cardRoot}>
                                     {/* <CardActionArea>
@@ -70,7 +70,7 @@ export default function DisplayMyListings() {
                                         />
                                     </CardActionArea> */}
                                     <Typography gutterBottom variant="h6" component="h2">
-                                        ${furniture.price} • {furniture.name}
+                                        ${listing.furniture.price} • {listing.furniture.name}
                                     </Typography>
                                     <CardActions className={classes.cardButtons}>
                                         <Button size="small" color="primary">
@@ -79,7 +79,7 @@ export default function DisplayMyListings() {
                                         <Button
                                             size="small"
                                             color="secondary"
-                                            onClick={(e) => { handleDelete(e, furniture.id) }}>
+                                            onClick={(e) => { handleDelete(e, listing.id) }}>
                                             Delete
                                         </Button>
                                     </CardActions>
