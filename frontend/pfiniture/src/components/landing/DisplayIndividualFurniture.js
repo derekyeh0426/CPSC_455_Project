@@ -61,6 +61,7 @@ function DisplayIndividualFurniture(props) {
             {listings.length === 0 
                 ? "Listings are currently unavailable"
                 :
+                // "Listings available"
                 <Grid
                     container
                     direction="row"

@@ -39,10 +39,10 @@ export default class listingClient {
         }
     }
 
-    static async addListing({images, title, description, user, furniture}) {
+    static async addListing({images, title, description, type, user, furniture,}) {
         try {
             const response = axios.post(BASE_URL + `/api/v1/listings/`,
-            {images, title, description, user, furniture});
+            {images, title, description, type, user, furniture});
             return response
         } catch (e) {
             console.log(e.message())

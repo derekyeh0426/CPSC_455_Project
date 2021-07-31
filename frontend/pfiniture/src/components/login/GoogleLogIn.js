@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
+import { GOOGLE_CLIENT_ID } from '../../GoogleId'
 
 const Client_ID = "897654971286-rgivsn5mcj4cs54e7j3v0fq6cm9a3dov.apps.googleusercontent.com"
 
@@ -70,7 +71,7 @@ class GoogleLogIn extends React.Component {
             <div>
                 {this.state.isLogined ?
                     <GoogleLogout
-                        clientId="897654971286-rgivsn5mcj4cs54e7j3v0fq6cm9a3dov.apps.googleusercontent.com"
+                        clientId={GOOGLE_CLIENT_ID}
                         buttonText="Logout"
                         onLogoutSuccess={this.handleSuccessfulLogOut}
                         onFailure={this.handleLogoutFailure}
@@ -78,7 +79,7 @@ class GoogleLogIn extends React.Component {
                     </GoogleLogout>
                     :
                     <GoogleLogin className="google-login-button"
-                        clientId="897654971286-rgivsn5mcj4cs54e7j3v0fq6cm9a3dov.apps.googleusercontent.com"
+                        clientId={GOOGLE_CLIENT_ID}
                         buttonText="Log in with Google!"
                         onSuccess={this.handleSuccessfulLogIn}
                         onFailure={this.handleLoginFailure}
