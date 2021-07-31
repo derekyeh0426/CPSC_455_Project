@@ -40,7 +40,7 @@ export default class imageClient {
                     'content-type': 'multipart/form-data'
                 }
             }
-            const response = axios.post(baseUrl + `/api/v1/images/`, formData, config);
+            const response = axios.post(BASE_URL + `/api/v1/images/`, formData, config);
             return response
         } catch (e) {
             console.log(e)
