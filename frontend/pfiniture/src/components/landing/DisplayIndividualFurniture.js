@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DisplayIndividualFurniture(props) {
     let listings = Array.from(props.allListings);
-    let temFurnitureType = ["All", "Chair", "Desk", "Table"]
+    let temFurnitureType = ["all", "chair", "desk", "table"]
     const classes = useStyles()
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
