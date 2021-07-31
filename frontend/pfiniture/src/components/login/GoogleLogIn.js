@@ -7,16 +7,15 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-// import { GOOGLE_CLIENT_ID } from '../../GoogleId'
 require('dotenv').config()
+const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isLogined: false,
-            accessToken: '',
-            googleLogin: process.env.REACT_APP_GOOGLE_CLIENT_ID
+            accessToken: ''
         }
         this.handleSuccessfulLogIn = this.handleSuccessfulLogIn.bind(this);
         this.handleLoginFailure = this.handleLoginFailure.bind(this);
@@ -25,10 +24,7 @@ class GoogleLogIn extends React.Component {
     }
 
     componentDidMount(){
-        // console.log(GOOGLE_CLIENT_ID);
-        // console.log(REACT_APP_GOOGLE_CLIENT_ID);
-        // const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
-        // this.setState({googleLogin: REACT_APP_GOOGLE_CLIENT_ID})
+        console.log(REACT_APP_GOOGLE_CLIENT_ID);
         console.log(this.state.googleLogin);
         console.log(this.props.name);
         console.log(this.props.email);
@@ -77,8 +73,7 @@ class GoogleLogIn extends React.Component {
             <div>
                 {this.state.isLogined ?
                     <GoogleLogout
-                        // clientId= {GOOGLE_CLIENT_ID}
-                        clientId= {this.state.googleLogin}
+                        clientId= {REACT_APP_GOOGLE_CLIENT_ID}
                         buttonText="Logout"
                         onLogoutSuccess={this.handleSuccessfulLogOut}
                         onFailure={this.handleLogoutFailure}
@@ -86,8 +81,7 @@ class GoogleLogIn extends React.Component {
                     </GoogleLogout>
                     :
                     <GoogleLogin className="google-login-button"
-                        // clientId= {GOOGLE_CLIENT_ID}
-                        clientId= {this.state.googleLogin}
+                        clientId= {REACT_APP_GOOGLE_CLIENT_ID}
                         buttonText="Log in with Google!"
                         onSuccess={this.handleSuccessfulLogIn}
                         onFailure={this.handleLoginFailure}
