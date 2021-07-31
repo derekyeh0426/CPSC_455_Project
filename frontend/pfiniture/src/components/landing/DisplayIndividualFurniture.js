@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
 import {
     Grid,
     Card,
@@ -156,3 +157,14 @@ export default function DisplayIndividualFurniture(props) {
         </div>
     )
 }
+
+
+// function mapStateToProps(state) {
+//     return {
+//         isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+//     }
+// }
+
+// export default connect(
+//     mapStateToProps,
+// )(DisplayIndividualFurniture)
