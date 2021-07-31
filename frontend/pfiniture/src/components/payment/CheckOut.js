@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from '@material-ui/core'
+import { Button } from 'react-bootstrap'
 import Paypal from "./Paypal"
 
 const CheckOut = () => {
@@ -12,7 +12,7 @@ const CheckOut = () => {
                 :
                 <Button
                     style={{margin: 5}}
-                    color="primary"
+                    variant="outline-dark"
                     onClick={() => { setCheckOut(true); }}
                 >
                     CheckOut

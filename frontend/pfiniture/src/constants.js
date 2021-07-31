@@ -1,6 +1,6 @@
 import Dashboard from "./components/my-account/Dashboard";
 import Orders from "./components/my-account/Orders";
-import Cart from "./components/my-account/Cart";
+import Cart from "./components/cart/ViewCart";
 import MyFurnitures from "./components/my-account/MyFurnitures";
 
 export const BASE_URL = 'http://localhost:8080'
