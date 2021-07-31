@@ -1,11 +1,11 @@
 import axios from "axios";
-import { baseUrl } from "../constants";
+import { BASE_URL } from "../constants";
 
 export default class userClient {
 
     static async getAllUsers() {
         try {
-            const response = axios.get(baseUrl + "/api/v1/users");
+            const response = axios.get(BASE_URL + "/api/v1/users");
             return response
         } catch (e) {
             console.log(e.message())
@@ -14,7 +14,7 @@ export default class userClient {
 
     static async deleteAllUsers() {
         try {
-            const response = axios.delete(baseUrl + `/api/v1/users/`);
+            const response = axios.delete(BASE_URL + `/api/v1/users/`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -23,11 +23,7 @@ export default class userClient {
 
     static async addUsers({name, email, token, location}) {
         try {
-            console.log(name);
-            console.log(email);
-            console.log(token);
-            console.log(location);
-            const response = axios.post(baseUrl + `/api/v1/users/`, {name, email, token, location});
+            const response = axios.post(BASE_URL + `/api/v1/users/`, {name, email, token, location});
             return response
         } catch (e) {
             console.log(e.message())
@@ -36,7 +32,7 @@ export default class userClient {
 
     static async deleteUserById(id) {
         try {
-            const response = axios.delete(baseUrl + `/api/v1/users/${id}`);
+            const response = axios.delete(BASE_URL + `/api/v1/users/${id}`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -45,7 +41,7 @@ export default class userClient {
 
     static async getUserById(id) {
         try {
-            const response = axios.get(baseUrl + `/api/v1/users/${id}`);
+            const response = axios.get(BASE_URL + `/api/v1/users/${id}`);
             return response
         } catch (e) {
             console.log(e.message())

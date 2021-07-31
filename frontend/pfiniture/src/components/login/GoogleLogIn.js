@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-import {GOOGLE_CLIENT_ID} from '../../GoogleId'
+import { GOOGLE_CLIENT_ID } from '../../GoogleId'
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -55,12 +55,14 @@ class GoogleLogIn extends React.Component {
     }
 
     handleLoginFailure(response) {
-        alert('Failed to log in')
+        // alert('Failed to log in')
+        console.log('Failed to log in')
     }
 
 
     handleLogoutFailure(response) {
-        alert('Failed to log out')
+        // alert('Failed to log out')
+        console.log('Failed to log out')
     }
 
 

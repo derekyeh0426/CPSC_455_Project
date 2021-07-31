@@ -1,11 +1,11 @@
 import axios from "axios";
-import { baseUrl} from "../constants";
+import { BASE_URL } from "../constants";
 
 
 export default class orderClient {
     static async getAllOrders() {
         try {
-            const response = axios.get(baseUrl + "/api/v1/orders");
+            const response = axios.get(BASE_URL + "/api/v1/orders");
             return response
         } catch (e) {
             console.log(e.message())
@@ -14,7 +14,7 @@ export default class orderClient {
 
     static async getOrderById(id) {
         try {
-            const response = axios.get(baseUrl + `/api/v1/orders/${id}`);
+            const response = axios.get(BASE_URL + `/api/v1/orders/${id}`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -23,7 +23,7 @@ export default class orderClient {
 
     static async deleteOrderById(id) {
         try {
-            const response = axios.delete(baseUrl + `/api/v1/orders/${id}`);
+            const response = axios.delete(BASE_URL + `/api/v1/orders/${id}`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -32,7 +32,7 @@ export default class orderClient {
 
     static async addToOrders({user, totalAmount, paymentType, furnitures}) {
         try {
-            const response = axios.post(baseUrl + `/api/v1/orders/`, 
+            const response = axios.post(BASE_URL + `/api/v1/orders/`, 
             {user, totalAmount, paymentType, furnitures});
             return response
         } catch (e) {
