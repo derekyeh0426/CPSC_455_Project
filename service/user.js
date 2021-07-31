@@ -15,7 +15,7 @@ const deleteAll = (req, res) => {
 };
 
 async function create (req, res) {
-    let { token, name, email, location } = req.body;
+    let { token, name, email, location, cart, order } = req.body;
 
     if (token !== undefined) {
         const ticket = await client.verifyIdToken({
@@ -38,6 +38,8 @@ async function create (req, res) {
     const user = new User({
         name: name,
         email: email,
+        cart: cart,
+        order: order,
         location: location || 'Vancouver'
     });
 
