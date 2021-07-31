@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function DisplayMyFurnitures() {
+export default function DisplayMyFurnitures() {
     const classes = useStyles()
     const [furnitures, setFurnitures] = useState('');
 
@@ -72,16 +72,6 @@ function DisplayMyFurnitures() {
                                     <Typography gutterBottom variant="h6" component="h2">
                                         ${furniture.price} • {furniture.name}
                                     </Typography>
-                                    {/* <IconButton
-                                        // TODO all cards expand when only want one card to expand
-                                        className={clsx(classes.expand, {
-                                            [classes.expandOpen]: expanded,
-                                        })}
-                                        onClick={handleExpandClick}
-                                        aria-expanded={expanded}
-                                        aria-label="show more">
-                                        <ExpandMoreIcon />
-                                    </IconButton> */}
                                     <CardActions className={classes.cardButtons}>
                                         <Button size="small" color="primary">
                                             List for Sale
@@ -104,7 +94,4 @@ function DisplayMyFurnitures() {
             </Container>
         </div>
     )
-
 }
-
-export default DisplayMyFurnitures;

@@ -6,8 +6,7 @@ import {
     Container
 } from '@material-ui/core'
 
-
-class Dashboard extends React.Component {
+export default class Dashboard extends React.Component {
 
     render() {
         return (
@@ -26,5 +25,3 @@ class Dashboard extends React.Component {
         )
     }
 }
-
-export default Dashboard;

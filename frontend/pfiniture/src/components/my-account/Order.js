@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const Order = (props) => {
     return (
         <tr>
@@ -12,6 +11,5 @@ const Order = (props) => {
         </tr>
     )
 }
-
 
 export default Order

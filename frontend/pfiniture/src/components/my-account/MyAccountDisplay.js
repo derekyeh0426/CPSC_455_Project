@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from "./Sidebar"
 import { MY_ACCOUNT_VIEWS } from "../../constants"
 
-export class MyAccountDisplay extends React.Component {
+export default class MyAccountDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {currView: Object.keys(MY_ACCOUNT_VIEWS)[0]}
@@ -29,5 +29,3 @@ export class MyAccountDisplay extends React.Component {
         )
     }
 }
-
-export default MyAccountDisplay

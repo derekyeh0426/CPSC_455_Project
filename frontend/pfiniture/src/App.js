@@ -11,8 +11,7 @@ import store from './redux/store'
 import CheckOut from './components/payment/CheckOut'
 import GoogleLogin from './components/login/GoogleLogIn'
 
-function App() {
-
+export default function App() {
   return (
     <Provider store = {store}>
     <div>
@@ -28,8 +27,3 @@ function App() {
     </Provider>
   )
 }
-
-
-
-
-export default App

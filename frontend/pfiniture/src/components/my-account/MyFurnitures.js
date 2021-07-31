@@ -1,32 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
-    Button,
     Container
-} from '@material-ui/core'
+} from '@material-ui/core';
 import DisplayMyFurnitures from './DisplayMyFurnitures';
-import ImageUpload from './ImageUpload';
+import AddFurnitureForm from './AddFurnitureForm';
 
-const useStyles = makeStyles((theme) => ({
-    addFurnitureButton: {
-        float: 'left',
-        margin: 5
-    }
-}));
-
-function MyFurnitures() {
-    const classes = useStyles()
-
+export default function MyFurnitures() {
     return (
         <div className="grid-container">
             <Container>
-                <Button className={classes.addFurnitureButton} variant="outlined" color="primary">Add Furniture</Button>
-                <ImageUpload />
+                <AddFurnitureForm />
                 <DisplayMyFurnitures />
             </Container>
         </div>
     )
-
 }
-
-export default MyFurnitures;

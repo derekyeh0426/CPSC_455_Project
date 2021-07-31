@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function DisplayIndividualFurniture(props) {
+export default function DisplayIndividualFurniture(props) {
     let listings = Array.from(props.allListings);
     let temFurnitureType = ["All", "Chair", "Desk", "Table"]
     const classes = useStyles()
@@ -151,5 +151,3 @@ function DisplayIndividualFurniture(props) {
         </div>
     )
 }
-
-export default DisplayIndividualFurniture
