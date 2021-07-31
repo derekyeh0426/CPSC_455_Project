@@ -77,7 +77,7 @@ function DisplayIndividualFurniture() {
         e.preventDefault()
     }
     let temFurnitureType = [
-        "chair", "desk", "table", "all"
+        "all", "chair", "desk", "table"
     ]
     return (
         <div>
@@ -91,10 +91,14 @@ function DisplayIndividualFurniture() {
                     <span>
                         <input type="text" placeholder="search...." onChange={(event) => { setSearchTerm(event.target.value) }}></input>
                         <Form.Control
-                            onClick={(event) => { setTypeTerm(event.target.value) }}
+                            onChange={(event) => { setTypeTerm(event.target.value) }}
+                            defaultValue="Filter by Furniture Type"
                             as="select"
                             single>
-                            <option>Filter by Furniture Type</option>
+                            <option 
+                                value="Filter by Furniture Type" 
+                                disabled
+                            >Filter by Furniture Type</option>
                             {temFurnitureType.map((type) => {
                                 return <option
                                     key={type}
