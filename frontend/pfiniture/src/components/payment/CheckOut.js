@@ -1,22 +1,22 @@
 import React, { useState } from "react";
+import { Button } from '@material-ui/core'
 import Paypal from "./Paypal"
 
-const CheckOut = () =>{
+const CheckOut = () => {
     const [checkout, setCheckOut] = useState(false);
 
-    return(
-        <div className = "checkout">
-            {checkout?(
-            <Paypal/>
-            ) : (
-                <button
-                onClick = { () => {
-                    setCheckOut(true);
-                }}
+    return (
+        <div className="checkout">
+            {checkout
+                ? <Paypal />
+                :
+                <Button
+                    style={{margin: 5}}
+                    color="primary"
+                    onClick={() => { setCheckOut(true); }}
                 >
                     CheckOut
-                </button>
-            ) 
+                </Button>
             }
         </div>
     );

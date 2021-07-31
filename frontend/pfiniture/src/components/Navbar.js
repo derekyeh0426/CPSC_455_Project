@@ -5,6 +5,8 @@ import {Toolbar, Button }from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import image from "../assets/FF_12.png";
+import CheckOut from './payment/CheckOut'
+import GoogleLogin from './login/GoogleLogIn'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarButtons: {
     display: 'flex',
-    marginLeft: 'auto',
+    marginLeft: 'auto'
   }
 }));
 
@@ -44,6 +46,8 @@ function Navbar() {
               <Button className={classes.link}>My Account</Button>
             </Link>
           <div className={classes.toolbarButtons}>
+            <CheckOut />
+            <GoogleLogin />
           </div>
         </Toolbar>
       </AppBar>

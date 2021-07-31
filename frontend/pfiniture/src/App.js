@@ -8,16 +8,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 import { Provider } from 'react-redux'
 import store from './redux/store'
-import CheckOut from './components/payment/CheckOut'
-import GoogleLogin from './components/login/GoogleLogIn'
 
 export default function App() {
   return (
     <Provider store = {store}>
     <div>
       <BrowserRouter>
-        <CheckOut/>
-        <GoogleLogin/>
         <Navbar/>
         <Route exact path="/" component={Landing}/>
         <Route exact path="/about" component={About}/>
