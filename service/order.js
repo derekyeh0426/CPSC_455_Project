@@ -4,12 +4,14 @@ const Order = require('../models/order');
 const getAll = (req, res) => {
     Order
         .find({})
+        .populate('user')
         .then(order => res.json(order));
 };
 
 const getById = (req, res) => {
     Order
         .findById(req.params.id)
+        .populate('user')
         .then(order => {
             if (order === null) {
                 return res.status(404).json({ error: 'invalid id' });
@@ -52,6 +54,10 @@ const create = async (req, res) => {
         return res.status(404).json({ error: 'invalid id' });
     }
 
+    console.log(userObject);
+    console.log(paymentType);
+    console.log(furnitures);
+
     const order = new Order({
         user: userObject,
         totalAmount: totalAmount,
@@ -60,9 +66,12 @@ const create = async (req, res) => {
         orderDate: new Date()
     });
 
+    console.log(order);
+
     order
         .save()
         .then(savedOrder => {
+            console.log(savedOrder);
             const newUser = JSON.parse(JSON.stringify(userObject));
             newUser.orders = newUser.orders.concat(savedOrder);
             User
