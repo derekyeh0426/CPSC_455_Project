@@ -41,79 +41,67 @@ const useStyles = makeStyles((theme) => ({
 
 function DisplayIndividualFurniture(props) {
     let listings = Array.from(props.allListings);
-    let temFurnitureType = [
-        "all", "chair", "desk", "table"
-    ]
+    let temFurnitureType = ["All", "Chair", "Desk", "Table"]
     const classes = useStyles()
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [typeTerm, setTypeTerm] = React.useState('');
-    const [value, setValue] = React.useState(0);
 
     const handleExpandClick = (index) => {
         setExpandedId(expandedId === index ? -1 : index);
     }
 
-    const getListings = (listing) => {
-        console.log(listings)
-        console.log(listing)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-    }
-
     return (
         <div>
             <span>
-                        <input type="text" placeholder="search...." onChange={(event) => { setSearchTerm(event.target.value) }}></input>
-                        <Form.Control
-                            onChange={(event) => { setTypeTerm(event.target.value) }}
-                            defaultValue="Filter by Furniture Type"
-                            as="select"
-                            single>
-                            <option 
-                                value="Filter by Furniture Type" 
-                                disabled
-                            >Filter by Furniture Type</option>
-                            {temFurnitureType.map((type) => {
-                                return <option
-                                    key={type}
-                                    value={type}
-                                    data-key={type}
-                                    default=''
-                                >
-                                    {type}
-                                </option>
-                            })}
-                        </Form.Control>
-                        {/* <RangeSlider
-                            value={value}
-                            onChange={(event) => { setValue(event.target.value) }}
-                        /> */}
-                    </span>
-            {listings.length === 0 
+                <input type="text" placeholder="Search..." onChange={(event) => { setSearchTerm(event.target.value) }}></input>
+                <Form.Control
+                    onChange={(event) => { setTypeTerm(event.target.value) }}
+                    defaultValue="Filter by Furniture Type"
+                    as="select"
+                    single>
+                    <option
+                        value="Filter by Furniture Type"
+                        disabled
+                    >Filter by Furniture Type</option>
+                    {temFurnitureType.map((type) => {
+                        return <option
+                            key={type}
+                            value={type}
+                            data-key={type}
+                            default=''>
+                            {type}
+                        </option>
+                    })}
+                </Form.Control>
+            </span>
+            {listings.length === 0
                 ? "Listings are currently unavailable"
                 :
-                // "Listings available"
                 <Grid
                     container
                     direction="row"
                     justifyContent="center"
                     alignItems="center">
-                    {listings.filter((val) => {
+                    {listings.filter((listing) => {
                         if (typeTerm === "" || typeTerm === "all") {
                             if (searchTerm === "") {
-                                return val;
-                            } else if (val.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
-                                return val;
+                                return listing;
+                            } else if (listing.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
+                                return listing;
+                            } else {
+                                return ""
                             }
-                        } else if (typeTerm === val.type) {
+                        } else if (typeTerm === listing.type) {
                             if (searchTerm === "") {
-                                return val;
-                            } else if (val.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
-                                return val;
+                                return listing;
+                            } else if (listing.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
+                                return listing;
+                            } else {
+                                return ""
                             }
+                        } else {
+                            return ""
                         }
                     }).map((listing, index) => (
                         <div key={index} className="furniture-spacing">
@@ -136,8 +124,7 @@ function DisplayIndividualFurniture(props) {
                                             Seller: {listing.user.name} ({listing.user.rating})
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" component="p">
-                                            Type:
-                                            {/* {listing.type} */}
+                                            Type: {listing.type}
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" component="p">
                                             Description: {listing.description}
@@ -145,8 +132,8 @@ function DisplayIndividualFurniture(props) {
                                     </CardContent>
                                 </Collapse>
                                 <IconButton
-                                    onClick={() => {handleExpandClick(index)}}
-                                        aria-expanded={expandedId === index}
+                                    onClick={() => { handleExpandClick(index) }}
+                                    aria-expanded={expandedId === index}
                                     aria-label="show more">
                                     <ExpandMoreIcon />
                                 </IconButton>
@@ -155,7 +142,6 @@ function DisplayIndividualFurniture(props) {
                                     <Button size="small" color="primary">
                                         Add to Cart
                                     </Button>
-                                    <Button onClick={() => getListings(listing)}>Get PropsListings</Button>
                                 </CardActions>
                             </Card>
                         </div>

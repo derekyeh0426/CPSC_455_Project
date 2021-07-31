@@ -1,5 +1,4 @@
 import React from 'react';
-import Sidebar from "./Sidebar"
 import Table from './Table'
 
 class Orders extends React.Component {

@@ -3,11 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import {Toolbar, Button }from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import LogInForm from './login/LogInForm'
-import RegistrationForm from './registration/RegistrationForm'
 import { connect } from 'react-redux'
 import image from "../assets/FF_12.png";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,8 +44,6 @@ function Navbar() {
               <Button className={classes.link}>My Account</Button>
             </Link>
           <div className={classes.toolbarButtons}>
-              <LogInForm/>
-              <RegistrationForm/>
           </div>
         </Toolbar>
       </AppBar>

@@ -1,4 +1,3 @@
-import { Form, Button, Row, Col, Container, FormGroup, Image, Modal, ModalBody, Nav } from "react-bootstrap";
 import React from 'react';
 import GoogleLogout from 'react-google-login';
 
