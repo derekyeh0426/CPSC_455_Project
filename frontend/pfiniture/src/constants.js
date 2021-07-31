@@ -4,7 +4,7 @@ import Cart from "./components/cart/ViewCart";
 import MyFurnitures from "./components/my-account/MyFurnitures";
 
 // export const BASE_URL = 'http://localhost:8080'
-export const BASE_URL = 'https://fresh-furniture.herokuapp.com/'
+export const BASE_URL = 'https://fresh-furniture.herokuapp.com'
 
 export const MY_ACCOUNT_VIEWS = {
     dashboard: {

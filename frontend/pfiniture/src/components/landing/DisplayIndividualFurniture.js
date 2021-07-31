@@ -113,10 +113,10 @@ export default function DisplayIndividualFurniture(props) {
                                 <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        image={listing.images[0]}
+                                        // image={listing.images[0]}
                                         title={listing.furniture.name}
                                     />
-                                    {console.log(listing.images[0])}
+                                    {/* {console.log(listing.images[0])} */}
                                 </CardActionArea>
                                 <Typography gutterBottom variant="h6" component="h2">
                                     ${listing.furniture.price} • {listing.furniture.name}
