@@ -1,9 +1,11 @@
 import React from 'react'
 import Table from './Table'
 import DisplayMyFurnitures from './DisplayMyFurnitures'
+import AddFurnitureForm from './AddFurnitureForm'
 import {
     Container
 } from '@material-ui/core'
+
 
 class Dashboard extends React.Component {
 
@@ -16,6 +18,7 @@ class Dashboard extends React.Component {
                 <h2>My Furnitures</h2>
                 <div className="grid-container">
                     <Container>
+                        <AddFurnitureForm/>
                         <DisplayMyFurnitures />
                     </Container>
                 </div>

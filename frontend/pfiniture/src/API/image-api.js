@@ -28,4 +28,22 @@ export default class imageClient {
             console.log(e.message())
         }
     }
+
+    static async addImages(imageFiles) {
+        try {
+            const formData = new FormData();
+            imageFiles.forEach(imageFile => {
+                formData.append('photo', imageFile);
+            });
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+            const response = axios.post(BASE_URL + `/api/v1/images/`, formData, config);
+            return response
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }

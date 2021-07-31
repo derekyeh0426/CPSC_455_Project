@@ -30,7 +30,7 @@ export default class userClient {
         }
     }
 
-    static async deleteUserById(id) {
+    static async deleteUserById({id}) {
         try {
             const response = axios.delete(BASE_URL + `/api/v1/users/${id}`);
             return response
@@ -38,7 +38,7 @@ export default class userClient {
             console.log(e.message())
         }
     }
-
+  
     static async getUserById(id) {
         try {
             const response = axios.get(BASE_URL + `/api/v1/users/${id}`);
