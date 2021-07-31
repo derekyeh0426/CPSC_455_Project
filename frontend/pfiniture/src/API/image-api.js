@@ -1,12 +1,10 @@
 
 import axios from "axios";
-import { baseUrl } from "../constants";
-
 
 export default class imageClient {
     static async getAllImages() {
         try {
-            const response = axios.get(baseUrl + "/api/v1/images");
+            const response = axios.get("/api/v1/images");
             return response
         } catch (e) {
             console.log(e.message())
@@ -15,7 +13,7 @@ export default class imageClient {
 
     static async getImagebyId(id) {
         try {
-            const response = axios.get(baseUrl + `/api/v1/images/${id}`);
+            const response = axios.get(`/api/v1/images/${id}`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -24,7 +22,7 @@ export default class imageClient {
 
     static async deleteImageById(id) {
         try {
-            const response = axios.delete(baseUrl + `/api/v1/images/${id}`);
+            const response = axios.delete(`/api/v1/images/${id}`);
             return response
         } catch (e) {
             console.log(e.message())
@@ -42,7 +40,7 @@ export default class imageClient {
                     'content-type': 'multipart/form-data'
                 }
             }
-            const response = axios.post(baseUrl + `/api/v1/images/`, formData, config);
+            const response = axios.post(`/api/v1/images/`, formData, config);
             return response
         } catch (e) {
             console.log(e)
