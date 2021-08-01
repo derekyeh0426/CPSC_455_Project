@@ -7,9 +7,9 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-require('dotenv').config()
-const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
-// import { GOOGLE_CLIENT_ID } from '../../googleID'
+// require('dotenv').config()
+// const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+import { GOOGLE_CLIENT_ID } from '../../GoogleId'
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -25,7 +25,7 @@ class GoogleLogIn extends React.Component {
     }
 
     componentDidMount(){
-        console.log(REACT_APP_GOOGLE_CLIENT_ID);
+        // console.log(REACT_APP_GOOGLE_CLIENT_ID);
         console.log(this.props.name);
         console.log(this.props.email);
         
@@ -78,7 +78,8 @@ class GoogleLogIn extends React.Component {
             <div>
                 {this.state.isLogined ?
                     <GoogleLogout
-                        clientId= {REACT_APP_GOOGLE_CLIENT_ID}
+                        clientId= {GOOGLE_CLIENT_ID}
+                        // clientId= {REACT_APP_GOOGLE_CLIENT_ID}
                         buttonText="Logout"
                         onLogoutSuccess={this.handleSuccessfulLogOut}
                         onFailure={this.handleLogoutFailure}
@@ -86,7 +87,8 @@ class GoogleLogIn extends React.Component {
                     </GoogleLogout>
                     :
                     <GoogleLogin className="google-login-button"
-                        clientId= {REACT_APP_GOOGLE_CLIENT_ID}
+                        clientId= {GOOGLE_CLIENT_ID}
+                        // clientId= {REACT_APP_GOOGLE_CLIENT_ID}
                         buttonText="Log in with Google!"
                         onSuccess={this.handleSuccessfulLogIn}
                         onFailure={this.handleLoginFailure}
@@ -101,7 +103,7 @@ class GoogleLogIn extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        isLogIn: state.isLogIn, name: state.name, email: state.email
+        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
     }
 }
 
