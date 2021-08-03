@@ -27,6 +27,8 @@ const getById = (req, res) => {
         .catch(err => res.status(500).end());
 };
 
+// Return listings based on the given type.
+// E.g., "/api/v1/listings/types?type=chair".
 const getByType = async (req, res) => {
     const { type } = req.query;
 

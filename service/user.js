@@ -80,6 +80,8 @@ const getById = (req, res) => {
         .catch(err => res.status(500).end());
 };
 
+// Return users based on the given location.
+// E.g., "/api/v1/users/locations?location=coquitlam".
 const getByLocation = async (req, res) => {
     const { location } = req.query;
 
@@ -102,6 +104,8 @@ const getByLocation = async (req, res) => {
         .catch(err => res.status(500).end());
 };
 
+// Return users based on the given email.
+// E.g., "/api/v1/users/emails?email=admin@gmail.com".
 const getByEmail = async (req, res) => {
     const { email } = req.query;
 
