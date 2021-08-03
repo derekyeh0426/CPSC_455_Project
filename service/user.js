@@ -5,6 +5,9 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 const getAll = (req, res) => {
     User
         .find({})
+        .populate('listings')
+        .populate('cart')
+        .populate('orders')
         .then(User => res.json(User));
 };
 
@@ -64,6 +67,9 @@ const deleteById = (req, res) => {
 const getById = (req, res) => {
     User
         .findById(req.params.id)
+        .populate('listings')
+        .populate('cart')
+        .populate('orders')
         .then(user => {
             if (user === null) {
                 return res.status(404).json({ error: 'invalid id' });
@@ -72,7 +78,49 @@ const getById = (req, res) => {
             return res.json(user);
         })
         .catch(err => res.status(500).end());
-}
+};
+
+const getByLocation = async (req, res) => {
+    const { location } = req.query;
+
+    User
+        .find({})
+        .populate('listings')
+        .populate('cart')
+        .populate('orders')
+        .then(users => {
+            const userResult = [];
+
+            users.forEach(user => {
+                if (user.location.toLowerCase() === location.toLowerCase()) {
+                    userResult.push(user);
+                }
+            });
+
+            return res.status(200).json(userResult);
+        })
+        .catch(err => res.status(500).end());
+};
+
+const getByEmail = async (req, res) => {
+    const { email } = req.query;
+
+    User
+        .find({})
+        .populate('listings')
+        .populate('cart')
+        .populate('orders')
+        .then(users => {
+            users.forEach(user => {
+                if (user.email === email) {
+                    return res.status(200).json(user);
+                }
+            });
+
+            return res.status(404).json({ error: 'invalid email' });
+        })
+        .catch(err => res.status(500).end());
+};
 
 const updateById = async (req, res) => {
     const { name, listings, rating, location } = req.body;
@@ -94,6 +142,9 @@ const updateById = async (req, res) => {
 
     User
         .findByIdAndUpdate(req.params.id, newUser, { new: true })
+        .populate('listings')
+        .populate('cart')
+        .populate('orders')
         .then(updatedUser => res.json(updatedUser))
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };
@@ -104,5 +155,7 @@ module.exports = {
     deleteAll,
     deleteById,
     getById,
-    updateById
+    updateById,
+    getByEmail,
+    getByLocation
 };
