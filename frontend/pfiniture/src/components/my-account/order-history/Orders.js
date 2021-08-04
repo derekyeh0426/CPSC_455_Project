@@ -3,7 +3,7 @@ import client from '../../../API/api';
 import { store } from '../../../redux/store';
 import Table from './Table'
 
-export default function Orders(props) {
+export default function Orders() {
     const [allOrderHistory, setallOrderHistory] = useState(0);
 
     useEffect(() => {
@@ -13,11 +13,10 @@ export default function Orders(props) {
             client.order.getOrderByUserId(userId).then(order => {
                 setallOrderHistory(order.data)
                 console.log(order.data)})
-                console.log(allOrderHistory)
         })
     }, [])
 
     return (
-        <Table />
+        <Table allOrderHistory={allOrderHistory} />
     )
 }

@@ -2,6 +2,9 @@ import React from 'react'
 import Order from './Order'
 
 const Table = (props) => {
+    let orderHistory = props.allOrderHistory
+    console.log("hi")
+    console.log(orderHistory)
     return (
         <>
             <div className="table-responsive">
