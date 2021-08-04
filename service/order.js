@@ -21,6 +21,17 @@ const getById = (req, res) => {
         .catch(err => res.status(500).end());
 };
 
+const getByUserId = (req, res) => {
+    User
+        .findById(req.params.id)
+        .then(user => {
+            if (user.orders.length === 0) {
+                return res.json({});
+            }
+            return res.json(user.orders);
+        })
+}
+
 const deleteById = async (req, res) => {
     const order = await Order.findById(req.params.id);
 
@@ -85,5 +96,6 @@ module.exports = {
     getAll,
     create,
     getById,
+    getByUserId,
     deleteById,
 };

@@ -10,6 +10,8 @@ router.get('/:id', (req, res, next) => orderService.getById(req, res));
 
 router.get('/', (req, res, next) => orderService.getAll(req, res));
 
+router.get('/user/:id', (req, res, next) => orderService.getByUserId(req, res));
+
 router.post('/', (req, res, next) => orderService.create(req, res));
 
 router.delete('/:id', (req, res, next) => orderService.deleteById(req, res));
