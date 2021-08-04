@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from './Table'
+import Table from './order-history/Table'
 import DisplayMyListings from './DisplayMyListings'
 import AddFurnitureForm from './AddFurnitureForm'
 import {

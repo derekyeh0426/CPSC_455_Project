@@ -1,7 +1,7 @@
 import React from 'react'
 import Order from './Order'
 
-const Table = () => {
+const Table = (props) => {
     return (
         <>
             <div className="table-responsive">

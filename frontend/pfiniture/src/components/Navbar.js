@@ -66,8 +66,9 @@ function Navbar() {
 }
 
 function mapStateToProps(state) {
+  console.log(state)
   return {
-    isLogIn: state.isLogIn, name: state.name, email: state.email
+    isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
   }
 }
 

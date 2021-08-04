@@ -39,4 +39,13 @@ export default class orderClient {
             console.log(e.message())
         }
     }
+
+    static async getOrderByUserId(id) {
+        try {
+            const response = axios.get(BASE_URL + `/api/v1/orders/user/${id}`);
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
 }
