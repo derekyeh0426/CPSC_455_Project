@@ -8,11 +8,16 @@ export default function Orders() {
 
     useEffect(() => {
         let userId = store.getState().id
-        client.user.getUserById(userId).then(userData => {
-            console.log(userData.data)
-            client.order.getOrderByUserId(userId).then(order => {
-                setallOrderHistory(order.data)
-                console.log(order.data)})
+        client.user.getUserById(userId).then(() => {
+            client.order.getOrderByUserId(userId).then(allOrders => {
+                let temp = []
+                allOrders.data.forEach(orderId => {
+                    client.order.getOrderById(orderId).then(order => {
+                        temp.push(order.data)
+                    })
+                })
+                setallOrderHistory(temp)
+            })
         })
     }, [])
 
