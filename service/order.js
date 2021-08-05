@@ -29,6 +29,18 @@ const getByUserId = (req, res) => {
                 return res.json({});
             }
             return res.json(user.orders);
+
+            // const ordersResult = [];
+
+            // user.orders.forEach(orderId => {
+            //     Order
+            //         .findById(orderId)
+            //         .then(order => {
+            //             ordersResult.push(order);
+            //         });
+
+            //         return res.json(ordersResult)
+            // })
         })
 }
 
