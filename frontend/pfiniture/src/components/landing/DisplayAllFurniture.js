@@ -44,6 +44,7 @@ export default function DisplayAllFurniture() {
     useEffect(() => {
         client.listing.getAllListings().then(listings => {
             setListings(listings.data);
+            console.log(listings.data);
         })
     }, [])
 
