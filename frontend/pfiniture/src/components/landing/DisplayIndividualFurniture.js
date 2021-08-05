@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DisplayIndividualFurniture(props) {
+function DisplayIndividualFurniture(props) {
     let temFurnitureType = ["all", "chair", "desk", "table"]
     const classes = useStyles()
     const [expandedId, setExpandedId] = React.useState(-1);
@@ -216,12 +216,12 @@ export default function DisplayIndividualFurniture(props) {
 }
 
 
-// function mapStateToProps(state) {
-//     return {
-//         isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
-//     }
-// }
+function mapStateToProps(state) {
+    return {
+        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+    }
+}
 
-// export default connect(
-//     mapStateToProps,
-// )(DisplayIndividualFurniture)
+export default connect(
+    mapStateToProps,
+)(DisplayIndividualFurniture)
