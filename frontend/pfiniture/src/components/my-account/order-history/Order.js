@@ -1,15 +1,14 @@
 import React from 'react'
 
 const Order = (props) => {
-    console.log("")
-    console.log(props.order)
+    let order = props.order
     return (
-        <tr>
-            <td>{props.orderId}</td>
-            <td><a href={props.productUrl}>{props.productName}</a></td>
-            <td>{props.price}</td>
-            <td>{props.seller}</td>
-            <td>{props.payment}</td>
+        <tr key={props.index}>
+            <td>{"1001"}</td>
+            <td><a href={"productUrl"}>{"productName"}</a></td>
+            <td>{order.totalAmount}</td>
+            <td>{"seller"}</td>
+            <td>{order.paymentType}</td>
         </tr>
     )
 }

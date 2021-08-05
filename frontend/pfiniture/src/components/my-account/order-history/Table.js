@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import client from '../../../API/api';
+import { store } from '../../../redux/store';
 import Order from './Order'
 
-const Table = (props) => {
-    let orderHistory = props.allOrderHistory
-    console.log("hi")
+const Table = () => {
+    const [orderHistory, setOrderHistory] = useState([]);
+
+    useEffect(() => {
+        let userId = store.getState().id
+        client.user.getUserById(userId).then(() => {
+            client.order.getOrderByUserId(userId).then(allOrders => {
+                let temp = []
+                allOrders.data.forEach(orderId => {
+                    client.order.getOrderById(orderId).then(order => {
+                        temp.push(order.data)
+                        setOrderHistory(temp)
+                    })
+                })
+            })
+        })
+    }, [])
+
     console.log(orderHistory)
 
     return (
@@ -19,29 +36,24 @@ const Table = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {!orderHistory
+                {!orderHistory
                         ? "No Orders Have Been Made"
                         :
-                        // "Order!"
-
                         orderHistory.map((order, index) => {
-                            // <Order key={index} order={order} />
-                            // console.log(order)
-
-                            <tr>
-                                <td>{"1001"}</td>
-                                <td><a href={"productUrl"}>{"productName"}</a></td>
-                                <td>{order.totalAmount}</td>
-                                <td>{"seller"}</td>
-                                <td>{order.paymentType}</td>
-                            </tr>
-
+                            console.log(index)
+                            return (
+                                // <Order key={index} index={index} order={order} />
+                                <tr key={index}>
+                                    <td>{"1001"}</td>
+                                    <td><a href={"productUrl"}>{"productName"}</a></td>
+                                    <td>{order.totalAmount}</td>
+                                    <td>{"seller"}</td>
+                                    <td>{order.paymentType}</td>
+                                </tr>
+                            )
                         })
                     }
                 </tbody>
-                {/* <Order orderId={"1,002"} productUrl={"#"} productName={"Wooden Table"} price={50} seller={"Derek"} payment={"Visa"} ></Order>
-                    <Order orderId={"1,003"} productUrl={"#"} productName={"Wooden Desk"} price={88} seller={"Daniel"} payment={"MasterCard"} ></Order> */}
-
             </table>
         </div>
     )

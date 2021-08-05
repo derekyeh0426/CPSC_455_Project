@@ -53,6 +53,14 @@ export default function DisplayIndividualFurniture(props) {
         setExpandedId(expandedId === index ? -1 : index);
     }
 
+    const displayImage = (listing) => {
+        if (listing.images.length === 0) {
+            return ""
+        } else {
+            return listing.images[0].imageUrl
+        }
+    }
+
     return (
         <div>
             <span>
@@ -114,12 +122,15 @@ export default function DisplayIndividualFurniture(props) {
                                 <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        image={listing.images[0].imageUrl}
-                                        title={listing.furniture.name}
+                                        image={displayImage(listing)}
+                                        // title={listing.furniture.name}
                                     />
+                                    {console.log("hi")}
+                                    {console.log(typeof listing)}
                                 </CardActionArea>
                                 <Typography gutterBottom variant="h6" component="h2">
-                                    ${listing.furniture.price} • {listing.furniture.name}
+                                    {/* ${listing.furniture.price}  */}
+                                    {/* • {listing.furniture.name} */}
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h2">
                                 </Typography>

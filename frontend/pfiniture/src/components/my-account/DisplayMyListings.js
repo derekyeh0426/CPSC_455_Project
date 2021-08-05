@@ -70,7 +70,8 @@ export default function DisplayMyListings() {
                                         />
                                     </CardActionArea> */}
                                     <Typography gutterBottom variant="h6" component="h2">
-                                        ${listing.furniture.price} • {listing.furniture.name}
+                                        {/* ${listing.furniture.price}  */}
+                                        {/* • {listing.furniture.name} */}
                                     </Typography>
                                     <CardActions className={classes.cardButtons}>
                                         <Button size="small" color="primary">
