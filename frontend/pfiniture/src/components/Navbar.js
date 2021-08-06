@@ -29,14 +29,19 @@ const useStyles = makeStyles(() => ({
   toolbarButtons: {
     display: 'flex',
     marginLeft: 'auto'
+  },
+  Name: {
+    flex: 1,
+    color: `#004aad`,
   }
 }));
 
-function Navbar() {
+function Navbar(props) {
   const classes = useStyles();
 
   return (
     <div style={{ paddingTop: 68 }}>
+      {/* <p5>{props.name}</p5> */}
       <AppBar className={classes.root} position="static">
         <Toolbar>
           <Link to={"/"}>
@@ -57,6 +62,10 @@ function Navbar() {
                   <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
               </Button>
             </Link>
+            {
+              props.isLogIn?
+              <p6 className = {classes.Name}>{props.name}</p6> : ""
+            }
             <GoogleLogin />
           </div>
         </Toolbar>
@@ -66,9 +75,8 @@ function Navbar() {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
-    isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+      isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
   }
 }
 

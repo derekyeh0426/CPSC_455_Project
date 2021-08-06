@@ -27,6 +27,69 @@ const getById = (req, res) => {
         .catch(err => res.status(500).end());
 };
 
+// Return listings by user ID
+// E.g., "/api/v1/listings/users/:userId"
+const getByUserId = async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user === null || user === undefined) {
+        return res.status(404).json({ error: 'invalid user id' });
+    }
+
+    const listings = await Listing
+        .find({})
+        .populate('user')
+        .populate('furniture')
+        .populate('images');
+
+    const filteredListings = listings.filter(listing => listing.user.id === user.id);
+
+    return res.status(200).json(filteredListings);
+};
+
+// Return listings based on the given type.
+// E.g., "/api/v1/listings/types?type=chair".
+const getByType = async (req, res) => {
+    const { type } = req.query;
+
+    if (type === undefined) {
+        return res.status(400).end();
+    }
+
+    const listings = await Listing
+        .find({})
+        .populate("user")
+        .populate("furniture")
+        .populate("images");
+
+    const filteredListings = listings.filter(listing => listing.type.toLowerCase() === type.toLowerCase());
+
+    console.log(filteredListings)
+
+    return res.status(200).json(filteredListings);
+};
+
+// By default, return listings in ascending order.
+// To retrieve in non-ascending order, pass "/api/v1/listings/createdDates?ascendingOrder=false".
+const getByCreatedDateInOrder = async (req, res) => {
+    const { ascendingOrder } = req.query;
+
+    const listings = await Listing
+        .find({})
+        .populate("user")
+        .populate("furniture")
+        .populate("images");
+
+    // By default, it returns listings in ascending order.
+    if (ascendingOrder === undefined || ascendingOrder.toLowerCase() === "true") {
+        listings.sort((a, b) => a.createdDate.getTime() - b.createdDate.getTime());
+        return res.status(200).json(listings);
+    }
+
+    listings.sort((a, b) => b.createdDate.getTime() - a.createdDate.getTime());
+    return res.status(200).json(listings);
+};
+
 const deleteById = async (req, res) => {
     const listing = await Listing.findById(req.params.id);
 
@@ -35,21 +98,28 @@ const deleteById = async (req, res) => {
     }
 
     const user = listing.user;
+    const furniture = listing.furniture;
 
     Listing
         .findByIdAndRemove(req.params.id)
         .then(() => {
-            console.log(user);
+            console.log(furniture);
 
-            User
-                .findById(user)
-                .then(userObject => {
-                    const newUser = JSON.parse(JSON.stringify(userObject));
-                    newUser.listings = newUser.listings.filter(listingId => listingId !== req.params.id);
+            Furniture
+                .findByIdAndRemove(furniture)
+                .then(() => {
+                    console.log(user);
 
                     User
-                        .findByIdAndUpdate(newUser.id, newUser, { new: true })
-                        .then(() => res.status(200).end());
+                        .findById(user)
+                        .then(userObject => {
+                            const newUser = JSON.parse(JSON.stringify(userObject));
+                            newUser.listings = newUser.listings.filter(listingId => listingId !== req.params.id);
+
+                            User
+                                .findByIdAndUpdate(newUser.id, newUser, { new: true })
+                                .then(() => res.status(200).end());
+                        })
                 })
         })
         .catch(err => res.status(500).end());
@@ -90,7 +160,7 @@ const create = async (req, res) => {
     const furnitureObject = await Furniture.findById(furniture);
 
     console.log("after user, furniture");
-    
+
     // console.log(userObject);
     // console.log(furnitureObject);
 
@@ -121,7 +191,7 @@ const create = async (req, res) => {
     listing
         .save()
         .then(savedListing => {
-            
+
             let listings = userObject.listings;
 
             listings.push(savedListing.id);
@@ -146,6 +216,9 @@ module.exports = {
     getAll,
     create,
     getById,
+    getByUserId,
+    getByType,
     deleteById,
-    updateById
+    updateById,
+    getByCreatedDateInOrder
 };

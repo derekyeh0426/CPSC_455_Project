@@ -20,6 +20,7 @@ import { Form } from 'react-bootstrap'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
 import './DisplayAllFurniture.css';
+import client from '../../API/api';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DisplayIndividualFurniture(props) {
+function DisplayIndividualFurniture(props) {
     let temFurnitureType = ["all", "chair", "desk", "table"]
     const classes = useStyles()
     const [expandedId, setExpandedId] = React.useState(-1);
@@ -169,13 +170,13 @@ export default function DisplayIndividualFurniture(props) {
                     listings.map((listing, index) => (
                         <div key={index} className="furniture-spacing">
                             <Card key={index} className={classes.cardRoot}>
-                                <CardActionArea>
+                                {/* <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
                                         // image={listing.images[0].imageUrl}
                                         title={listing.furniture.name}
                                     />
-                                </CardActionArea>
+                                </CardActionArea> */}
                                 <Typography gutterBottom variant="h6" component="h2">
                                     ${listing.furniture.price} • {listing.furniture.name}
                                 </Typography>
@@ -202,7 +203,7 @@ export default function DisplayIndividualFurniture(props) {
                                 </IconButton>
                                 <CardActions>
                                     <ViewSellerProfile userInfo={listing.user} />
-                                    <Button size="small" color="primary">
+                                    <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
                                         Add to Cart
                                     </Button>
                                 </CardActions>
@@ -215,13 +216,28 @@ export default function DisplayIndividualFurniture(props) {
     )
 }
 
+function onAddToCart(listingID) {
+    const userID = "6104918f9a92da1084fb7438";
+    client.user.getUserById(userID).then((response) => {
+        const cart = response.data.cart;
+        if (!cart) {
+            client.cart.addCartToUser({user: userID, listing: listingID}).then((response) => console.log(response));
+        }
+        else {
+            console.log("user already has cart");
+            client.cart.updateCartById({user: userID, listing: listingID, id: cart.id}).then((response) => {
+                console.log(response)
+            });
+        }
+    })
+}
 
-// function mapStateToProps(state) {
-//     return {
-//         isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
-//     }
-// }
+function mapStateToProps(state) {
+    return {
+        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+    }
+}
 
-// export default connect(
-//     mapStateToProps,
-// )(DisplayIndividualFurniture)
+export default connect(
+    mapStateToProps,
+)(DisplayIndividualFurniture)

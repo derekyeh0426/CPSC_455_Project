@@ -6,6 +6,12 @@ router.use((req, res, next) => {
     next();
 });
 
+router.get('/users/:id', (req, res, next) => listingService.getByUserId(req, res));
+
+router.get('/createdDates', (req, res, next) => listingService.getByCreatedDateInOrder(req, res));
+
+router.get('/types', (req, res, next) => listingService.getByType(req, res));
+
 router.get('/:id', (req, res, next) => listingService.getById(req, res));
 
 router.get('/', (req, res, next) => listingService.getAll(req, res));

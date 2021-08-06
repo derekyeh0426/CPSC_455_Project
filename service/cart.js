@@ -38,7 +38,7 @@ const updateById = async (req, res) => {
                 return res.status(400).json({ error: 'invalid listing' });
             }
             const newCart = JSON.parse(JSON.stringify(cart));
-            newCart.listing = listing;
+            newCart.listings = [...cart.listings, listing];
             Cart
                 .findByIdAndUpdate(req.params.id, newCart, { new: true})
                 .then(updatedCart => res.json(updatedCart))
@@ -54,18 +54,22 @@ const create = async (req, res) => {
 
     const cart = new Cart({
         user: userObject,
-        listing: listing
+        listings: [listing]
     })
 
     cart
         .save()
         .then(savedCart => {
-            console.log(userObject);
+            // console.log(userObject);
             const newUser = JSON.parse(JSON.stringify(userObject));
             newUser.cart = savedCart;
             User
                 .findByIdAndUpdate(newUser.id, newUser, { new: true })
-                .then(() => res.status(200).end());
+                .then(() => {
+                    console.log(savedCart);
+                    res.json(savedCart)
+                    res.status(200).end()
+                });
         })
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };

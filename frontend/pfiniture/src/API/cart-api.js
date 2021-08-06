@@ -30,20 +30,20 @@ export default class cartClient {
         }
     }
 
-    static async updateCartById({user, listings, id}) {
+    static async updateCartById({user, listing, id}) {
         try {
             const response = axios.put(BASE_URL + `/api/v1/carts/${id}`, 
-            {user, listings});
+            {user, listing});
             return response
         } catch (e) {
             console.log(e.message())
         }
     }
 
-    static async addCartToUser({user, listings}) {
+    static async addCartToUser({user, listing}) {
         try {
             const response = axios.post(BASE_URL + `/api/v1/carts/`, 
-            {user, listings});
+            {user, listing});
             return response
         } catch (e) {
             console.log(e.message())
