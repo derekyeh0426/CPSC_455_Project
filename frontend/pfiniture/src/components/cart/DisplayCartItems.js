@@ -39,7 +39,7 @@ export default function DisplayCartItems(props) {
             justifyContent="center"
             alignItems="center">
             {cart.map((cartItem, index) => (
-                "display cart items"
+                <li key={index}> { cartItem } </li>
                 // <div key={index} className="furniture-spacing">
                 //     <Card key={index} className={classes.cardRoot}>
                 //         <CardActionArea>

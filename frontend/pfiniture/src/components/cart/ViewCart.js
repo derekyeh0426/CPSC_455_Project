@@ -10,11 +10,17 @@ import '../landing/DisplayAllFurniture.css'
 
 
 export default function ViewCart() {
-    const [cart, setCart] = useState(0);
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        client.cart.getAllCarts().then(carts => {
-            setCart(carts.data);
+        const userID = "6104918f9a92da1084fb7438";
+        client.user.getUserById(userID).then(response => {
+            if (response.status === 200) {
+                const cart = response.data.cart;
+                if (cart != null) {
+                    setCart(cart.listings.map((listing) => listing));
+                }
+            }
         })
     }, [])
     return (
