@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
+import client from "../../API/api";
 import {
     Grid,
     Card,
@@ -12,6 +13,8 @@ import {
     Button,
     IconButton,
     Collapse,
+    Slider,
+    Input
 } from '@material-ui/core'
 import { Form } from 'react-bootstrap'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -42,24 +45,84 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DisplayIndividualFurniture(props) {
-    let listings = Array.from(props.allListings);
+function DisplayIndividualFurniture(props) {
     let temFurnitureType = ["all", "chair", "desk", "table"]
     const classes = useStyles()
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [typeTerm, setTypeTerm] = React.useState('');
+    const [value, setValue] = React.useState(30)
+    const [min, setMin] = React.useState(0)
+    const [max, setMax] = React.useState(10000)
+    const [search, setSearch] = React.useState(true);
+    const [listings, setListings] = React.useState([]);
+    const [originalListings, setOriginalListings] = React.useState([]);
+    
+
+    React.useEffect(() => {
+        client.listing.getAllListings().then(listings => {
+            setListings(listings.data);
+            setOriginalListings(listings.data);
+        })
+    }, [])
+    
+
+    // const handleSliderChange = (event, newValue) => {
+    //     setValue(newValue);
+    // };
+
+    // const handleInputChange = (event) => {
+    //     setValue(event.target.value === "" ? "" : Number(event.target.value));
+    // };
+
+    // const handleBlur = () => {
+    //     if (value < 0) {
+    //         setValue(0);
+    //     } else if (value > 100) {
+    //         setValue(100);
+    //     }
+    // };
 
     const handleExpandClick = (index) => {
         setExpandedId(expandedId === index ? -1 : index);
     }
 
+    const handleSearch = (event) => {
+        const currentListing = listings;
+        const filterListing = currentListing.filter((listing) => listing.furniture.price > min && listing.furniture.price < max).filter((listing) => {
+            if (typeTerm === "" || typeTerm === "all") {
+                if (searchTerm === "") {
+                    return listing;
+                } else if (listing.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
+                    return listing;
+                } else {
+                    return ""
+                }
+            } else if (typeTerm === listing.type) {
+                if (searchTerm === "") {
+                    return listing;
+                } else if (listing.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
+                    return listing;
+                } else {
+                    return ""
+                }
+            } else {
+                return ""
+            }
+        })
+        setListings(filterListing);
+    }
+
+    const resetSearch = (event) => {
+        setListings(originalListings);
+    }
+
     return (
         <div>
             <span>
-                <input 
-                    type="text" 
-                    placeholder="Search..." 
+                <input
+                    type="text"
+                    placeholder="Search..."
                     onChange={(event) => { setSearchTerm(event.target.value) }}></input>
                 <Form.Control
                     onChange={(event) => { setTypeTerm(event.target.value) }}
@@ -80,36 +143,31 @@ export default function DisplayIndividualFurniture(props) {
                         </option>
                     })}
                 </Form.Control>
+                <span>
+                    <input
+                        type="number"
+                        value = {min}
+                        onChange={(event) => { setMin(event.target.value) }}
+                    />
+                    <input
+                        type="number"
+                        value = {max}
+                        onChange={(event) => { setMax(event.target.value) }}
+                    />
+                </span>
+                <button onClick = {handleSearch}> Search</button>
+                <button onClick = {resetSearch}> Reset Search</button>
             </span>
             {listings.length === 0
-                ? "Listings are currently unavailable"
+                ? "No Matched Results"
                 :
                 <Grid
                     container
                     direction="row"
                     justifyContent="center"
                     alignItems="center">
-                    {listings.filter((listing) => {
-                        if (typeTerm === "" || typeTerm === "all") {
-                            if (searchTerm === "") {
-                                return listing;
-                            } else if (listing.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
-                                return listing;
-                            } else {
-                                return ""
-                            }
-                        } else if (typeTerm === listing.type) {
-                            if (searchTerm === "") {
-                                return listing;
-                            } else if (listing.furniture.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())) {
-                                return listing;
-                            } else {
-                                return ""
-                            }
-                        } else {
-                            return ""
-                        }
-                    }).map((listing, index) => (
+                    {
+                    listings.map((listing, index) => (
                         <div key={index} className="furniture-spacing">
                             <Card key={index} className={classes.cardRoot}>
                                 {/* <CardActionArea>
@@ -174,12 +232,12 @@ function onAddToCart(listingID) {
     })
 }
 
-// function mapStateToProps(state) {
-//     return {
-//         isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
-//     }
-// }
+function mapStateToProps(state) {
+    return {
+        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+    }
+}
 
-// export default connect(
-//     mapStateToProps,
-// )(DisplayIndividualFurniture)
+export default connect(
+    mapStateToProps,
+)(DisplayIndividualFurniture)
