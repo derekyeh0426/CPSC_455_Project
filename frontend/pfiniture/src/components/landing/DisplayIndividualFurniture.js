@@ -158,8 +158,6 @@ function DisplayIndividualFurniture() {
                                 <Typography gutterBottom variant="h6" component="h2">
                                     ${listing.furniture.price} • {listing.furniture.name}
                                 </Typography>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                </Typography>
                                 <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
                                     <CardContent>
                                         <Typography variant="body2" color="textSecondary" component="p">
