@@ -172,7 +172,7 @@ export default function DisplayIndividualFurniture(props) {
                                 <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        image={listing.images[0].imageUrl}
+                                        // image={listing.images[0].imageUrl}
                                         title={listing.furniture.name}
                                     />
                                 </CardActionArea>
