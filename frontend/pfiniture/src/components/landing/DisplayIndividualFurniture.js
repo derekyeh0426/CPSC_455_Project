@@ -12,9 +12,7 @@ import {
     CardActions,
     Button,
     IconButton,
-    Collapse,
-    Slider,
-    Input
+    Collapse
 } from '@material-ui/core'
 import { Form } from 'react-bootstrap'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -50,10 +48,8 @@ function DisplayIndividualFurniture(props) {
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [typeTerm, setTypeTerm] = React.useState('');
-    const [value, setValue] = React.useState(30)
     const [min, setMin] = React.useState(0)
     const [max, setMax] = React.useState(10000)
-    const [search, setSearch] = React.useState(true);
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
     
@@ -88,7 +84,7 @@ function DisplayIndividualFurniture(props) {
 
     const handleSearch = (event) => {
         const currentListing = listings;
-        const filterListing = currentListing.filter((listing) => listing.furniture.price > min && listing.furniture.price < max).filter((listing) => {
+        const filterListing = currentListing.filter((listing) => listing.furniture.price >= min && listing.furniture.price <= max).filter((listing) => {
             if (typeTerm === "" || typeTerm === "all") {
                 if (searchTerm === "") {
                     return listing;

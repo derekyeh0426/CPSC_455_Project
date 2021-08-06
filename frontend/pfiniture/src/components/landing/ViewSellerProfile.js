@@ -9,9 +9,8 @@ import { Button, Modal, Backdrop, Fade,
     Typography,
     CardActions,
     IconButton,
-    Collapse,
-    Slider,
-    Input } from '@material-ui/core';
+    Collapse 
+} from '@material-ui/core';
 import client from "../../API/api";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
@@ -51,10 +50,8 @@ export default function ViewSellerProfile(props) {
     };
 
     useEffect(() => {
-        console.log("hello")
         client.listing.getListingByUserId(user.id).then(listings => {
             setListings(listings.data);
-            console.log(listings.data);
         })
     }, [])
 
