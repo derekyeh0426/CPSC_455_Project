@@ -27,6 +27,26 @@ const getById = (req, res) => {
         .catch(err => res.status(500).end());
 };
 
+// Return listings by user ID
+// E.g., "/api/v1/listings/users/:userId"
+const getByUserId = async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user === null || user === undefined) {
+        return res.status(404).json({ error: 'invalid user id' });
+    }
+
+    const listings = await Listing
+        .find({})
+        .populate('user')
+        .populate('furniture')
+        .populate('images');
+
+    const filteredListings = listings.filter(listing => listing.user.id === user.id);
+
+    return res.status(200).json(filteredListings);
+};
+
 // Return listings based on the given type.
 // E.g., "/api/v1/listings/types?type=chair".
 const getByType = async (req, res) => {
@@ -196,6 +216,7 @@ module.exports = {
     getAll,
     create,
     getById,
+    getByUserId,
     getByType,
     deleteById,
     updateById,
