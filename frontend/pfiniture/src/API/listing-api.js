@@ -20,6 +20,15 @@ export default class listingClient {
         }
     }
 
+    static async getListingByUserId(id) {
+        try {
+            const response = axios.get(BASE_URL + `/api/v1/listings/users/${id}`);
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
+
     static async deleteListingById(id) {
         try {
             const response = axios.delete(BASE_URL + `/api/v1/listings/${id}`);

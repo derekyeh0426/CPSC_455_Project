@@ -20,7 +20,6 @@ import { Form } from 'react-bootstrap'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
 import './DisplayAllFurniture.css';
-import client from '../../API/api';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -170,13 +169,13 @@ function DisplayIndividualFurniture(props) {
                     listings.map((listing, index) => (
                         <div key={index} className="furniture-spacing">
                             <Card key={index} className={classes.cardRoot}>
-                                {/* <CardActionArea>
+                                <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        // image={listing.images[0].imageUrl}
+                                        image={listing.image? listing.images[0].imageUrl: ""}
                                         title={listing.furniture.name}
                                     />
-                                </CardActionArea> */}
+                                </CardActionArea>
                                 <Typography gutterBottom variant="h6" component="h2">
                                     ${listing.furniture.price} • {listing.furniture.name}
                                 </Typography>
