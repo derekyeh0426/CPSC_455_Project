@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import client from "../../API/api";
 import {
@@ -19,7 +19,6 @@ import {
     InputLabel,
     Select,
     MenuItem,
-    AirbnbSlider,
     Slider
 } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
@@ -36,14 +35,21 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: 600
     },
     formControl: {
-        margin: theme.spacing(1),
         minWidth: 120,
     },
+    listingsSection: {
+        height: '68vh',
+        overflowY: 'auto',
+        border: 0,
+        borderRadius: 1,
+    },
     searchMargin: {
-        margin: theme.spacing(1),
+        marginTop: theme.spacing(2),
+        marginRight: theme.spacing(1),
+        marginBottom: theme.spacing(1)
     },
     selectEmpty: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(1),
     },
     sliderRoot: {
         flexGrow: 1,
@@ -65,16 +71,15 @@ const useStyles = makeStyles((theme) => ({
 
 function DisplayIndividualFurniture() {
     let temFurnitureType = ["chair", "desk", "table"];
+    const min = 0;
+    const max = 1000
     const classes = useStyles();
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [typeTerm, setTypeTerm] = React.useState("all");
-    const [min, setMin] = React.useState(0);
-    const [max, setMax] = React.useState(1000);
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
-    const [value, setValue] = React.useState([0, 1000]);
-
+    const [priceRange, setpriceRange] = React.useState([min, max]);
 
     React.useEffect(() => {
         client.listing.getAllListings().then(listings => {
@@ -89,7 +94,7 @@ function DisplayIndividualFurniture() {
 
     const handleSearch = () => {
         const currentListing = listings;
-        const filterListing = currentListing.filter((listing) => listing.furniture.price > min && listing.furniture.price < max).filter((listing) => {
+        const filterListing = currentListing.filter((listing) => listing.furniture.price >= priceRange[0] && listing.furniture.price <= priceRange[1]).filter((listing) => {
             if (typeTerm === "" || typeTerm === "all") {
                 if (searchTerm === "") {
                     return listing;
@@ -113,28 +118,24 @@ function DisplayIndividualFurniture() {
         setListings(filterListing);
     }
 
-    function valuetext(value) {
-        return `$${value}`;
+    function priceRangeText(priceRange) {
+        return `$${priceRange}`;
     }
 
-    const handleChange = (event, newValue) => {
-        setMin(newValue[0]);
-        setMax(newValue[1])
-        setValue(newValue);
+    const handleChange = (event, newpriceRange) => {
+        setpriceRange(newpriceRange);
     };
 
     const resetSearch = () => {
         setListings(originalListings);
         setSearchTerm("");
-        setTypeTerm("");
-        setMin(0);
-        setMax(1000);
-        setValue([0, 1000]);
+        setTypeTerm("all");
+        setpriceRange([min, max]);
     }
 
     return (
         <div>
-            <span>
+            <div>
                 <TextField
                     className={classes.searchMargin}
                     placeholder="Search..."
@@ -173,23 +174,24 @@ function DisplayIndividualFurniture() {
                 </FormControl>
                 <div className={classes.sliderRoot}>
                     <Typography id="range-slider" gutterBottom>
-                        Price Range
+                        Price Range • ${priceRange[0]} - ${priceRange[1]}
                     </Typography>
                     <Slider
-                        value={value}
+                        value={priceRange}
                         onChange={handleChange}
                         valueLabelDisplay="auto"
                         aria-labelledby="range-slider"
-                        getAriaValueText={valuetext}
+                        getAriaValueText={priceRangeText}
                         step={100}
                         marks
-                        min={0}
-                        max={1000}
+                        min={min}
+                        max={max}
                     />
                 </div>
                 <Button onClick={handleSearch}>Search</Button>
                 <Button onClick={resetSearch}>Clear Filters</Button>
-            </span>
+            </div>
+            <div className={classes.listingsSection}>
             {listings.length === 0
                 ? <p>No Matched Results</p>
                 :
@@ -242,6 +244,7 @@ function DisplayIndividualFurniture() {
                         ))}
                 </Grid>
             }
+            </div>
         </div>
     )
 }
