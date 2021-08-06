@@ -12,9 +12,7 @@ import {
     CardActions,
     Button,
     IconButton,
-    Collapse,
-    Slider,
-    Input
+    Collapse
 } from '@material-ui/core'
 import { Form } from 'react-bootstrap'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -44,16 +42,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function DisplayIndividualFurniture(props) {
+function DisplayIndividualFurniture() {
     let temFurnitureType = ["all", "chair", "desk", "table"]
     const classes = useStyles()
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [typeTerm, setTypeTerm] = React.useState('');
-    const [value, setValue] = React.useState(30)
     const [min, setMin] = React.useState(0)
     const [max, setMax] = React.useState(10000)
-    const [search, setSearch] = React.useState(true);
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
     
@@ -64,29 +60,12 @@ function DisplayIndividualFurniture(props) {
             setOriginalListings(listings.data);
         })
     }, [])
-    
-
-    // const handleSliderChange = (event, newValue) => {
-    //     setValue(newValue);
-    // };
-
-    // const handleInputChange = (event) => {
-    //     setValue(event.target.value === "" ? "" : Number(event.target.value));
-    // };
-
-    // const handleBlur = () => {
-    //     if (value < 0) {
-    //         setValue(0);
-    //     } else if (value > 100) {
-    //         setValue(100);
-    //     }
-    // };
 
     const handleExpandClick = (index) => {
         setExpandedId(expandedId === index ? -1 : index);
     }
 
-    const handleSearch = (event) => {
+    const handleSearch = () => {
         const currentListing = listings;
         const filterListing = currentListing.filter((listing) => listing.furniture.price > min && listing.furniture.price < max).filter((listing) => {
             if (typeTerm === "" || typeTerm === "all") {
@@ -112,7 +91,7 @@ function DisplayIndividualFurniture(props) {
         setListings(filterListing);
     }
 
-    const resetSearch = (event) => {
+    const resetSearch = () => {
         setListings(originalListings);
     }
 
@@ -172,7 +151,7 @@ function DisplayIndividualFurniture(props) {
                                 <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        image={listing.image? listing.images[0].imageUrl: ""}
+                                        image={listing.images[0]? listing.images[0].imageUrl: ""}
                                         title={listing.furniture.name}
                                     />
                                 </CardActionArea>

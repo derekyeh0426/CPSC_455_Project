@@ -22,21 +22,11 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function getUsers() {
-    client.user.getAllUsers().then(res => {
-        console.log(res.data)
-    })
-}
-
-function getListings() {
-    client.listing.getAllListings().then(res => {
-        console.log(res.data)})
-}
-
 export default function DisplayAllFurniture() {
     const [listings, setListings] = useState(0);
     const classes = useStyles()
 
+    // TODO
     const handleAddListing = () => {
         console.log("open listing modal")
     }
@@ -50,8 +40,6 @@ export default function DisplayAllFurniture() {
 
     return (
         <div>
-            <Button onClick={getUsers}>Get Users</Button>
-            <Button onClick={getListings}>Get Listings</Button>
             <IconButton className={classes.addListing} onClick={handleAddListing}>
                 <AddCircleOutlineIcon color="primary" style={{ fontSize: 50 }} />
             </IconButton>
