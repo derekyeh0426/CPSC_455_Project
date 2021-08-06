@@ -12,9 +12,12 @@ import {
     CardActions,
     Button,
     IconButton,
-    Collapse
+    Collapse,
+    TextField,
+    InputAdornment
 } from '@material-ui/core'
-import { Form } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
+import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
 import './DisplayAllFurniture.css';
@@ -26,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
     cardRoot: {
         width: 400,
         maxHeight: 600
+    },
+    searchMargin: {
+        margin: theme.spacing(1),
     },
     media: {
         height: 300,
@@ -43,16 +49,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DisplayIndividualFurniture() {
-    let temFurnitureType = ["all", "chair", "desk", "table"]
-    const classes = useStyles()
+    let temFurnitureType = ["all", "chair", "desk", "table"];
+    const classes = useStyles();
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [typeTerm, setTypeTerm] = React.useState('');
-    const [min, setMin] = React.useState(0)
-    const [max, setMax] = React.useState(10000)
+    const [min, setMin] = React.useState(0);
+    const [max, setMax] = React.useState(10000);
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
-    
+
 
     React.useEffect(() => {
         client.listing.getAllListings().then(listings => {
@@ -93,51 +99,67 @@ function DisplayIndividualFurniture() {
 
     const resetSearch = () => {
         setListings(originalListings);
+        setSearchTerm("");
+        setTypeTerm("");
+        setMin(0);
+        setMax(10000);
     }
 
     return (
         <div>
             <span>
-                <input
-                    type="text"
+                <TextField
+                    className={classes.searchMargin}
                     placeholder="Search..."
-                    onChange={(event) => { setSearchTerm(event.target.value) }}></input>
-                <Form.Control
-                    onChange={(event) => { setTypeTerm(event.target.value) }}
-                    defaultValue="Filter by Furniture Type"
-                    as="select"
-                    single>
-                    <option
-                        value="Filter by Furniture Type"
-                        disabled
-                    >Filter by Furniture Type</option>
-                    {temFurnitureType.map((type) => {
-                        return <option
-                            key={type}
-                            value={type}
-                            data-key={type}
-                            default=''>
-                            {type}
-                        </option>
-                    })}
-                </Form.Control>
+                    id="input-with-icon-textfield"
+                    onChange={(event) => { setSearchTerm(event.target.value) }}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <Col xs={3}>
+                    <Form.Control
+                        className=""
+                        onChange={(event) => { setTypeTerm(event.target.value) }}
+                        defaultValue="Filter by Furniture Type"
+                        as="select"
+                        single>
+                        <option
+                            value="Filter by Furniture Type"
+                            disabled
+                        >Filter by Furniture Type</option>
+                        {temFurnitureType.map((type) => {
+                            return <option
+                                key={type}
+                                value={type}
+                                data-key={type}
+                                default=''>
+                                {type}
+                            </option>
+                        })}
+                    </Form.Control>
+                </Col>
                 <span>
                     <input
                         type="number"
-                        value = {min}
+                        value={min}
                         onChange={(event) => { setMin(event.target.value) }}
                     />
                     <input
                         type="number"
-                        value = {max}
+                        value={max}
                         onChange={(event) => { setMax(event.target.value) }}
                     />
                 </span>
-                <button onClick = {handleSearch}> Search</button>
-                <button onClick = {resetSearch}> Reset Search</button>
+                <Button onClick={handleSearch}>Search</Button>
+                <Button onClick={resetSearch}>Clear Filters</Button>
             </span>
             {listings.length === 0
-                ? "No Matched Results"
+                ? <p>No Matched Results</p>
                 :
                 <Grid
                     container
@@ -145,47 +167,47 @@ function DisplayIndividualFurniture() {
                     justifyContent="center"
                     alignItems="center">
                     {
-                    listings.map((listing, index) => (
-                        <div key={index} className="furniture-spacing">
-                            <Card key={index} className={classes.cardRoot}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        className={classes.media}
-                                        image={listing.images[0]? listing.images[0].imageUrl: ""}
-                                        title={listing.furniture.name}
-                                    />
-                                </CardActionArea>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                    ${listing.furniture.price} • {listing.furniture.name}
-                                </Typography>
-                                <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
-                                    <CardContent>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Seller: {listing.user.name} ({listing.user.rating})
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Type: {listing.type}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            Description: {listing.description}
-                                        </Typography>
-                                    </CardContent>
-                                </Collapse>
-                                <IconButton
-                                    onClick={() => { handleExpandClick(index) }}
-                                    aria-expanded={expandedId === index}
-                                    aria-label="show more">
-                                    <ExpandMoreIcon />
-                                </IconButton>
-                                <CardActions>
-                                    <ViewSellerProfile userInfo={listing.user} />
-                                    <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
-                                        Add to Cart
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </div>
-                    ))}
+                        listings.map((listing, index) => (
+                            <div key={index} className="furniture-spacing">
+                                <Card key={index} className={classes.cardRoot}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            className={classes.media}
+                                            image={listing.images[0] ? listing.images[0].imageUrl : ""}
+                                            title={listing.furniture.name}
+                                        />
+                                    </CardActionArea>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                        ${listing.furniture.price} • {listing.furniture.name}
+                                    </Typography>
+                                    <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Seller: {listing.user.name} ({listing.user.rating})
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Type: {listing.type}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Description: {listing.description}
+                                            </Typography>
+                                        </CardContent>
+                                    </Collapse>
+                                    <IconButton
+                                        onClick={() => { handleExpandClick(index) }}
+                                        aria-expanded={expandedId === index}
+                                        aria-label="show more">
+                                        <ExpandMoreIcon />
+                                    </IconButton>
+                                    <CardActions>
+                                        <ViewSellerProfile userInfo={listing.user} />
+                                        <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
+                                            Add to Cart
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </div>
+                        ))}
                 </Grid>
             }
         </div>
@@ -197,11 +219,11 @@ function onAddToCart(listingID) {
     client.user.getUserById(userID).then((response) => {
         const cart = response.data.cart;
         if (!cart) {
-            client.cart.addCartToUser({user: userID, listing: listingID}).then((response) => console.log(response));
+            client.cart.addCartToUser({ user: userID, listing: listingID }).then((response) => console.log(response));
         }
         else {
             console.log("user already has cart");
-            client.cart.updateCartById({user: userID, listing: listingID, id: cart.id}).then((response) => {
+            client.cart.updateCartById({ user: userID, listing: listingID, id: cart.id }).then((response) => {
                 console.log(response)
             });
         }
