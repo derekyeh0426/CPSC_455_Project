@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import client from "../../API/api";
 import {
@@ -14,9 +14,14 @@ import {
     IconButton,
     Collapse,
     TextField,
-    InputAdornment
+    InputAdornment,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    AirbnbSlider,
+    Slider
 } from '@material-ui/core'
-import { Form, Col } from 'react-bootstrap'
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
@@ -30,8 +35,18 @@ const useStyles = makeStyles((theme) => ({
         width: 400,
         maxHeight: 600
     },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
     searchMargin: {
         margin: theme.spacing(1),
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    sliderRoot: {
+        flexGrow: 1,
     },
     media: {
         height: 300,
@@ -49,15 +64,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DisplayIndividualFurniture() {
-    let temFurnitureType = ["all", "chair", "desk", "table"];
+    let temFurnitureType = ["chair", "desk", "table"];
     const classes = useStyles();
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
-    const [typeTerm, setTypeTerm] = React.useState('');
+    const [typeTerm, setTypeTerm] = React.useState("all");
     const [min, setMin] = React.useState(0);
-    const [max, setMax] = React.useState(10000);
+    const [max, setMax] = React.useState(1000);
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
+    const [value, setValue] = React.useState([0, 1000]);
 
 
     React.useEffect(() => {
@@ -65,11 +81,11 @@ function DisplayIndividualFurniture() {
             setListings(listings.data);
             setOriginalListings(listings.data);
         })
-    }, [])
+    }, []);
 
     const handleExpandClick = (index) => {
         setExpandedId(expandedId === index ? -1 : index);
-    }
+    };
 
     const handleSearch = () => {
         const currentListing = listings;
@@ -97,12 +113,23 @@ function DisplayIndividualFurniture() {
         setListings(filterListing);
     }
 
+    function valuetext(value) {
+        return `$${value}`;
+    }
+
+    const handleChange = (event, newValue) => {
+        setMin(newValue[0]);
+        setMax(newValue[1])
+        setValue(newValue);
+    };
+
     const resetSearch = () => {
         setListings(originalListings);
         setSearchTerm("");
         setTypeTerm("");
         setMin(0);
-        setMax(10000);
+        setMax(1000);
+        setValue([0, 1000]);
     }
 
     return (
@@ -121,40 +148,45 @@ function DisplayIndividualFurniture() {
                         ),
                     }}
                 />
-                <Col xs={3}>
-                    <Form.Control
-                        className=""
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">Furniture Type</InputLabel>
+                    <Select
+                        labelId="select-furniture-type-label"
+                        id="select-furniture-type"
+                        value={typeTerm}
                         onChange={(event) => { setTypeTerm(event.target.value) }}
-                        defaultValue="Filter by Furniture Type"
-                        as="select"
-                        single>
-                        <option
-                            value="Filter by Furniture Type"
-                            disabled
-                        >Filter by Furniture Type</option>
+                        displayEmpty
+                        className={classes.selectEmpty}
+                    >
+                        <MenuItem value="all">
+                            <em>All</em>
+                        </MenuItem>
                         {temFurnitureType.map((type) => {
-                            return <option
+                            return <MenuItem
                                 key={type}
                                 value={type}
-                                data-key={type}
                                 default=''>
                                 {type}
-                            </option>
+                            </MenuItem>
                         })}
-                    </Form.Control>
-                </Col>
-                <span>
-                    <input
-                        type="number"
-                        value={min}
-                        onChange={(event) => { setMin(event.target.value) }}
+                    </Select>
+                </FormControl>
+                <div className={classes.sliderRoot}>
+                    <Typography id="range-slider" gutterBottom>
+                        Price Range
+                    </Typography>
+                    <Slider
+                        value={value}
+                        onChange={handleChange}
+                        valueLabelDisplay="auto"
+                        aria-labelledby="range-slider"
+                        getAriaValueText={valuetext}
+                        step={100}
+                        marks
+                        min={0}
+                        max={1000}
                     />
-                    <input
-                        type="number"
-                        value={max}
-                        onChange={(event) => { setMax(event.target.value) }}
-                    />
-                </span>
+                </div>
                 <Button onClick={handleSearch}>Search</Button>
                 <Button onClick={resetSearch}>Clear Filters</Button>
             </span>
