@@ -8,7 +8,8 @@ import {
     Grid,
     Typography,
     Paper,
-    ButtonBase
+    ButtonBase,
+    Radio
 } from '@material-ui/core';
 import client from "../../API/api";
 
@@ -48,10 +49,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ViewSellerProfile(props) {
-    let user = props.userInfo;
+    let page = props.page;
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [listings, setListings] = React.useState([]);
+    const [user, setUser] = React.useState(props.userInfo)
+    const [userId, setUserId] = React.useState(props.userId)
 
     const handleOpen = () => {
         setOpen(true);
@@ -61,11 +64,33 @@ export default function ViewSellerProfile(props) {
         setOpen(false);
     };
 
+    const [selectedValue, setSelectedValue] = React.useState('a');
+
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
     useEffect(() => {
-        client.listing.getListingByUserId(user.id).then(listings => {
-            setListings(listings.data);
-        })
-    }, [])
+        if (user || userId) {
+            if (page === "landing") {
+                setUser(props.userInfo)
+                client.listing.getListingByUserId(user.id).then(listings => {
+                    setListings(listings.data);
+                })
+            } else if (page === "order-history") {
+                setUserId(props.userId)
+                client.user.getUserById(userId).then(info => {
+                    setUser(info.data)
+                    client.listing.getListingByUserId(info.data.id).then(listings => {
+                        setListings(listings.data);
+                    })
+                })
+            } else {
+                setUser({})
+                setListings([])
+            }
+        }
+    }, [props.userInfo, props.userId])
 
     return (
         <div>
@@ -87,10 +112,32 @@ export default function ViewSellerProfile(props) {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
+                        {!user
+                        ? "No seller found"
+                    :
+                    <div>
                         <h2 id="view-seller-profile">{user.name}'s Profile ({user.rating})</h2>
-                        <p id="profile-modal-description">Based in {user.location}</p>
+                        <p id="location-description">Based in {user.location}</p>
+                    </div>
+                    }
+                        
+                        {props.page === "order-history"
+                            ?
+                            <div>
+                                <p id="rate-seller-paragraph">Rate this seller!</p>
+                                <Radio
+                                    checked={selectedValue === 'a'}
+                                    onChange={handleChange}
+                                    value="a"
+                                    name="radio-button-demo"
+                                    inputProps={{ 'aria-label': 'A' }}
+                                />
+                            </div>
+                            : ""
+                        }
+
                         <h6 id="profile-modal-description">All listings </h6>
-                        {listings.length === 0
+                        {!listings
                             ? "No Matched Results"
                             :
                             <div>
@@ -107,7 +154,7 @@ export default function ViewSellerProfile(props) {
                                                     <ButtonBase className={classes.image}>
                                                         <img
                                                             className={classes.img}
-                                                            alt="complex"
+                                                            alt={listing.furniture.name}
                                                             src={listing.images[0] ? listing.images[0].imageUrl : ""} />
                                                     </ButtonBase>
                                                 </Grid>
