@@ -41,7 +41,6 @@ function Navbar(props) {
 
   return (
     <div style={{ paddingTop: 68 }}>
-      {/* <p5>{props.name}</p5> */}
       <AppBar className={classes.root} position="static">
         <Toolbar>
           <Link to={"/"}>
@@ -64,7 +63,7 @@ function Navbar(props) {
             </Link>
             {
               props.isLogIn?
-              <p6 className = {classes.Name}>{props.name}</p6> : ""
+              <p5 className = {classes.Name}>{props.name}</p5> : ""
             }
             <GoogleLogin />
           </div>
