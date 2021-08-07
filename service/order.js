@@ -59,22 +59,34 @@ const deleteById = async (req, res) => {
 
 
 const create = async (req, res) => {
-    const { user, totalAmount, paymentType, furnitures} = req.body;
+    const { user, totalAmount, paymentType, furnitures, shippingAddress } = req.body;
     const userObject = await User.findById(user);
     if (userObject === null) {
         return res.status(404).json({ error: 'invalid id' });
     }
 
+    if (!user || !totalAmount || !paymentType || !furnitures || furnitures.length === 0 || !shippingAddress) {
+        return res.status(404).json({ error: 'bad request - cannot take null values' });
+    }
+
     console.log(userObject);
     console.log(paymentType);
     console.log(furnitures);
+    console.log(shippingAddress);
 
     const order = new Order({
         user: userObject,
         totalAmount: totalAmount,
-        paymentType: paymentType,
+        paymentType: paymentType.toLowerCase(),
         furnitures: furnitures,
-        orderDate: new Date()
+        orderDate: new Date(),
+        shippingAddress: {
+            address: shippingAddress.address.trim().toLowerCase(),
+            city: shippingAddress.city.trim().toLowerCase(),
+            province: shippingAddress.province.trim().toLowerCase(),
+            country: shippingAddress.country.trim().toLowerCase(),
+            postalCode: shippingAddress.postalCode.replace(/\s+/g, '').toLowerCase()
+        }
     });
 
     console.log(order);
