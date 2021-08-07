@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Modal, Backdrop, Fade } from '@material-ui/core';
+import {
+    Button,
+    Modal,
+    Backdrop,
+    Fade,
+    Grid,
+    Typography,
+    Paper,
+    ButtonBase
+} from '@material-ui/core';
+import client from "../../API/api";
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: theme.spacing(1),
+        flexGrow: 1,
+    },
+    gridPaper: {
+        padding: theme.spacing(2),
+        margin: 'auto',
+        maxWidth: 500,
+    },
     modal: {
         display: 'flex',
         alignItems: 'center',
@@ -16,12 +35,23 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '80%',
         overflowY: 'auto'
     },
+    image: {
+        width: 200,
+        height: 200,
+    },
+    img: {
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    },
 }));
 
 export default function ViewSellerProfile(props) {
     let user = props.userInfo;
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [listings, setListings] = React.useState([]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -30,6 +60,12 @@ export default function ViewSellerProfile(props) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        client.listing.getListingByUserId(user.id).then(listings => {
+            setListings(listings.data);
+        })
+    }, [])
 
     return (
         <div>
@@ -52,12 +88,77 @@ export default function ViewSellerProfile(props) {
                 <Fade in={open}>
                     <div className={classes.paper}>
                         <h2 id="view-seller-profile">{user.name}'s Profile ({user.rating})</h2>
-                        <p id="profile-modal-description">Location: {user.location}</p>
-                        <p id="profile-modal-description">All listings: </p>
-                        <p id="profile-modal-description">LoremLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p id="profile-modal-description">Based in {user.location}</p>
+                        <h6 id="profile-modal-description">All listings </h6>
+                        {listings.length === 0
+                            ? "No Matched Results"
+                            :
+                            <div>
+                                {listings.map((listing, index) => (
+                                    <div key={index} className={classes.root}>
+                                        <Paper className={classes.gridPaper}>
+                                            <Grid
+                                                container
+                                                spacing={2}
+                                                direction="row"
+                                                justifyContent="center"
+                                                alignItems="center">
+                                                <Grid item>
+                                                    <ButtonBase className={classes.image}>
+                                                        <img
+                                                            className={classes.img}
+                                                            alt="complex"
+                                                            src={listing.images[0] ? listing.images[0].imageUrl : ""} />
+                                                    </ButtonBase>
+                                                </Grid>
+                                                <Grid item xs={12} sm container>
+                                                    <Grid item xs container direction="column" spacing={2}>
+                                                        <Grid item xs>
+                                                            <Typography gutterBottom variant="h6" component="h2">
+                                                                {listing.furniture.name}
+                                                            </Typography>
+                                                            <Typography variant="body2" gutterBottom>
+                                                                {listing.description}
+                                                            </Typography>
+                                                            <Typography variant="body2" color="textSecondary">
+                                                                Type: {listing.type}
+                                                            </Typography>
+                                                        </Grid>
+                                                        <Grid item>
+                                                            <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
+                                                                Add to Cart
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Typography variant="subtitle1">${listing.furniture.price}</Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Paper>
+                                    </div>
+                                ))}
+                            </div>
+                        }
                     </div>
                 </Fade>
             </Modal>
         </div>
     )
+}
+
+function onAddToCart(listingID) {
+    const userID = "6104918f9a92da1084fb7438";
+    client.user.getUserById(userID).then((response) => {
+        const cart = response.data.cart;
+        if (!cart) {
+            client.cart.addCartToUser({ user: userID, listing: listingID }).then((response) => console.log(response));
+        }
+        else {
+            console.log("user already has cart");
+            client.cart.updateCartById({ user: userID, listing: listingID, id: cart.id }).then((response) => {
+                console.log(response)
+            });
+        }
+    })
 }

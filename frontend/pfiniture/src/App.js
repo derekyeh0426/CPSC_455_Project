@@ -6,7 +6,7 @@ import Landing from './pages/Landing'
 import Cart from './pages/Cart'
 import MyAccountDisplay from "./components/my-account/MyAccountDisplay"
 import { BrowserRouter, Route } from 'react-router-dom';
-import Navbar from "./components/Navbar"
+import Navbar from '../src/components/Navbar'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 

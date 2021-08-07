@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import client from '../../API/api'
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
 import {
     Grid,
     Card,
@@ -30,15 +31,23 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DisplayMyListings() {
+function DisplayMyListings(props) {
     const classes = useStyles()
     const [listings, setListings] = useState('');
 
+    // Change this from displaying all listing to displaying all listing under my account
+    // useEffect(() => {
+    //     client.listing.getAllListings().then(listings => {
+    //         setListings(listings.data);
+    //     })
+    // }, [])
+
     useEffect(() => {
-        client.listing.getAllListings().then(listings => {
+        client.listing.getListingByUserId(props.id).then(listings => {
             setListings(listings.data);
         })
     }, [])
+
 
     const handleDelete = (e, id) => {
         e.preventDefault();
@@ -93,3 +102,13 @@ export default function DisplayMyListings() {
         </div>
     )
 }
+
+function mapStateToProps(state) {
+    return {
+        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+    }
+}
+
+export default connect(
+    mapStateToProps,
+)(DisplayMyListings)
