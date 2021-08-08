@@ -20,6 +20,10 @@ router.delete('/:id', (req, res, next) => userService.deleteById(req, res));
 
 router.delete('/', (req, res, next) => userService.deleteAll(req, res));
 
+router.put('/:buyer/rates', (req, res, next) => userService.rateUserById(req, res));
+
+router.put('/:buyer/comments', (req, res, next) => userService.commentUserById(req, res));
+
 router.put('/:id', (req, res, next) => userService.updateById(req, res));
 
 module.exports = router;
