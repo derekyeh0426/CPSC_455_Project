@@ -32,7 +32,9 @@ const getByUserId = (req, res) => {
             if (user.orders.length === 0) {
                 return res.json({});
             }
-            return res.json(user.orders);
+            Order.find().where('_id').in(user.orders).exec((err, records) => {
+                return res.json(records);
+            });
         })
 }
 
