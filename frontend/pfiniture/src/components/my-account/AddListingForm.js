@@ -2,19 +2,37 @@ import { Form, Button, Row, Col, Modal, ModalBody } from "react-bootstrap";
 import { useState } from "react";
 import client from "../../API/api";
 
-export default function AddFurnitureForm() {
+export default function AddListingForm() {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
     const [imageFiles, setImageFiles] = useState([]);
-    const [selectedFile, setSelectedFile] = useState({});
+    const [selectedFile, setSelectedFile] = useState("");
     const [show, setShow] = useState(false);
+    const [message, setMessage] = useState("");
+
+    const message_types = {
+        SUCCESS: "success",
+        FAILURE: "failure"
+    }
+
+    const messages = Object.freeze({
+        ADD_LISTING_SUCCESS: { message: "Sucessfully added listing. You can now vew your listing on the listings page", 
+        type: message_types.SUCCESS},
+        IMAGE_UPLOAD_SUCCESS: {message: "Sucessfully uploaded image", type: message_types.SUCCESS},
+        MAX_IMAGE_COUNT_EXCEEDED: {message: "Error, can't upload more than three images for a listing", type: message_types.FAILURE},
+        NO_FILE_SELECTED: {message: "Error, select an image file to upload image", type: message_types.FAILURE},
+        WRONG_FILE_TYPE: {message: "Error, can only upload images", type: message_types.FAILURE}
+    })
+
+   
+
     return (
         <div>
             <Button variant="outline-dark" onClick={() => setShow(true)}>
                 Add Listing
             </Button>
-            <Modal size="lg" scrollable={true} show={show} onHide={() => setShow(false)}>
+            <Modal size="lg" scrollable={true} show={show} onHide={() => setShow(false)} centered>
                 <Modal.Header closeButton>Add Listing</Modal.Header>
                 <ModalBody>
                     <Form>
@@ -67,6 +85,16 @@ export default function AddFurnitureForm() {
                         })}
                     </div>
                 </ModalBody>
+                {message ?
+                <div
+                    className={
+                        message.type === message_types.SUCCESS ? "alert alert-success" : "alert alert-danger"}
+                    role="alert">
+                    {`${message.message}`}
+                </div>
+                :
+                <div></div>
+                }
                 <Modal.Footer>
                     <Button variant="outline-dark" onClick={onAddListing}>Add Listing</Button>
                 </Modal.Footer>
@@ -95,7 +123,13 @@ export default function AddFurnitureForm() {
     }
 
     function onAddImage() {
-        setImageFiles([...imageFiles, selectedFile]);
+        if (!selectedFile) {
+            console.log("no file selected");
+            setMessage(messages.NO_FILE_SELECTED);
+        } else {
+            setImageFiles([...imageFiles, selectedFile]);
+            setMessage(messages.IMAGE_UPLOAD_SUCCESS)
+        } 
     }
 
     function onFileChange(event) {
