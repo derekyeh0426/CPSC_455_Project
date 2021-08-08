@@ -15,6 +15,29 @@ const userSchema = new mongoose.Schema({
             ref: 'Listing'
         }
     ],
+    ratedUsers: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            rating: {
+                default: 0,
+                type: Number
+            }
+        }
+    ],
+    commentedUsers: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            comment: {
+                type: String
+            }
+        }
+    ],
     rating: {
         default: 0,
         type: Number

@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    user: {
+    seller: {
+        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    buyer: {
         required: true,
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -23,6 +28,28 @@ const orderSchema = new mongoose.Schema({
             type: String
         },
     ],
+    shippingAddress: {
+        address: {
+            required: true,
+            type: String
+        },
+        city: {
+            required: true,
+            type: String
+        },
+        province: {
+            required: true,
+            type: String
+        },
+        country: {
+            required: true,
+            type: String
+        },
+        postalCode: {
+            required: true,
+            type: String
+        }
+    }
 });
 
 orderSchema.set('toJSON', {
