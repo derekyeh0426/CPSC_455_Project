@@ -4,14 +4,16 @@ const Order = require('../models/order');
 const getAll = (req, res) => {
     Order
         .find({})
-        .populate('user')
+        .populate('buyer')
+        .populate('seller')
         .then(order => res.json(order));
 };
 
 const getById = (req, res) => {
     Order
         .findById(req.params.id)
-        .populate('user')
+        .populate('buyer')
+        .populate('seller')
         .then(order => {
             if (order === null) {
                 return res.status(404).json({ error: 'invalid id' });
@@ -24,23 +26,15 @@ const getById = (req, res) => {
 const getByUserId = (req, res) => {
     User
         .findById(req.params.id)
+        .populate('buyer')
+        .populate('seller')
         .then(user => {
             if (user.orders.length === 0) {
                 return res.json({});
             }
-            return res.json(user.orders);
-
-            // const ordersResult = [];
-
-            // user.orders.forEach(orderId => {
-            //     Order
-            //         .findById(orderId)
-            //         .then(order => {
-            //             ordersResult.push(order);
-            //         });
-
-            //         return res.json(ordersResult)
-            // })
+            Order.find().where('_id').in(user.orders).exec((err, records) => {
+                return res.json(records);
+            });
         })
 }
 
@@ -71,22 +65,38 @@ const deleteById = async (req, res) => {
 
 
 const create = async (req, res) => {
-    const { user, totalAmount, paymentType, furnitures} = req.body;
-    const userObject = await User.findById(user);
-    if (userObject === null) {
+    const { buyer, seller, totalAmount, paymentType, furnitures, shippingAddress } = req.body;
+    const buyerObject = await User.findById(buyer);
+    const sellerObject = await User.findById(seller);
+
+    if (buyerObject === null || sellerObject === null) {
         return res.status(404).json({ error: 'invalid id' });
     }
 
-    console.log(userObject);
+    if (!buyer || !seller || !totalAmount || !paymentType || !furnitures || furnitures.length === 0 || !shippingAddress) {
+        return res.status(404).json({ error: 'bad request - cannot take null values' });
+    }
+
+    console.log(buyerObject);
+    console.log(sellerObject);
     console.log(paymentType);
     console.log(furnitures);
+    console.log(shippingAddress);
 
     const order = new Order({
-        user: userObject,
+        buyer: buyerObject,
+        seller: sellerObject,
         totalAmount: totalAmount,
-        paymentType: paymentType,
+        paymentType: paymentType.toLowerCase(),
         furnitures: furnitures,
-        orderDate: new Date()
+        orderDate: new Date(),
+        shippingAddress: {
+            address: shippingAddress.address.trim().toLowerCase(),
+            city: shippingAddress.city.trim().toLowerCase(),
+            province: shippingAddress.province.trim().toLowerCase(),
+            country: shippingAddress.country.trim().toLowerCase(),
+            postalCode: shippingAddress.postalCode.replace(/\s+/g, '').toLowerCase()
+        }
     });
 
     console.log(order);
@@ -95,10 +105,10 @@ const create = async (req, res) => {
         .save()
         .then(savedOrder => {
             console.log(savedOrder);
-            const newUser = JSON.parse(JSON.stringify(userObject));
-            newUser.orders = newUser.orders.concat(savedOrder);
+            const newBuyer = JSON.parse(JSON.stringify(buyerObject));
+            newBuyer.orders = newBuyer.orders.concat(savedOrder);
             User
-                .findByIdAndUpdate(newUser.id, newUser, { new: true })
+                .findByIdAndUpdate(newBuyer.id, newBuyer, { new: true })
                 .then(() => res.status(200).end());
         })
         .catch(err => res.status(400).json({ error: 'invalid id' }));
