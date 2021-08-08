@@ -59,7 +59,7 @@ const deleteById = async (req, res) => {
 
 
 const create = async (req, res) => {
-    const { user, totalAmount, paymentType, furnitures} = req.body;
+    const { user, totalAmount, paymentType, furnitures, shippingAddress} = req.body;
     const userObject = await User.findById(user);
     if (userObject === null) {
         return res.status(404).json({ error: 'invalid id' });
@@ -74,7 +74,8 @@ const create = async (req, res) => {
         totalAmount: totalAmount,
         paymentType: paymentType,
         furnitures: furnitures,
-        orderDate: new Date()
+        orderDate: new Date(),
+        shippingAddress: shippingAddress
     });
 
     console.log(order);
@@ -87,7 +88,10 @@ const create = async (req, res) => {
             newUser.orders = newUser.orders.concat(savedOrder);
             User
                 .findByIdAndUpdate(newUser.id, newUser, { new: true })
-                .then(() => res.status(200).end());
+                .then(() => {
+                    res.json(savedOrder);
+                    res.status(200).end();
+                });
         })
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };

@@ -23,6 +23,10 @@ const orderSchema = new mongoose.Schema({
             type: String
         },
     ],
+    shippingAddress: {
+        required: true,
+        type: String
+    }
 });
 
 orderSchema.set('toJSON', {
