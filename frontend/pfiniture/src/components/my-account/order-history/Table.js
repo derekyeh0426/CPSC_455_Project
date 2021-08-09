@@ -9,16 +9,8 @@ const Table = () => {
 
     useEffect(() => {
         let userId = store.getState().id
-        client.user.getUserById(userId).then(() => {
-            client.order.getOrderByUserId(userId).then(allOrders => {
-                let temp = []
-                allOrders.data.forEach(orderId => {
-                    client.order.getOrderById(orderId).then(order => {
-                        temp.push(order.data)
-                        setOrderHistory(temp)
-                    })
-                })
-            })
+        client.order.getOrderByUserId(userId).then(allOrders => {
+            setOrderHistory(allOrders.data)
         })
     }, [])
 
