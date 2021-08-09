@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './DisplayAllFurniture.css';
 import {
     Container,
@@ -7,7 +7,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DisplayIndividualFurniture from "./DisplayIndividualFurniture"
-import client from "../../API/api";
 
 const useStyles = makeStyles(() => ({
     addListing: {
@@ -22,20 +21,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function DisplayAllFurniture() {
-    const [listings, setListings] = useState(0);
     const classes = useStyles()
 
     // TODO
     const handleAddListing = () => {
         console.log("open listing modal")
     }
-
-    useEffect(() => {
-        client.listing.getAllListings().then(listings => {
-            setListings(listings.data);
-            console.log(listings.data);
-        })
-    }, [])
 
     return (
         <div>
@@ -44,7 +35,7 @@ export default function DisplayAllFurniture() {
             </IconButton>
             <div className="grid-container">
             <Container>
-                    <DisplayIndividualFurniture allListings={listings} />
+                    <DisplayIndividualFurniture/>
             </Container>
         </div>
         </div>

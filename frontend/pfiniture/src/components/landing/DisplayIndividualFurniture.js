@@ -122,7 +122,7 @@ function DisplayIndividualFurniture() {
         return `$${priceRange}`;
     }
 
-    const handleChange = (event, newpriceRange) => {
+    const handleChange = (newpriceRange) => {
         setpriceRange(newpriceRange);
     };
 
@@ -131,14 +131,6 @@ function DisplayIndividualFurniture() {
         setSearchTerm("");
         setTypeTerm("all");
         setpriceRange([min, max]);
-    }
-
-    const displayImage = (listing) => {
-        if (listing.images.length === 0) {
-            return ""
-        } else {
-            return listing.images[0].imageUrl
-        }
     }
 
     return (
