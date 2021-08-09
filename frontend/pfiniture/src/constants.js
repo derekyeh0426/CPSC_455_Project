@@ -28,3 +28,5 @@ export const MY_ACCOUNT_VIEWS = {
         component: <MyFurnitures />
     }
 }
+
+export const RATINGS = ["1", "2", "3", "4", "5"]

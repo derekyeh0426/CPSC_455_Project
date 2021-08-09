@@ -12,6 +12,7 @@ import {
     Radio
 } from '@material-ui/core';
 import client from "../../API/api";
+import { RATINGS } from "../../constants"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,6 +56,7 @@ export default function ViewSellerProfile(props) {
     const [listings, setListings] = React.useState([]);
     const [user, setUser] = React.useState(props.userInfo)
     const [userId, setUserId] = React.useState(props.userId)
+    const [ratingValue, setRatingValue] = React.useState(0)
 
     const handleOpen = () => {
         setOpen(true);
@@ -64,10 +66,8 @@ export default function ViewSellerProfile(props) {
         setOpen(false);
     };
 
-    const [selectedValue, setSelectedValue] = React.useState('a');
-
     const handleChange = (event) => {
-        setSelectedValue(event.target.value);
+        setRatingValue(event.target.value);
     };
 
     useEffect(() => {
@@ -79,6 +79,7 @@ export default function ViewSellerProfile(props) {
                 })
             } else if (page === "order-history") {
                 setUserId(props.userId)
+                console.log(props.userId)
                 client.user.getUserById(userId).then(info => {
                     setUser(info.data)
                     client.listing.getListingByUserId(info.data.id).then(listings => {
@@ -113,29 +114,37 @@ export default function ViewSellerProfile(props) {
                 <Fade in={open}>
                     <div className={classes.paper}>
                         {!user
-                        ? "No seller found"
-                    :
-                    <div>
-                        <h2 id="view-seller-profile">{user.name}'s Profile ({user.rating})</h2>
-                        <p id="location-description">Based in {user.location}</p>
-                    </div>
-                    }
-                        
+                            ? "No seller found"
+                            :
+                            <div>
+                                <h2 id="view-seller-profile">{user.name}'s Profile ({user.rating})</h2>
+                                <p id="location-description">Based in {user.location}</p>
+                            </div>
+                        }
                         {props.page === "order-history"
                             ?
                             <div>
                                 <p id="rate-seller-paragraph">Rate this seller!</p>
-                                <Radio
-                                    checked={selectedValue === 'a'}
-                                    onChange={handleChange}
-                                    value="a"
-                                    name="radio-button-demo"
-                                    inputProps={{ 'aria-label': 'A' }}
-                                />
+                                <div>
+                                    {RATINGS.map((rating, index) => {
+                                        return (
+
+                                            <Radio
+                                                key={index}
+                                                checked={ratingValue === rating}
+                                                onChange={handleChange}
+                                                value={rating}
+                                                name={rating}
+                                                inputProps={{ 'aria-label': 'A' }}
+                                            />
+
+                                        )
+                                    })
+                                    }
+                                </div>
                             </div>
                             : ""
                         }
-
                         <h6 id="profile-modal-description">All listings </h6>
                         {!listings
                             ? "No Matched Results"
