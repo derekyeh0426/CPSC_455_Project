@@ -9,12 +9,16 @@ import {
     Typography,
     Paper,
     ButtonBase,
-    Radio
+    Radio,
+    TextField,
 } from '@material-ui/core';
 import client from "../../API/api";
 import { RATINGS } from "../../constants"
 
 const useStyles = makeStyles((theme) => ({
+    alignCenter: {
+        
+    },
     root: {
         padding: theme.spacing(1),
         flexGrow: 1,
@@ -24,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
         maxWidth: 500,
     },
-    modal: {
+    alignCenter: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -47,6 +51,35 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '100%',
         maxHeight: '100%',
     },
+    review: {
+        display: 'flex',
+    },
+    rating: {
+        float: "left",
+        marginRight: 5,
+        border: "1px solid #bdbdbd",
+        borderRadius: 5,
+        padding: 10,
+        '&:hover': {
+            borderColor: "black"
+        },
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    comment: {
+        float: "right",
+        marginLeft: 5,
+        border: "1px solid #bdbdbd",
+        borderRadius: 5,
+        padding: 8,
+        '&:hover': {
+            borderColor: "black"
+        },
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column'
+    }
 }));
 
 export default function ViewSellerProfile(props) {
@@ -54,9 +87,10 @@ export default function ViewSellerProfile(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [listings, setListings] = React.useState([]);
-    const [user, setUser] = React.useState(props.userInfo)
-    const [userId, setUserId] = React.useState(props.userId)
-    const [ratingValue, setRatingValue] = React.useState(0)
+    const [user, setUser] = React.useState(props.userInfo);
+    const [userId, setUserId] = React.useState(props.userId);
+    const [ratingValue, setRatingValue] = React.useState(0);
+    const [comment, setComment] = React.useState('');
 
     const handleOpen = () => {
         setOpen(true);
@@ -64,11 +98,18 @@ export default function ViewSellerProfile(props) {
 
     const handleClose = () => {
         setOpen(false);
+        setRatingValue(0);
+        setComment('');
     };
 
-    const handleChange = (event) => {
+    const handleRatingChange = (event) => {
         setRatingValue(event.target.value);
     };
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
 
     useEffect(() => {
         if (user || userId) {
@@ -101,7 +142,7 @@ export default function ViewSellerProfile(props) {
             <Modal
                 aria-labelledby="view-seller-profile"
                 aria-describedby="profile-modal-description"
-                className={classes.modal}
+                className={classes.alignCenter}
                 open={open}
                 onClose={handleClose}
                 scrollable
@@ -124,24 +165,40 @@ export default function ViewSellerProfile(props) {
                         {props.page === "order-history"
                             ?
                             <div>
-                                <p id="rate-seller-paragraph">Rate this seller!</p>
-                                <div>
+                                <p className={classes.alignCenter}>Since you bought furniture from {!user.name ? "this seller" : user.name}...</p>
+                            <div className={classes.alignCenter}>
+                                <div className={classes.rating}>
+                                    <p id="rate-seller-p">Leave a rating!</p>
+                                    <div className={classes.alignCenter}>
                                     {RATINGS.map((rating, index) => {
                                         return (
-
                                             <Radio
                                                 key={index}
                                                 checked={ratingValue === rating}
-                                                onChange={handleChange}
+                                                onChange={handleRatingChange}
                                                 value={rating}
                                                 name={rating}
                                                 inputProps={{ 'aria-label': 'A' }}
                                             />
-
                                         )
                                     })
                                     }
+                                    </div>
+                                    <Button className={classes.alignCenter}>Submit Rating</Button>
                                 </div>
+                                <div className={classes.comment}>
+                                {/* <p id="rate-seller-p">Leave a comment!</p> */}
+                                    <TextField
+                                        id="comment-seller-textfield"
+                                        label="Leave a comment!"
+                                        multiline
+                                        rows={3}
+                                        value={comment}
+                                        onChange={handleCommentChange}
+                                    />
+                                    <Button>Submit Comment</Button>
+                                </div>
+                            </div>
                             </div>
                             : ""
                         }
