@@ -5,6 +5,7 @@ import {
     Button,
     Radio,
 } from '@material-ui/core';
+import { store } from '../../../redux/store';
 import client from "../../../API/api";
 
 
@@ -31,14 +32,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RateSeller(props) {
     const classes = useStyles();
-    const [user, setUser] = React.useState(props.user);
+    const [sellerInfo, setSellerInfo] = React.useState(props.userInfo);
     const [ratingValue, setRatingValue] = React.useState(0);
+    const [buyerId, setBuyerId] = React.useState(store.getState().id)
+    const [alreadyRated, setAlreadyRated] = React.useState(false)
 
     useEffect(() => {
-        if (user) {
-            setUser(props.userInfo)
+        if (sellerInfo) {
+            setSellerInfo(props.userInfo);
+            setBuyerId(store.getState().id);
+            client.user.getUserById(buyerId).then(buyerInfo => {
+                let ratedUsers = buyerInfo.data.ratedUsers
+                if (ratedUsers.length) {
+                    ratedUsers.forEach(rating => {
+                        console.log(rating)
+                        if (rating.user === sellerInfo.id) {
+                            setRatingValue(rating.rating.toString());
+                            setAlreadyRated(true);
+                        }
+                    })
+                }
+            })
         } else {
-            setUser({})
+            setSellerInfo({})
         }
     }, [props.userInfo])
 
@@ -49,7 +65,9 @@ export default function RateSeller(props) {
     return (
         <div>
             <div className={classes.rating}>
-                <p id="rate-seller-p">Leave a rating!</p>
+                <p id="rate-seller-p">
+                    {alreadyRated ? "Update your rating!" : "Leave a rating!"}
+                </p>
                 <div className={classes.alignCenter}>
                     {RATINGS.map((rating, index) => {
                         return (
@@ -65,7 +83,9 @@ export default function RateSeller(props) {
                     })
                     }
                 </div>
-                <Button className={classes.alignCenter}>Submit Rating</Button>
+                <Button className={classes.alignCenter}>
+                    {alreadyRated ? "Update Rating" : "Submit Rating"}
+                </Button>
             </div>
         </div>
     )
