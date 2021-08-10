@@ -1,4 +1,5 @@
 import { Form, Button, Row, Col, Modal, ModalBody } from "react-bootstrap";
+import { Select } from '@material-ui/core'
 import { useState } from "react";
 import client from "../../API/api";
 
@@ -10,11 +11,14 @@ export default function AddListingForm() {
     const [selectedFile, setSelectedFile] = useState("");
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState("");
+    const [type, setType] = useState("");
 
     const message_types = {
         SUCCESS: "success",
         FAILURE: "failure"
     }
+
+    const MAX_IMAGE_COUNT = 3;
 
     const messages = Object.freeze({
         ADD_LISTING_SUCCESS: { message: "Sucessfully added listing. You can now vew your listing on the listings page", 
@@ -22,7 +26,7 @@ export default function AddListingForm() {
         IMAGE_UPLOAD_SUCCESS: {message: "Sucessfully uploaded image", type: message_types.SUCCESS},
         MAX_IMAGE_COUNT_EXCEEDED: {message: "Error, can't upload more than three images for a listing", type: message_types.FAILURE},
         NO_FILE_SELECTED: {message: "Error, select an image file to upload image", type: message_types.FAILURE},
-        WRONG_FILE_TYPE: {message: "Error, can only upload images", type: message_types.FAILURE}
+        WRONG_FILE_TYPE: {message: "Error, can only upload images", type: message_types.FAILURE},
     })
 
    
@@ -72,7 +76,27 @@ export default function AddListingForm() {
                             </Col>
                         </Form.Group>
 
-                        {/* TODO Add Type Select Form */}
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="2">
+                                Type
+                            </Form.Label>
+                        
+                        <Select
+                            native
+                            value={type}
+                            onChange={(e) => setType(e.target.value)}
+                            inputProps={{
+                                name: 'type',
+                                id: 'type',
+                            }}
+                            >
+                            <option aria-label="None" value="" />
+                            <option value={"Chair"}>Chair</option>
+                            <option value={"Desk"}>Desk</option>
+                            <option value={"Table"}>Table</option>
+                        </Select>
+
+                        </Form.Group>
 
                         <div className="add-image-container">
                         <input type="file" id="myFile" name="filename" onChange={onFileChange} />
@@ -113,9 +137,10 @@ export default function AddListingForm() {
                     images: imageResponse.data.map(({ id }) => id),
                     furniture: response.data.id,
                     user: "6104918f9a92da1084fb7438", //hardcoded for now 
-                    type: "chair"
+                    type: type
                 }).then((response) => {
                     console.log(response);
+                    setImageFiles([]);
                     setShow(false);
                 })
             });
@@ -125,9 +150,14 @@ export default function AddListingForm() {
     function onAddImage() {
         if (!selectedFile) {
             console.log("no file selected");
-            setMessage(messages.NO_FILE_SELECTED);
+            setMessage(messages.NO_FILE_SELECTED); 
+        } else if (!isFileImage(selectedFile)) {
+            setMessage(messages.WRONG_FILE_TYPE);
+        } else if (imageFiles.length === MAX_IMAGE_COUNT) {
+            setMessage(messages.MAX_IMAGE_COUNT_EXCEEDED);
         } else {
             setImageFiles([...imageFiles, selectedFile]);
+            setSelectedFile("");
             setMessage(messages.IMAGE_UPLOAD_SUCCESS)
         } 
     }
@@ -135,5 +165,9 @@ export default function AddListingForm() {
     function onFileChange(event) {
         const file = event.target.files[0];
         setSelectedFile(file);
+    }
+
+    function isFileImage(file) {
+        return file && file['type'].split('/')[0] === 'image';
     }
 }
