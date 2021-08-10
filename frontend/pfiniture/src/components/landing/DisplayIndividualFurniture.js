@@ -200,7 +200,7 @@ function DisplayIndividualFurniture() {
                     direction="row"
                     justifyContent="center"
                     alignItems="center">
-                    {
+             {
                         listings.map((listing, index) => (
                             <div key={index} className="furniture-spacing">
                                 <Card key={index} className={classes.cardRoot}>
@@ -235,9 +235,12 @@ function DisplayIndividualFurniture() {
                                     </IconButton>
                                     <CardActions>
                                         <ViewSellerProfile userInfo={listing.user} />
-                                        <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
+                                        {props.isLogIn?
+                                          <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
                                             Add to Cart
-                                        </Button>
+                                          </Button>
+                                          : ""
+                                        }
                                     </CardActions>
                                 </Card>
                             </div>
