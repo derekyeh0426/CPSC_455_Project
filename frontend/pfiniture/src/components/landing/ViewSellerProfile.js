@@ -83,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ViewSellerProfile(props) {
+    let page = props.page
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [listings, setListings] = React.useState([]);
@@ -149,7 +150,7 @@ export default function ViewSellerProfile(props) {
                                 <p id="location-description">Based in {user.location}</p>
                             </div>
                         }
-                        {props.page === "order-history"
+                        {page === "order-history"
                             ?
                             <div>
                                 <p className={classes.alignCenter}>Since you bought furniture from {!user ? "this seller" : user.name}...</p>
@@ -158,7 +159,6 @@ export default function ViewSellerProfile(props) {
                                         <p id="rate-seller-p">Leave a rating!</p>
                                         <div className={classes.alignCenter}>
                                             {RATINGS.map((rating, index) => {
-
                                                 return (
                                                     <Radio
                                                         key={index}

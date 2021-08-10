@@ -10,21 +10,16 @@ const Order = (props) => {
         <tr key={props.index}>
             <td>{order.id}</td>
             <td>
-                {/* {!order.furnitures
+                {!order.furnitures
                     ? ""
-                    : order.furnitures.map((furnitureId, index) => {
-                        let furnitureName = "hi"
-                        client.furniture.getFurnitureById(furnitureId).then(furniture => {
-                            console.log(furniture.data.name)
-                            furnitureName = furniture.data.name
-                        })
+                    : order.furnitures.map((furniture, index) => {
                         return (
-                            <p href={"productUrl"}>{furnitureName}</p>
+                            <p key={index}>{furniture.name} (${furniture.price})</p>
                         )
-                    })} */}
+                    })}
             </td>
             <td>{order.totalAmount}</td>
-            <td><ViewSellerProfile userInfo={order.seller}/></td>
+            <td><ViewSellerProfile userInfo={order.seller} page="order-history" /></td>
             <td>{order.paymentType}</td>
         </tr>
     )
