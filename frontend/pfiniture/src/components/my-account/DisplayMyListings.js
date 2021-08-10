@@ -2,16 +2,25 @@ import React, { useEffect, useState } from 'react';
 import client from '../../API/api'
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
+import { store } from '../../redux/store';
 import {
     Grid,
     Card,
     Typography,
     CardActions,
     Button,
-    Container
+    Container,
+    CardActionArea,
+    CardMedia
 } from '@material-ui/core'
+import AddListingForm from './AddListingForm';
 
 const useStyles = makeStyles((theme) => ({
+    alignCenter: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     root: {
         flexGrow: 1,
     },
@@ -33,35 +42,30 @@ const useStyles = makeStyles((theme) => ({
 
 function DisplayMyListings(props) {
     const classes = useStyles()
-    const [listings, setListings] = useState('');
-
-    // Change this from displaying all listing to displaying all listing under my account
-    // useEffect(() => {
-    //     client.listing.getAllListings().then(listings => {
-    //         setListings(listings.data);
-    //     })
-    // }, [])
+    const [listings, setListings] = useState([]);
+    const [userId, setUserId] = useState(store.getState().id);
 
     useEffect(() => {
-        client.listing.getListingByUserId(props.id).then(listings => {
-            setListings(listings.data);
+        setUserId(store.getState().id)
+        client.listing.getListingByUserId(userId).then(listings => {
+            setListings(listings.data.reverse());
         })
-    }, [])
-
+    }, [store.getState().id])
 
     const handleDelete = (e, id) => {
         e.preventDefault();
         client.listing.deleteListingById(id).then(() => {
             client.listing.getAllListings().then(listings => {
-                setListings(listings.data);
+                setListings(listings.data.reverse());
             })
         })
     }
 
     return (
         <div className="grid-container">
-            <Container>
+            <AddListingForm setListings={setListings}/>
                 <Grid
+                    className={classes.alignCenter}
                     container
                     direction="row"
                     justifyContent="center"
@@ -71,13 +75,13 @@ function DisplayMyListings(props) {
                         : listings.map((listing, index) => (
                             <div key={index} className="furniture-spacing">
                                 <Card className={classes.cardRoot}>
-                                    {/* <CardActionArea>
+                                    <CardActionArea>
                                         <CardMedia
                                             className={classes.media}
-                                            image={furniture.picture}
-                                            title={furniture.name}
+                                            image={listing.images[0] ? listing.images[0].imageUrl : ""}
+                                            title={listing.furniture.name}
                                         />
-                                    </CardActionArea> */}
+                                    </CardActionArea>
                                     <Typography gutterBottom variant="h6" component="h2">
                                         {/* ${listing.furniture.price}  */}
                                         {/* • {listing.furniture.name} */}
@@ -98,7 +102,6 @@ function DisplayMyListings(props) {
                         ))
                     }
                 </Grid>
-            </Container>
         </div>
     )
 }

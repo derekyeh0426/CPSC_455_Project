@@ -207,7 +207,10 @@ const create = async (req, res) => {
 
             User
                 .findByIdAndUpdate(newUser.id, newUser, { new: true })
-                .then(() => res.status(200).end());
+                .then(() => {
+                    res.json(savedListing)
+                    res.status(200).end()
+                });
         })
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };
