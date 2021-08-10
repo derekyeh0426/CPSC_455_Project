@@ -1,7 +1,8 @@
 import { Form, Button, Row, Col, Modal, ModalBody } from "react-bootstrap";
 import { Select } from '@material-ui/core'
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { store } from '../../redux/store';
+import { MESSAGE_TYPES, MAX_IMAGE_COUNT } from '../../constants'
 import client from "../../API/api";
 
 export default function AddListingForm(props) {
@@ -19,28 +20,34 @@ export default function AddListingForm(props) {
         setUserId(store.getState().id)
     }, [store.getState().id])
 
-    const message_types = {
-        SUCCESS: "success",
-        FAILURE: "failure"
-    }
-
-    const MAX_IMAGE_COUNT = 3;
-
     const messages = Object.freeze({
-        ADD_LISTING_SUCCESS: { message: "Sucessfully added listing. You can now vew your listing on the listings page", 
-        type: message_types.SUCCESS},
-        IMAGE_UPLOAD_SUCCESS: {message: "Sucessfully uploaded image", type: message_types.SUCCESS},
-        MAX_IMAGE_COUNT_EXCEEDED: {message: "Error, can't upload more than three images for a listing", type: message_types.FAILURE},
-        NO_FILE_SELECTED: {message: "Error, select an image file to upload image", type: message_types.FAILURE},
-        WRONG_FILE_TYPE: {message: "Error, can only upload images", type: message_types.FAILURE},
+        ADD_LISTING_SUCCESS: {
+            message: "Sucessfully added listing. You can now vew your listing on the listings page",
+            type: MESSAGE_TYPES.SUCCESS
+        },
+        IMAGE_UPLOAD_SUCCESS: { message: "Sucessfully uploaded image", type: MESSAGE_TYPES.SUCCESS },
+        MAX_IMAGE_COUNT_EXCEEDED: { message: "Error, can't upload more than three images for a listing", type: MESSAGE_TYPES.FAILURE },
+        NO_FILE_SELECTED: { message: "Error, select an image file to upload image", type: MESSAGE_TYPES.FAILURE },
+        WRONG_FILE_TYPE: { message: "Error, can only upload images", type: MESSAGE_TYPES.FAILURE },
     })
 
+    const handleCloseModal = () => {
+        setImageFiles([]);
+        setSelectedFile("");
+        setShow(false);
+        setPrice("");
+        setName("");
+        setDescription("");
+        setType("");
+        setMessage("");
+    }
+    
     return (
         <div>
             <Button variant="outline-dark" onClick={() => setShow(true)}>
                 Add Listing
             </Button>
-            <Modal size="lg" scrollable={true} show={show} onHide={() => setShow(false)} centered>
+            <Modal size="lg" scrollable={true} show={show} onHide={handleCloseModal} centered>
                 <Modal.Header closeButton>Add Listing</Modal.Header>
                 <ModalBody>
                     <Form>
@@ -84,44 +91,43 @@ export default function AddListingForm(props) {
                             <Form.Label column sm="2">
                                 Type
                             </Form.Label>
-                        
-                        <Select
-                            native
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}
-                            inputProps={{
-                                name: 'type',
-                                id: 'type',
-                            }}
-                            >
-                            <option aria-label="None" value="" />
-                            <option value={"Chair"}>Chair</option>
-                            <option value={"Desk"}>Desk</option>
-                            <option value={"Table"}>Table</option>
-                        </Select>
 
+                            <Select
+                                native
+                                value={type}
+                                onChange={(e) => setType(e.target.value)}
+                                inputProps={{
+                                    name: 'type',
+                                    id: 'type',
+                                }}
+                            >
+                                <option aria-label="None" value="" />
+                                <option value={"Chair"}>Chair</option>
+                                <option value={"Desk"}>Desk</option>
+                                <option value={"Table"}>Table</option>
+                            </Select>
                         </Form.Group>
 
                         <div className="add-image-container">
-                        <input type="file" id="myFile" name="filename" onChange={onFileChange} />
-                        <Button variant="outline-dark" onClick={onAddImage}>Add Image</Button>
+                            <input type="file" id="myFile" name="filename" onChange={onFileChange} />
+                            <Button variant="outline-dark" onClick={onAddImage}>Add Image</Button>
                         </div>
                     </Form>
                     <div className="add-image-container">
                         {imageFiles.map((imageFile) => {
-                            return <img className="image-container" src={URL.createObjectURL(imageFile)} alt="furniture"/>
+                            return <img className="image-container" src={URL.createObjectURL(imageFile)} alt="furniture" />
                         })}
                     </div>
                 </ModalBody>
                 {message ?
-                <div
-                    className={
-                        message.type === message_types.SUCCESS ? "alert alert-success" : "alert alert-danger"}
-                    role="alert">
-                    {`${message.message}`}
-                </div>
-                :
-                <div></div>
+                    <div
+                        className={
+                            message.type === MESSAGE_TYPES.SUCCESS ? "alert alert-success" : "alert alert-danger"}
+                        role="alert">
+                        {`${message.message}`}
+                    </div>
+                    :
+                    <div></div>
                 }
                 <Modal.Footer>
                     <Button variant="outline-dark" onClick={onAddListing}>Add Listing</Button>
@@ -154,7 +160,7 @@ export default function AddListingForm(props) {
                         setType("");
                         setMessage("");
                     })
-                    
+
                 })
             });
         })
@@ -163,7 +169,7 @@ export default function AddListingForm(props) {
     function onAddImage() {
         if (!selectedFile) {
             console.log("no file selected");
-            setMessage(messages.NO_FILE_SELECTED); 
+            setMessage(messages.NO_FILE_SELECTED);
         } else if (!isFileImage(selectedFile)) {
             setMessage(messages.WRONG_FILE_TYPE);
         } else if (imageFiles.length === MAX_IMAGE_COUNT) {
@@ -172,7 +178,7 @@ export default function AddListingForm(props) {
             setImageFiles([...imageFiles, selectedFile]);
             setSelectedFile("");
             setMessage(messages.IMAGE_UPLOAD_SUCCESS)
-        } 
+        }
     }
 
     function onFileChange(event) {

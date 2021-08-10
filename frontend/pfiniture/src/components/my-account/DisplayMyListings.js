@@ -45,20 +45,12 @@ function DisplayMyListings(props) {
     const [listings, setListings] = useState([]);
     const [userId, setUserId] = useState(store.getState().id);
 
-    // Change this from displaying all listing to displaying all listing under my account
-    // useEffect(() => {
-    //     client.listing.getAllListings().then(listings => {
-    //         setListings(listings.data);
-    //     })
-    // }, [])
-
     useEffect(() => {
         setUserId(store.getState().id)
         client.listing.getListingByUserId(userId).then(listings => {
             setListings(listings.data.reverse());
         })
     }, [store.getState().id])
-
 
     const handleDelete = (e, id) => {
         e.preventDefault();

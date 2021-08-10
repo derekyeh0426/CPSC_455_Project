@@ -3,8 +3,8 @@ import Orders from "./components/my-account/order-history/Orders";
 import Cart from "./components/cart/ViewCart";
 import DisplayMyListings from "./components/my-account/DisplayMyListings";
 
-export const BASE_URL = 'http://localhost:8080'
-// export const BASE_URL = 'https://fresh-furniture.herokuapp.com'
+export const BASE_URL = 'http://localhost:8080';
+// export const BASE_URL = 'https://fresh-furniture.herokuapp.com';
 
 export const MY_ACCOUNT_VIEWS = {
     dashboard: {
@@ -27,4 +27,11 @@ export const MY_ACCOUNT_VIEWS = {
         icon: "fas fa-couch",
         component: <DisplayMyListings />
     }
-}
+};
+
+export const MESSAGE_TYPES = {
+    SUCCESS: "success",
+    FAILURE: "failure"
+};
+
+export const MAX_IMAGE_COUNT = 3;
