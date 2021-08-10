@@ -82,7 +82,7 @@ function DisplayIndividualFurniture() {
     const [priceRange, setpriceRange] = React.useState([min, max]);
 
     React.useEffect(() => {
-        client.listing.getAllListings().then(listings => {
+        client.listing.getAllListingsDescendingOrder().then(listings => {
             setListings(listings.data);
             setOriginalListings(listings.data);
         })

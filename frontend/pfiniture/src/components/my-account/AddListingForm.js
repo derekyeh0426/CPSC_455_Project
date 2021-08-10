@@ -144,7 +144,7 @@ export default function AddListingForm(props) {
                     type: type
                 }).then(() => {
                     client.listing.getListingByUserId(userId).then(listings => {
-                        props.setListings(listings.data);
+                        props.setListings(listings.data.reverse());
                     }).then(() => {
                         setImageFiles([]);
                         setShow(false);

@@ -16,6 +16,11 @@ import {
 import AddListingForm from './AddListingForm';
 
 const useStyles = makeStyles((theme) => ({
+    alignCenter: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     root: {
         flexGrow: 1,
     },
@@ -50,7 +55,7 @@ function DisplayMyListings(props) {
     useEffect(() => {
         setUserId(store.getState().id)
         client.listing.getListingByUserId(userId).then(listings => {
-            setListings(listings.data);
+            setListings(listings.data.reverse());
         })
     }, [store.getState().id])
 
@@ -59,18 +64,16 @@ function DisplayMyListings(props) {
         e.preventDefault();
         client.listing.deleteListingById(id).then(() => {
             client.listing.getAllListings().then(listings => {
-                setListings(listings.data);
+                setListings(listings.data.reverse());
             })
         })
     }
 
     return (
         <div className="grid-container">
-        <Container>
             <AddListingForm setListings={setListings}/>
-        <div className="grid-container">
-            <Container>
                 <Grid
+                    className={classes.alignCenter}
                     container
                     direction="row"
                     justifyContent="center"
@@ -106,9 +109,6 @@ function DisplayMyListings(props) {
                         ))
                     }
                 </Grid>
-            </Container>
-        </div>
-        </Container>
         </div>
     )
 }
