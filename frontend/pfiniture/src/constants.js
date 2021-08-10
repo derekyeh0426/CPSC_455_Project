@@ -35,3 +35,5 @@ export const MESSAGE_TYPES = {
 };
 
 export const MAX_IMAGE_COUNT = 3;
+
+export const RATINGS = ["1", "2", "3", "4", "5"];
