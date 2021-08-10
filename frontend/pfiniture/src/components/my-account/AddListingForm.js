@@ -4,7 +4,7 @@ import { useState, useEffect} from "react";
 import { store } from '../../redux/store';
 import client from "../../API/api";
 
-export default function AddListingForm() {
+export default function AddListingForm(props) {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
@@ -142,14 +142,19 @@ export default function AddListingForm() {
                     furniture: response.data.id,
                     user: userId,
                     type: type
-                }).then((response) => {
-                    console.log(response);
-                    setImageFiles([]);
-                    setShow(false);
-                    setPrice("");
-                    setName("");
-                    setDescription("");
-                    setType("");
+                }).then(() => {
+                    client.listing.getListingByUserId(userId).then(listings => {
+                        props.setListings(listings.data);
+                    }).then(() => {
+                        setImageFiles([]);
+                        setShow(false);
+                        setPrice("");
+                        setName("");
+                        setDescription("");
+                        setType("");
+                        setMessage("");
+                    })
+                    
                 })
             });
         })

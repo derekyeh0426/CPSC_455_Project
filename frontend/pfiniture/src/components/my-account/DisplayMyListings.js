@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import client from '../../API/api'
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
+import { store } from '../../redux/store';
 import {
     Grid,
     Card,
@@ -12,6 +13,7 @@ import {
     CardActionArea,
     CardMedia
 } from '@material-ui/core'
+import AddListingForm from './AddListingForm';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 function DisplayMyListings(props) {
     const classes = useStyles()
-    const [listings, setListings] = useState('');
+    const [listings, setListings] = useState([]);
+    const [userId, setUserId] = useState(store.getState().id);
 
     // Change this from displaying all listing to displaying all listing under my account
     // useEffect(() => {
@@ -45,10 +48,11 @@ function DisplayMyListings(props) {
     // }, [])
 
     useEffect(() => {
-        client.listing.getListingByUserId(props.id).then(listings => {
+        setUserId(store.getState().id)
+        client.listing.getListingByUserId(userId).then(listings => {
             setListings(listings.data);
         })
-    }, [])
+    }, [store.getState().id])
 
 
     const handleDelete = (e, id) => {
@@ -61,6 +65,9 @@ function DisplayMyListings(props) {
     }
 
     return (
+        <div className="grid-container">
+        <Container>
+            <AddListingForm setListings={setListings}/>
         <div className="grid-container">
             <Container>
                 <Grid
@@ -100,6 +107,8 @@ function DisplayMyListings(props) {
                     }
                 </Grid>
             </Container>
+        </div>
+        </Container>
         </div>
     )
 }
