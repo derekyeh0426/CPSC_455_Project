@@ -30,32 +30,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CommentSeller(props) {
     const classes = useStyles();
-    const [seller, setSeller] = React.useState(props.userInfo);
+    const [sellerInfo, setSellerInfo] = React.useState(props.userInfo);
     const [comment, setComment] = React.useState('');
-    const [buyer, setBuyer] = React.useState({})
+    const [buyerInfo, setBuyerInfo] = React.useState({})
     const [buyerId, setBuyerId] = React.useState(store.getState().id)
     const [commentedOn, setCommentedOn] = React.useState(false)
 
     useEffect(() => {
-        if (seller) {
-            setSeller(props.userInfo)
-            setBuyerId(store.getState().id) 
-            console.log(buyerId)
+        if (sellerInfo) {
+            setSellerInfo(props.userInfo);
+            setBuyerId(store.getState().id);
             client.user.getUserById(buyerId).then(buyerInfo => {
-                setBuyer(buyerInfo.data)
+                setBuyerInfo(buyerInfo.data);
                 let commentedUsers = buyerInfo.data.commentedUsers
                 if (commentedUsers.length) {
                     commentedUsers.forEach(comment => {
-                        if (comment.user === seller.id) {
-                            console.log("commented on already")
-                            setComment(comment)
-                            setCommentedOn(true)
+                        if (comment.user === sellerInfo.id) {
+                            setComment(comment);
+                            setCommentedOn(true);
                         }
                     })
                 }
             })
         } else {
-            setSeller({})
+            setSellerInfo({});
         }
     }, [props.userInfo, store.getState().id])
 
@@ -64,9 +62,11 @@ export default function CommentSeller(props) {
     };
 
     const handleSubmitComment = () => {
-        let sellerId = seller.id;
-        console.log(buyerId)
-        client.user.commentSeller({sellerId, comment, buyerId})
+        let seller = sellerInfo.id;
+        let buyer = buyerId;
+        client.user.commentSeller({seller, comment, buyer}).then(() =>
+            setComment(comment)
+        )
     }
 
     return (
@@ -81,6 +81,7 @@ export default function CommentSeller(props) {
                 rows={3}
                 value={comment.comment}
                 onChange={handleCommentChange}
+                InputLabelProps={{ shrink: true }}
             />
             <Button onClick={handleSubmitComment}>Update Comment</Button>
             </div>
@@ -93,6 +94,7 @@ export default function CommentSeller(props) {
                 rows={3}
                 value={comment}
                 onChange={handleCommentChange}
+                InputLabelProps={{ shrink: true }}
             />
             <Button onClick={handleSubmitComment}>Submit Comment</Button>
             </div>

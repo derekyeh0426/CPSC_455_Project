@@ -48,9 +48,9 @@ export default class userClient {
         }
     }
 
-    static async rateSeller({seller, rating, id}) {
+    static async rateSeller({seller, rating, buyer}) {
         try {
-            const response = axios.put(BASE_URL + `/api/v1/users/${id}/rates`, 
+            const response = axios.put(BASE_URL + `/api/v1/users/${buyer}/rates`, 
             {seller, rating});
             return response
         } catch (e) {
@@ -58,9 +58,9 @@ export default class userClient {
         }
     }
 
-    static async commentSeller({seller, comment, id}) {
+    static async commentSeller({seller, comment, buyer}) {
         try {
-            const response = axios.put(BASE_URL + `/api/v1/users/${id}/comments`, 
+            const response = axios.put(BASE_URL + `/api/v1/users/${buyer}/comments`, 
             {seller, comment});
             return response
         } catch (e) {
