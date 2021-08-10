@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function DisplayIndividualFurniture() {
+function DisplayIndividualFurniture(props) {
     let temFurnitureType = ["chair", "desk", "table"];
     const min = 0;
     const max = 1000
@@ -192,61 +192,61 @@ function DisplayIndividualFurniture() {
                 <Button onClick={resetSearch}>Clear Filters</Button>
             </div>
             <div className={classes.listingsSection}>
-            {listings.length === 0
-                ? <p>No Matched Results</p>
-                :
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center">
-             {
-                        listings.map((listing, index) => (
-                            <div key={index} className="furniture-spacing">
-                                <Card key={index} className={classes.cardRoot}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.media}
-                                            image={listing.images[0] ? listing.images[0].imageUrl : ""}
-                                            title={listing.furniture.name}
-                                        />
-                                    </CardActionArea>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                        ${listing.furniture.price} • {listing.furniture.name}
-                                    </Typography>
-                                    <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Seller: {listing.user.name} ({listing.user.rating})
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Type: {listing.type}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Description: {listing.description}
-                                            </Typography>
-                                        </CardContent>
-                                    </Collapse>
-                                    <IconButton
-                                        onClick={() => { handleExpandClick(index) }}
-                                        aria-expanded={expandedId === index}
-                                        aria-label="show more">
-                                        <ExpandMoreIcon />
-                                    </IconButton>
-                                    <CardActions>
-                                        <ViewSellerProfile userInfo={listing.user} />
-                                        {props.isLogIn?
-                                          <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
-                                            Add to Cart
-                                          </Button>
-                                          : ""
-                                        }
-                                    </CardActions>
-                                </Card>
-                            </div>
-                        ))}
-                </Grid>
-            }
+                {listings.length === 0
+                    ? <p>No Matched Results</p>
+                    :
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center">
+                        {
+                            listings.map((listing, index) => (
+                                <div key={index} className="furniture-spacing">
+                                    <Card key={index} className={classes.cardRoot}>
+                                        <CardActionArea>
+                                            <CardMedia
+                                                className={classes.media}
+                                                image={listing.images[0] ? listing.images[0].imageUrl : ""}
+                                                title={listing.furniture.name}
+                                            />
+                                        </CardActionArea>
+                                        <Typography gutterBottom variant="h6" component="h2">
+                                            ${listing.furniture.price} • {listing.furniture.name}
+                                        </Typography>
+                                        <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
+                                            <CardContent>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Seller: {listing.user.name} ({listing.user.rating})
+                                                </Typography>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Type: {listing.type}
+                                                </Typography>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Description: {listing.description}
+                                                </Typography>
+                                            </CardContent>
+                                        </Collapse>
+                                        <IconButton
+                                            onClick={() => { handleExpandClick(index) }}
+                                            aria-expanded={expandedId === index}
+                                            aria-label="show more">
+                                            <ExpandMoreIcon />
+                                        </IconButton>
+                                        <CardActions>
+                                            <ViewSellerProfile userInfo={listing.user} />
+                                            {props.isLogIn ?
+                                                <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
+                                                    Add to Cart
+                                                </Button>
+                                                : ""
+                                            }
+                                        </CardActions>
+                                    </Card>
+                                </div>
+                            ))}
+                    </Grid>
+                }
             </div>
         </div>
     )
