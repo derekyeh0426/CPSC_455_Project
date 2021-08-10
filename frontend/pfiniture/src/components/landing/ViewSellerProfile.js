@@ -46,7 +46,9 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '100%',
         maxHeight: '100%',
     },
-    
+    listingsTitle: {
+        marginTop: 10
+    }
 }));
 
 export default function ViewSellerProfile(props) {
@@ -62,8 +64,6 @@ export default function ViewSellerProfile(props) {
 
     const handleClose = () => {
         setOpen(false);
-        // setRatingValue(0);
-        // setComment('');
     };
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export default function ViewSellerProfile(props) {
             setUser({})
             setListings([])
         }
-    }, [props.userInfo, props.seller])
+    }, [props.userInfo])
 
     return (
         <div>
@@ -107,14 +107,14 @@ export default function ViewSellerProfile(props) {
                             </div>
                         }
                         {page === "order-history"
-                            ? <ReviewSeller user={user}/>
+                            ? <ReviewSeller userInfo={user}/>
                             : ""
                         }
-                        <h6 id="profile-modal-description">All listings </h6>
                         {!listings
-                            ? "No Matched Results"
+                            ? "No listings posted."
                             :
                             <div>
+                                <h5 className={classes.listingsTitle} id="profile-modal-description">All listings </h5>
                                 {listings.map((listing, index) => (
                                     <div key={index} className={classes.root}>
                                         <Paper className={classes.gridPaper}>

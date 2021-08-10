@@ -200,8 +200,7 @@ function DisplayIndividualFurniture(props) {
                         direction="row"
                         justifyContent="center"
                         alignItems="center">
-                        {
-                            listings.map((listing, index) => (
+                        {listings.map((listing, index) => (
                                 <div key={index} className="furniture-spacing">
                                     <Card key={index} className={classes.cardRoot}>
                                         <CardActionArea>
