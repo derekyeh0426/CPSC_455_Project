@@ -8,7 +8,9 @@ import {
     Typography,
     CardActions,
     Button,
-    Container
+    Container,
+    CardActionArea,
+    CardMedia
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
@@ -71,13 +73,13 @@ function DisplayMyListings(props) {
                         : listings.map((listing, index) => (
                             <div key={index} className="furniture-spacing">
                                 <Card className={classes.cardRoot}>
-                                    {/* <CardActionArea>
+                                    <CardActionArea>
                                         <CardMedia
                                             className={classes.media}
-                                            image={furniture.picture}
-                                            title={furniture.name}
+                                            image={listing.images[0] ? listing.images[0].imageUrl : ""}
+                                            title={listing.furniture.name}
                                         />
-                                    </CardActionArea> */}
+                                    </CardActionArea>
                                     <Typography gutterBottom variant="h6" component="h2">
                                         ${listing.furniture.price} • {listing.furniture.name}
                                     </Typography>

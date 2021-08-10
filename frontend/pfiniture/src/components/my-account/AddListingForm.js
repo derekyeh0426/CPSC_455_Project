@@ -1,6 +1,7 @@
 import { Form, Button, Row, Col, Modal, ModalBody } from "react-bootstrap";
 import { Select } from '@material-ui/core'
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import { store } from '../../redux/store';
 import client from "../../API/api";
 
 export default function AddListingForm() {
@@ -12,6 +13,11 @@ export default function AddListingForm() {
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState("");
     const [type, setType] = useState("");
+    const [userId, setUserId] = useState(store.getState().id);
+
+    useEffect(() => {
+        setUserId(store.getState().id)
+    }, [store.getState().id])
 
     const message_types = {
         SUCCESS: "success",
@@ -28,8 +34,6 @@ export default function AddListingForm() {
         NO_FILE_SELECTED: {message: "Error, select an image file to upload image", type: message_types.FAILURE},
         WRONG_FILE_TYPE: {message: "Error, can only upload images", type: message_types.FAILURE},
     })
-
-   
 
     return (
         <div>
@@ -136,12 +140,16 @@ export default function AddListingForm() {
                     description: description,
                     images: imageResponse.data.map(({ id }) => id),
                     furniture: response.data.id,
-                    user: "6104918f9a92da1084fb7438", //hardcoded for now 
+                    user: userId,
                     type: type
                 }).then((response) => {
                     console.log(response);
                     setImageFiles([]);
                     setShow(false);
+                    setPrice("");
+                    setName("");
+                    setDescription("");
+                    setType("");
                 })
             });
         })
