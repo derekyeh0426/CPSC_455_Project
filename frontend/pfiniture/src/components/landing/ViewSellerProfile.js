@@ -9,15 +9,15 @@ import {
     Typography,
     Paper,
     ButtonBase,
-    Radio,
-    TextField,
 } from '@material-ui/core';
 import client from "../../API/api";
-import { RATINGS } from "../../constants"
+import ReviewSeller from "../my-account/order-history/ReviewSeller"
 
 const useStyles = makeStyles((theme) => ({
     alignCenter: {
-
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     root: {
         padding: theme.spacing(1),
@@ -27,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         margin: 'auto',
         maxWidth: 500,
-    },
-    alignCenter: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
@@ -51,35 +46,7 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '100%',
         maxHeight: '100%',
     },
-    review: {
-        display: 'flex',
-    },
-    rating: {
-        float: "left",
-        marginRight: 5,
-        border: "1px solid #bdbdbd",
-        borderRadius: 5,
-        padding: 10,
-        '&:hover': {
-            borderColor: "black"
-        },
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    comment: {
-        float: "right",
-        marginLeft: 5,
-        border: "1px solid #bdbdbd",
-        borderRadius: 5,
-        padding: 8,
-        '&:hover': {
-            borderColor: "black"
-        },
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column'
-    }
+    
 }));
 
 export default function ViewSellerProfile(props) {
@@ -88,8 +55,6 @@ export default function ViewSellerProfile(props) {
     const [open, setOpen] = React.useState(false);
     const [listings, setListings] = React.useState([]);
     const [user, setUser] = React.useState(props.userInfo);
-    const [ratingValue, setRatingValue] = React.useState(0);
-    const [comment, setComment] = React.useState('');
 
     const handleOpen = () => {
         setOpen(true);
@@ -97,18 +62,9 @@ export default function ViewSellerProfile(props) {
 
     const handleClose = () => {
         setOpen(false);
-        setRatingValue(0);
-        setComment('');
+        // setRatingValue(0);
+        // setComment('');
     };
-
-    const handleRatingChange = (event) => {
-        setRatingValue(event.target.value);
-    };
-
-    const handleCommentChange = (event) => {
-        setComment(event.target.value);
-    };
-
 
     useEffect(() => {
         if (user) {
@@ -151,43 +107,7 @@ export default function ViewSellerProfile(props) {
                             </div>
                         }
                         {page === "order-history"
-                            ?
-                            <div>
-                                <p className={classes.alignCenter}>Since you bought furniture from {!user ? "this seller" : user.name}...</p>
-                                <div className={classes.alignCenter}>
-                                    <div className={classes.rating}>
-                                        <p id="rate-seller-p">Leave a rating!</p>
-                                        <div className={classes.alignCenter}>
-                                            {RATINGS.map((rating, index) => {
-                                                return (
-                                                    <Radio
-                                                        key={index}
-                                                        checked={ratingValue === rating}
-                                                        onChange={handleRatingChange}
-                                                        value={rating}
-                                                        name={rating}
-                                                        inputProps={{ 'aria-label': 'A' }}
-                                                    />
-                                                )
-                                            })
-                                            }
-                                        </div>
-                                        <Button className={classes.alignCenter}>Submit Rating</Button>
-                                    </div>
-                                    <div className={classes.comment}>
-                                        {/* <p id="rate-seller-p">Leave a comment!</p> */}
-                                        <TextField
-                                            id="comment-seller-textfield"
-                                            label="Leave a comment!"
-                                            multiline
-                                            rows={3}
-                                            value={comment}
-                                            onChange={handleCommentChange}
-                                        />
-                                        <Button>Submit Comment</Button>
-                                    </div>
-                                </div>
-                            </div>
+                            ? <ReviewSeller user={user}/>
                             : ""
                         }
                         <h6 id="profile-modal-description">All listings </h6>
