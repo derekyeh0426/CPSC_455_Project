@@ -63,6 +63,12 @@ export default function CommentSeller(props) {
         setComment(event.target.value);
     };
 
+    const handleSubmitComment = () => {
+        let sellerId = seller.id;
+        console.log(buyerId)
+        client.user.commentSeller({sellerId, comment, buyerId})
+    }
+
     return (
         <div className={classes.comment}>
             {commentedOn
@@ -76,7 +82,7 @@ export default function CommentSeller(props) {
                 value={comment.comment}
                 onChange={handleCommentChange}
             />
-            <Button>Update Comment</Button>
+            <Button onClick={handleSubmitComment}>Update Comment</Button>
             </div>
             :
             <div>
@@ -88,7 +94,7 @@ export default function CommentSeller(props) {
                 value={comment}
                 onChange={handleCommentChange}
             />
-            <Button>Submit Comment</Button>
+            <Button onClick={handleSubmitComment}>Submit Comment</Button>
             </div>
             }
             

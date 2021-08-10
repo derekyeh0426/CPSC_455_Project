@@ -47,4 +47,24 @@ export default class userClient {
             console.log(e.message())
         }
     }
+
+    static async rateSeller({seller, rating, id}) {
+        try {
+            const response = axios.put(BASE_URL + `/api/v1/users/${id}/rates`, 
+            {seller, rating});
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
+
+    static async commentSeller({seller, comment, id}) {
+        try {
+            const response = axios.put(BASE_URL + `/api/v1/users/${id}/comments`, 
+            {seller, comment});
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
 }
