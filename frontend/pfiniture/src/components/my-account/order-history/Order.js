@@ -24,7 +24,7 @@ const Order = (props) => {
                     })} */}
             </td>
             <td>{order.totalAmount}</td>
-            <td><ViewSellerProfile userId={order.seller} page="order-history" /></td>
+            <td><ViewSellerProfile userInfo={order.seller}/></td>
             <td>{order.paymentType}</td>
         </tr>
     )

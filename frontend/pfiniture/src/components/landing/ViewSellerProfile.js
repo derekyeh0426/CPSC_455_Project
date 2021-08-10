@@ -17,7 +17,7 @@ import { RATINGS } from "../../constants"
 
 const useStyles = makeStyles((theme) => ({
     alignCenter: {
-        
+
     },
     root: {
         padding: theme.spacing(1),
@@ -83,12 +83,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ViewSellerProfile(props) {
-    let page = props.page;
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [listings, setListings] = React.useState([]);
     const [user, setUser] = React.useState(props.userInfo);
-    const [userId, setUserId] = React.useState(props.userId);
     const [ratingValue, setRatingValue] = React.useState(0);
     const [comment, setComment] = React.useState('');
 
@@ -106,33 +104,22 @@ export default function ViewSellerProfile(props) {
         setRatingValue(event.target.value);
     };
 
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    };
 
 
     useEffect(() => {
-        if (user || userId) {
-            if (page === "landing") {
-                setUser(props.userInfo)
-                client.listing.getListingByUserId(user.id).then(listings => {
-                    setListings(listings.data);
-                })
-            } else if (page === "order-history") {
-                setUserId(props.userId)
-                console.log(props.userId)
-                client.user.getUserById(userId).then(info => {
-                    setUser(info.data)
-                    client.listing.getListingByUserId(info.data.id).then(listings => {
-                        setListings(listings.data);
-                    })
-                })
-            } else {
-                setUser({})
-                setListings([])
-            }
+        if (user) {
+            setUser(props.userInfo)
+            client.listing.getListingByUserId(user.id).then(listings => {
+                setListings(listings.data);
+            })
+        } else {
+            setUser({})
+            setListings([])
         }
-    }, [props.userInfo, props.userId])
+    }, [props.userInfo, props.seller])
 
     return (
         <div>
@@ -165,40 +152,41 @@ export default function ViewSellerProfile(props) {
                         {props.page === "order-history"
                             ?
                             <div>
-                                <p className={classes.alignCenter}>Since you bought furniture from {!user.name ? "this seller" : user.name}...</p>
-                            <div className={classes.alignCenter}>
-                                <div className={classes.rating}>
-                                    <p id="rate-seller-p">Leave a rating!</p>
-                                    <div className={classes.alignCenter}>
-                                    {RATINGS.map((rating, index) => {
-                                        return (
-                                            <Radio
-                                                key={index}
-                                                checked={ratingValue === rating}
-                                                onChange={handleRatingChange}
-                                                value={rating}
-                                                name={rating}
-                                                inputProps={{ 'aria-label': 'A' }}
-                                            />
-                                        )
-                                    })
-                                    }
+                                <p className={classes.alignCenter}>Since you bought furniture from {!user ? "this seller" : user.name}...</p>
+                                <div className={classes.alignCenter}>
+                                    <div className={classes.rating}>
+                                        <p id="rate-seller-p">Leave a rating!</p>
+                                        <div className={classes.alignCenter}>
+                                            {RATINGS.map((rating, index) => {
+
+                                                return (
+                                                    <Radio
+                                                        key={index}
+                                                        checked={ratingValue === rating}
+                                                        onChange={handleRatingChange}
+                                                        value={rating}
+                                                        name={rating}
+                                                        inputProps={{ 'aria-label': 'A' }}
+                                                    />
+                                                )
+                                            })
+                                            }
+                                        </div>
+                                        <Button className={classes.alignCenter}>Submit Rating</Button>
                                     </div>
-                                    <Button className={classes.alignCenter}>Submit Rating</Button>
+                                    <div className={classes.comment}>
+                                        {/* <p id="rate-seller-p">Leave a comment!</p> */}
+                                        <TextField
+                                            id="comment-seller-textfield"
+                                            label="Leave a comment!"
+                                            multiline
+                                            rows={3}
+                                            value={comment}
+                                            onChange={handleCommentChange}
+                                        />
+                                        <Button>Submit Comment</Button>
+                                    </div>
                                 </div>
-                                <div className={classes.comment}>
-                                {/* <p id="rate-seller-p">Leave a comment!</p> */}
-                                    <TextField
-                                        id="comment-seller-textfield"
-                                        label="Leave a comment!"
-                                        multiline
-                                        rows={3}
-                                        value={comment}
-                                        onChange={handleCommentChange}
-                                    />
-                                    <Button>Submit Comment</Button>
-                                </div>
-                            </div>
                             </div>
                             : ""
                         }
