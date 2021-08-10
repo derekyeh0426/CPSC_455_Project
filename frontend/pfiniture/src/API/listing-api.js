@@ -11,6 +11,15 @@ export default class listingClient {
         }
     }
 
+    static async getAllListingsDescendingOrder() {
+        try {
+            const response = axios.get(BASE_URL + "/api/v1/listings/createdDates?ascendingOrder=false");
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
+
     static async getListingById(id) {
         try {
             const response = axios.get(BASE_URL + `/api/v1/listings/${id}`);
