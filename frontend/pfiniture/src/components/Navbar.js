@@ -52,15 +52,25 @@ function Navbar(props) {
           <Link to={"/about"}>
             <Button className={classes.link}>About</Button>
           </Link>
+          {props.isLogIn?
           <Link exact path to={"/my-account"}>
             <Button className={classes.link}>My Account</Button>
-          </Link>
+          </Link> : ""
+          } 
           <div className={classes.toolbarButtons}>
-            <Link exact path to={"/cart"}>
+            {
+              props.isLogIn?
+              <Link exact path to={"/cart"}>
               <Button className={classes.cartButton}>
                   <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
               </Button>
-            </Link>
+            </Link> : ""
+            }
+            {/* <Link exact path to={"/cart"}>
+              <Button className={classes.cartButton}>
+                  <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
+              </Button>
+            </Link> */}
             {
               props.isLogIn?
               <p5 className = {classes.Name}>{props.name}</p5> : ""
