@@ -25,7 +25,9 @@ const orderSchema = new mongoose.Schema({
     },
     furnitures: [
         {
-            type: String
+            required: true,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Furniture'
         },
     ],
     shippingAddress: {

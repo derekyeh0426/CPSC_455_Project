@@ -6,6 +6,7 @@ const getAll = (req, res) => {
         .find({})
         .populate('buyer')
         .populate('seller')
+        .populate('furnitures')
         .then(order => res.json(order));
 };
 
@@ -14,6 +15,7 @@ const getById = (req, res) => {
         .findById(req.params.id)
         .populate('buyer')
         .populate('seller')
+        .populate('furnitures')
         .then(order => {
             if (order === null) {
                 return res.status(404).json({ error: 'invalid id' });
@@ -26,14 +28,16 @@ const getById = (req, res) => {
 const getByUserId = (req, res) => {
     User
         .findById(req.params.id)
-        .populate('buyer')
-        .populate('seller')
         .then(user => {
             if (user.orders.length === 0) {
                 return res.json({});
             }
-            Order.find().where('_id').in(user.orders).exec((err, records) => {
-                return res.json(records);
+            Order.find().where('_id').in(user.orders)
+                .populate('buyer')
+                .populate('seller')
+                .populate('furnitures')
+                .exec((err, records) => {
+                    return res.json(records);
             });
         })
 }
