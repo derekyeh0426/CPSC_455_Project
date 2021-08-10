@@ -45,18 +45,17 @@ const deleteById = async (req, res) => {
         return res.status(404).end();
     }
 
-    const user = order.user;
+    const buyer = order.buyer;
     Order
         .findByIdAndRemove(req.params.id)
         .then(() => {
             User
-                .findById(user)
-                .then((userObject) => {
-                    const newUser = JSON.parse(JSON.stringify(userObject));
-                    console.log(req.params.id);
-                    newUser.orders = newUser.orders.filter(orderId => orderId !== req.params.id);
+                .findById(buyer)
+                .then((buyerObject) => {
+                    const newBuyer = JSON.parse(JSON.stringify(buyerObject));
+                    newBuyer.orders = newBuyer.orders.filter(orderId => orderId !== req.params.id);
                     User
-                        .findByIdAndUpdate(newUser.id, newUser, { new: true })
+                        .findByIdAndUpdate(newBuyer.id, newBuyer, { new: true })
                         .then(() => res.status(200).end());
                 })
         })
