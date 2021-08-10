@@ -122,7 +122,7 @@ function DisplayIndividualFurniture(props) {
         return `$${priceRange}`;
     }
 
-    const handleChange = (event, newpriceRange) => {
+    const handleChange = (newpriceRange) => {
         setpriceRange(newpriceRange);
     };
 

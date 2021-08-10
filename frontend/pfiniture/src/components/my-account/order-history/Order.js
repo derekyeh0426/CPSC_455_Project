@@ -1,15 +1,26 @@
 import React from 'react'
+import ViewSellerProfile from '../../landing/ViewSellerProfile'
+import client from '../../../API/api';
 
 const Order = (props) => {
-    console.log("")
-    console.log(props.order)
+    let order = props.order
+    console.log(order)
+    console.log(order.seller)
     return (
-        <tr>
-            <td>{props.orderId}</td>
-            <td><a href={props.productUrl}>{props.productName}</a></td>
-            <td>{props.price}</td>
-            <td>{props.seller}</td>
-            <td>{props.payment}</td>
+        <tr key={props.index}>
+            <td>{order.id}</td>
+            <td>
+                {!order.furnitures
+                    ? ""
+                    : order.furnitures.map((furniture, index) => {
+                        return (
+                            <p key={index}>{furniture.name} (${furniture.price})</p>
+                        )
+                    })}
+            </td>
+            <td>{order.totalAmount}</td>
+            <td><ViewSellerProfile userInfo={order.seller} page="order-history" /></td>
+            <td>{order.paymentType}</td>
         </tr>
     )
 }
