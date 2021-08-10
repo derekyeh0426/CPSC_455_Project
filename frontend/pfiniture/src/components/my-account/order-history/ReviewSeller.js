@@ -13,11 +13,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ReviewSeller(props) {
     const classes = useStyles();
-    const [user, setUser] = React.useState(props.user);
+    const [user, setUser] = React.useState(props.userInfo);
 
     useEffect(() => {
         if (user) {
             setUser(props.userInfo)
+            console.log(props.userInfo)
+            // client.user.getUserById(props.userInfo.id).then
         } else {
             setUser({})
         }

@@ -3,8 +3,6 @@ import ViewSellerProfile from '../../landing/ViewSellerProfile'
 
 const Order = (props) => {
     let order = props.order
-    console.log(order)
-    console.log(order.seller)
     return (
         <tr key={props.index}>
             <td>{order.id}</td>

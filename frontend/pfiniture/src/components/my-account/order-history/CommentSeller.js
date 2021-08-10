@@ -4,6 +4,7 @@ import {
     Button,
     TextField,
 } from '@material-ui/core';
+import { store } from '../../../redux/store';
 import client from "../../../API/api";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,16 +30,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CommentSeller(props) {
     const classes = useStyles();
-    const [user, setUser] = React.useState(props.user);
+    const [seller, setSeller] = React.useState(props.userInfo);
     const [comment, setComment] = React.useState('');
+    const [buyer, setBuyer] = React.useState({})
+    const [buyerId, setBuyerId] = React.useState(store.getState().id)
+    const [commentedOn, setCommentedOn] = React.useState(false)
 
     useEffect(() => {
-        if (user) {
-            setUser(props.userInfo)
+        if (seller) {
+            setSeller(props.userInfo)
+            setBuyerId(store.getState().id) 
+            console.log(buyerId)
+            client.user.getUserById(buyerId).then(buyerInfo => {
+                setBuyer(buyerInfo.data)
+                let commentedUsers = buyerInfo.data.commentedUsers
+                if (commentedUsers.length) {
+                    commentedUsers.forEach(comment => {
+                        if (comment.user === seller.id) {
+                            console.log("commented on already")
+                            setComment(comment)
+                            setCommentedOn(true)
+                        }
+                    })
+                }
+            })
         } else {
-            setUser({})
+            setSeller({})
         }
-    }, [props.userInfo])
+    }, [props.userInfo, store.getState().id])
 
     const handleCommentChange = (event) => {
         setComment(event.target.value);
@@ -46,6 +65,21 @@ export default function CommentSeller(props) {
 
     return (
         <div className={classes.comment}>
+            {commentedOn
+            ? 
+            <div>
+                <TextField
+                id="comment-seller-textfield"
+                label="Your current comment:"
+                multiline
+                rows={3}
+                value={comment.comment}
+                onChange={handleCommentChange}
+            />
+            <Button>Update Comment</Button>
+            </div>
+            :
+            <div>
             <TextField
                 id="comment-seller-textfield"
                 label="Leave a comment!"
@@ -55,6 +89,9 @@ export default function CommentSeller(props) {
                 onChange={handleCommentChange}
             />
             <Button>Submit Comment</Button>
+            </div>
+            }
+            
         </div>
     )
 }
