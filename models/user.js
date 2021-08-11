@@ -61,7 +61,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-
+    overallRating: {
+        default: 0,
+        type: Number,
+    },
     location: {
         required: true,
         type: String
