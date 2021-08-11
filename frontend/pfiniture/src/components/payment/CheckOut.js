@@ -74,7 +74,10 @@ const CheckOut = () => {
                         </div>
                     }    
                 </ModalBody>
-                <Paypal/>
+                <Paypal
+                address = {shippingAddress} 
+                total = {getCartTotal()}
+                />
                 <Modal.Footer>
                     <Button variant="outline-dark" onClick={onPlaceOrder}>Place Order</Button>
                 </Modal.Footer>

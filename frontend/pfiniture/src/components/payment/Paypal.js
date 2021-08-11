@@ -1,9 +1,13 @@
 import { useEffect, useRef } from "react";
 
-export default function Paypal() {
+export default function Paypal(props) {
     const paypal = useRef()
 
     useEffect(() => {
+        console.log(props.address);
+        console.log(props.total);
+        let total = props.total
+        console.log(total);
         window.paypal.Buttons({
             createOrder: (data, actions, err) => {
                 return actions.order.create({
@@ -13,7 +17,7 @@ export default function Paypal() {
                             description: "test object",
                             amount:{
                                 currency_code: "CAD",
-                                value: 500.0,
+                                value: total,
                             },
                         },
                     ],
