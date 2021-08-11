@@ -5,43 +5,42 @@ import {
     Modal,
     Backdrop,
     Fade,
-    Grid,
-    Typography,
-    Paper,
     Radio,
     TextField,
     Tabs,
-    Tab
+    Tab,
+    Typography
 } from '@material-ui/core';
 import client from "../../API/api";
 import { RATINGS } from "../../constants"
 import SellerListings from './SellerListings';
+import SellerReviews from './SellerReviews';
 
 const StyledTabs = withStyles({
     indicator: {
-      display: 'flex',
-      justifyContent: 'center',
-      backgroundColor: 'transparent',
-      '& > span': {
-        maxWidth: 40,
-        width: '100%',
-        backgroundColor: '#000000',
-      },
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        '& > span': {
+            maxWidth: 40,
+            width: '100%',
+            backgroundColor: '#405dc5',
+        },
     },
-  })((props) => <Tabs centered {...props} TabIndicatorProps={{ children: <span /> }} />);
+})((props) => <Tabs centered {...props} TabIndicatorProps={{ children: <span /> }} />);
 
-  const StyledTab = withStyles((theme) => ({
+const StyledTab = withStyles((theme) => ({
     root: {
-      textTransform: 'none',
-      color: '#000000',
-      fontWeight: theme.typography.fontWeightRegular,
-      fontSize: theme.typography.pxToRem(15),
-      marginRight: theme.spacing(1),
-      '&:focus': {
-        opacity: 1,
-      },
+        textTransform: 'none',
+        color: '#405dc5',
+        fontWeight: theme.typography.fontWeightRegular,
+        fontSize: theme.typography.pxToRem(15),
+        marginRight: theme.spacing(1),
+        '&:focus': {
+            opacity: 1,
+        },
     },
-  }))((props) => <Tab disableRipple {...props} />);
+}))((props) => <Tab disableRipple {...props} />);
 
 const useStyles = makeStyles((theme) => ({
     alignCenter: {
@@ -62,10 +61,13 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     demo2: {
-        backgroundColor: '#c7e7e8',
+        backgroundColor: 'transparent',
     },
     padding: {
         padding: theme.spacing(3),
+    },
+    tabPadding: {
+        padding: theme.spacing(1),
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
@@ -121,8 +123,11 @@ export default function ViewSellerProfile(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [user, setUser] = React.useState(props.userInfo);
+    const [ratings, setRatings] = React.useState([]);
+    const [comments, setComments] = React.useState([]);
     const [ratingValue, setRatingValue] = React.useState(0);
     const [comment, setComment] = React.useState('');
+    const [listings, setListings] = React.useState([]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -149,20 +154,28 @@ export default function ViewSellerProfile(props) {
         console.log(newTab)
     };
 
-    // const getTabs = () => {
-    //     switch(tab) {
-    //         case 0:
-    //             return (
-                
-    //             )
-    //     }
-    // }
+    const getTabs = (tab) => {
+        switch (tab) {
+            case 0:
+                return <SellerListings listings={listings} userInfo={user} />
+            case 1:
+                return <SellerReviews ratings={ratings} comments={comments} userInfo={user} />
+            default:
+                return <SellerListings userInfo={user} />
+        }
+    }
 
     useEffect(() => {
         if (user) {
             setUser(props.userInfo)
+            client.listing.getListingByUserId(user.id).then(listings => {
+                setListings(listings.data);
+            })
         } else {
             setUser({})
+            setListings([])
+            setRatings([])
+            setComments([])
         }
     }, [props.userInfo])
 
@@ -234,42 +247,14 @@ export default function ViewSellerProfile(props) {
                             </div>
                             : ""
                         }
-                            <div className={classes.demo2}>
-                                <StyledTabs value={tab} onChange={handleTabChange} aria-label="styled-tabs">
-                                    <StyledTab label="Listings" />
-                                    <StyledTab label="Reviews" />
-                                </StyledTabs>
-                                <SellerListings userInfo={user}/>
-                                {/* {getTabs} */}
-                                {
-                                <div className={classes.root}>
-                                    <Paper className={classes.gridPaper}>
-                                            <Grid
-                                                container
-                                                spacing={2}
-                                                direction="row"
-                                                justifyContent="center"
-                                                alignItems="center">
-                                                    <Grid item xs={12} sm container>
-                                                    <Grid item xs container direction="column" spacing={2}>
-                                                        <Grid item xs>
-                                                            <Typography gutterBottom variant="h6" component="h2">
-                                                                Buyer's name
-                                                            </Typography>
-                                                            <Typography variant="body2" gutterBottom>
-                                                                Buyer's rating
-                                                            </Typography>
-                                                            <Typography variant="body2" color="textSecondary">
-                                                                None
-                                                            </Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                                </Grid>
-                                    </Paper>
-                                </div>
-                            }
-                            </div>
+                        <div className={classes.demo2}>
+                            <StyledTabs value={tab} onChange={handleTabChange} aria-label="styled-tabs">
+                                <StyledTab label="Listings" />
+                                <StyledTab label="Reviews" />
+                            </StyledTabs>
+                            <Typography className={classes.tabPadding} />
+                            {getTabs(tab)}
+                        </div>
                     </div>
                 </Fade>
             </Modal>

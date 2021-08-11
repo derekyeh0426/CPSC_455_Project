@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Button,
-    Fade,
     Grid,
     Typography,
     Paper,
@@ -50,20 +49,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SellerListings(props) {
     const classes = useStyles();
-    const [listings, setListings] = React.useState([]);
+    const [listings, setListings] = React.useState(props.listings);
     const [user, setUser] = React.useState(props.userInfo);
 
     useEffect(() => {
         if (user) {
             setUser(props.userInfo)
-            client.listing.getListingByUserId(user.id).then(listings => {
-                setListings(listings.data);
-            })
+            setListings(props.listings)
         } else {
             setUser({})
             setListings([])
         }
-    }, [props.userInfo])
+    }, [props.userInfo, props.listings])
 
     return (
         <div>
