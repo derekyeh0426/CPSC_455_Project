@@ -29,10 +29,14 @@ const useStyles = makeStyles(() => ({
   toolbarButtons: {
     display: 'flex',
     marginLeft: 'auto'
+  },
+  Name: {
+    flex: 1,
+    color: `#004aad`,
   }
 }));
 
-function Navbar() {
+function Navbar(props) {
   const classes = useStyles();
 
   return (
@@ -48,15 +52,29 @@ function Navbar() {
           <Link to={"/about"}>
             <Button className={classes.link}>About</Button>
           </Link>
+          {props.isLogIn?
           <Link exact path to={"/my-account"}>
             <Button className={classes.link}>My Account</Button>
-          </Link>
+          </Link> : ""
+          } 
           <div className={classes.toolbarButtons}>
-            <Link exact path to={"/cart"}>
+            {
+              props.isLogIn?
+              <Link exact path to={"/cart"}>
               <Button className={classes.cartButton}>
                   <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
               </Button>
-            </Link>
+            </Link> : ""
+            }
+            {/* <Link exact path to={"/cart"}>
+              <Button className={classes.cartButton}>
+                  <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
+              </Button>
+            </Link> */}
+            {
+              props.isLogIn?
+              <p5 className = {classes.Name}>{props.name}</p5> : ""
+            }
             <GoogleLogin />
           </div>
         </Toolbar>
@@ -66,9 +84,8 @@ function Navbar() {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
-    isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+      isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
   }
 }
 

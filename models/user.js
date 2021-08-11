@@ -15,9 +15,55 @@ const userSchema = new mongoose.Schema({
             ref: 'Listing'
         }
     ],
-    rating: {
+    ratedUsers: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            rating: {
+                default: 0,
+                type: Number
+            }
+        }
+    ],
+    commentedUsers: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            comment: {
+                type: String
+            }
+        }
+    ],
+    ratings: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            rating: {
+                default: 0,
+                type: Number
+            }
+        }
+    ],
+    comments: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            comment: {
+                type: String
+            }
+        }
+    ],
+    overallRating: {
         default: 0,
-        type: Number
+        type: Number,
     },
     location: {
         required: true,

@@ -30,10 +30,30 @@ export default class orderClient {
         }
     }
 
-    static async addToOrders({user, totalAmount, paymentType, furnitures, shippingAddress}) {
+    static async addToOrders({seller, buyer, totalAmount, paymentType, furnitures, shippingAddress}) {
         try {
             const response = axios.post(BASE_URL + `/api/v1/orders/`, 
-            {user, totalAmount, paymentType, furnitures, shippingAddress});
+            {seller, buyer, totalAmount, paymentType, furnitures, shippingAddress});
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
+
+    static async rateSeller({seller, rating, id}) {
+        try {
+            const response = axios.post(BASE_URL + `/api/v1/orders/${id}/rates`, 
+            {seller, rating});
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
+
+    static async commentSeller({seller, comment, id}) {
+        try {
+            const response = axios.post(BASE_URL + `/api/v1/orders/${id}/comments`, 
+            {seller, comment});
             return response
         } catch (e) {
             console.log(e.message())
