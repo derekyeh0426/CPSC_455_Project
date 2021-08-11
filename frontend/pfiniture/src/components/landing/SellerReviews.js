@@ -39,39 +39,42 @@ export default function SellerReviews(props) {
 
     return (
         <div>
-            {!ratings
-                ? <p>No Reviews</p>
-                :
-                ratings.map((rating, index) => {
-                    return (
-                        <div key={index} className={classes.root}>
-                        <Paper className={classes.gridPaper}>
-                            <Grid
-                                container
-                                spacing={2}
-                                direction="row"
-                                justifyContent="center"
-                                alignItems="center">
-                                <Grid item xs={12} sm container>
-                                    <Grid item xs container direction="column" spacing={2}>
-                                        <Grid item xs>
-                                            <Typography gutterBottom variant="h6" component="h2">
-                                                Buyer's Name
-                                            </Typography>
-                                            <Typography variant="body2" gutterBottom>
-                                                {rating.rating}
-                                            </Typography>
-                                            <Typography variant="body2" color="textSecondary">
-                                                None
-                                            </Typography>
+            {!comments
+                ? "No comments"
+                : !ratings
+                    ? "Display Comments"
+                    :
+                    ratings.map((rating, index) => {
+                        console.log(rating)
+                        return (
+                            <div key={index} className={classes.root}>
+                                <Paper className={classes.gridPaper}>
+                                    <Grid
+                                        container
+                                        spacing={2}
+                                        direction="row"
+                                        justifyContent="center"
+                                        alignItems="center">
+                                        <Grid item xs={12} sm container>
+                                            <Grid item xs container direction="column" spacing={2}>
+                                                <Grid item xs>
+                                                    <Typography gutterBottom variant="h6" component="h2">
+                                                        {rating.user.name}
+                                                    </Typography>
+                                                    <Typography variant="body2" gutterBottom>
+                                                        {rating.rating}
+                                                    </Typography>
+                                                    <Typography variant="body2" color="textSecondary">
+                                                        Rating: {rating.rating}
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                        </div>
-                    )
-                })
+                                </Paper>
+                            </div>
+                        )
+                    })
             }
         </div>
     )

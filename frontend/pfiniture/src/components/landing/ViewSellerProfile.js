@@ -132,13 +132,14 @@ export default function ViewSellerProfile(props) {
 
     const handleOpen = () => {
         setOpen(true);
+        console.log(props.userInfo)
         client.listing.getListingByUserId(user.id).then(listings => {
             setListings(listings.data);
-            client.user.getAllRatingsByUserId(user.id).then(ratings => {
-                setRatings(ratings.data.ratings);
-                setSellerRating(ratings.data.overall)
-                client.user.getAllCommentsByUserId(user.id).then(comments => {
-                    setComments(comments.data);
+            client.user.getUserById(user.id).then(userInfo => {
+                setRatings(userInfo.data.ratings)
+                setComments(userInfo.data.comments)
+                client.user.getAllRatingsByUserId(user.id).then(ratings => {
+                    setSellerRating(ratings.data.overall)
                 })
             })
         })

@@ -8,8 +8,10 @@ const getAll = (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(User => res.json(User));
 };
 
@@ -72,8 +74,10 @@ const getById = (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(user => {
             if (user === null) {
                 return res.status(404).json({ error: 'invalid id' });
@@ -94,8 +98,10 @@ const getByLocation = async (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(users => {
             const userResult = [];
 
@@ -120,8 +126,10 @@ const getByEmail = async (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(users => {
             users.forEach(user => {
                 if (user.email === email) {
@@ -186,8 +194,10 @@ const updateById = async (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(updatedUser => res.json(updatedUser))
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };
@@ -240,6 +250,11 @@ const rateUserById = async (req, res) => {
         user: buyer,
         rating: (rating > 5) ? 5 : rating
     });
+
+    // Update the seller's overall rating.
+    newSellerObject.overallRating = newSellerObject.ratings.length === 0
+        ? 0
+        : newSellerObject.ratings.reduce((a, b) => a + b.rating, 0) / newSellerObject.ratings.length;
 
     User
         .findByIdAndUpdate(newSellerObject.id, newSellerObject, {new: true})
