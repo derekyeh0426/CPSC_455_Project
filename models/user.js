@@ -38,10 +38,30 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    rating: {
-        default: 0,
-        type: Number
-    },
+    ratings: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            rating: {
+                default: 0,
+                type: Number
+            }
+        }
+    ],
+    comments: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            comment: {
+                type: String
+            }
+        }
+    ],
+
     location: {
         required: true,
         type: String

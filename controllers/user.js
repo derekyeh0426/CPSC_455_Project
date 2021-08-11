@@ -10,6 +10,10 @@ router.get('/emails', (req, res, next) => userService.getByEmail(req, res));
 
 router.get('/locations', (req, res, next) => userService.getByLocation(req, res));
 
+router.get('/:id/ratings', (req, res, next) => userService.getAllRatingsByUserId(req, res));
+
+router.get('/:id/comments', (req, res, next) => userService.getAllCommentsByUserId(req, res));
+
 router.get('/:id', (req, res, next) => userService.getById(req, res));
 
 router.get('/', (req, res, next) => userService.getAll(req, res));
