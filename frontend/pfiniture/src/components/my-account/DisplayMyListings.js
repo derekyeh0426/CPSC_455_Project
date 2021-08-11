@@ -58,7 +58,7 @@ function DisplayMyListings() {
     const handleDelete = (e, id) => {
         e.preventDefault();
         client.listing.deleteListingById(id).then(() => {
-            client.listing.getAllListings().then(listings => {
+            client.listing.getListingByUserId(userId).then(listings => {
                 setListings(listings.data.reverse());
             })
         })

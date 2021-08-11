@@ -47,4 +47,22 @@ export default class userClient {
             console.log(e.message())
         }
     }
+
+    static async getAllRatingsByUserId(id) {
+        try {
+            const response = axios.get(BASE_URL + `/api/v1/users/${id}/ratings`);
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
+
+    static async getAllCommentsByUserId(id) {
+        try {
+            const response = axios.get(BASE_URL + `/api/v1/users/${id}/comments`);
+            return response
+        } catch (e) {
+            console.log(e.message())
+        }
+    }
 }
