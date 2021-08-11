@@ -241,6 +241,11 @@ const rateUserById = async (req, res) => {
         rating: (rating > 5) ? 5 : rating
     });
 
+    // Update the seller's overall rating.
+    newSellerObject.overallRating = newSellerObject.ratings.length === 0
+        ? 0
+        : newSellerObject.ratings.reduce((a, b) => a + b.rating, 0) / newSellerObject.ratings.length;
+
     User
         .findByIdAndUpdate(newSellerObject.id, newSellerObject, {new: true})
         .then(() => {
