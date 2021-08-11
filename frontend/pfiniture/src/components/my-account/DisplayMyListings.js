@@ -9,9 +9,8 @@ import {
     Typography,
     CardActions,
     Button,
-    Container,
     CardActionArea,
-    CardMedia
+    CardMedia,
 } from '@material-ui/core'
 import AddListingForm from './AddListingForm';
 
@@ -28,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
         width: 400,
         maxHeight: 600
     },
+    listingInfo: {
+        marginRight: 10,
+        marginLeft: 10
+    },
     media: {
         height: 300,
     },
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function DisplayMyListings(props) {
+function DisplayMyListings() {
     const classes = useStyles()
     const [listings, setListings] = useState([]);
     const [userId, setUserId] = useState(store.getState().id);
@@ -82,10 +85,17 @@ function DisplayMyListings(props) {
                                             title={listing.furniture.name}
                                         />
                                     </CardActionArea>
+                                    <div className={classes.listingInfo}>
                                     <Typography gutterBottom variant="h6" component="h2">
-                                        {/* ${listing.furniture.price}  */}
-                                        {/* • {listing.furniture.name} */}
-                                    </Typography>
+                                            ${listing.furniture.price} • {listing.furniture.name}
+                                        </Typography>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Type: {listing.type}
+                                                </Typography>
+                                                <Typography variant="body2" color="textSecondary" component="p">
+                                                    Description: {listing.description}
+                                                </Typography>
+                                                </div>
                                     <CardActions className={classes.cardButtons}>
                                         <Button size="small" color="primary">
                                             Edit

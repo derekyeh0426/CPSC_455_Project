@@ -45,8 +45,7 @@ export default function RateSeller(props) {
                 let ratedUsers = buyerInfo.data.ratedUsers
                 if (ratedUsers.length) {
                     ratedUsers.forEach(rating => {
-                        console.log(rating)
-                        if (rating.user === sellerInfo.id) {
+                        if (rating.user.id === sellerInfo.id) {
                             setRatingValue(rating.rating.toString());
                             setAlreadyRated(true);
                         }
@@ -61,6 +60,15 @@ export default function RateSeller(props) {
     const handleRatingChange = (event) => {
         setRatingValue(event.target.value);
     };
+
+    const handleSubmitRating = () => {
+        let seller = sellerInfo.id;
+        let buyer = buyerId;
+        let rating = ratingValue;
+        client.user.rateSeller({ seller, rating, buyer }).then(() =>
+            setRatingValue(rating)
+        );
+    }
 
     return (
         <div>
@@ -83,7 +91,7 @@ export default function RateSeller(props) {
                     })
                     }
                 </div>
-                <Button className={classes.alignCenter}>
+                <Button className={classes.alignCenter} onClick={handleSubmitRating}>
                     {alreadyRated ? "Update Rating" : "Submit Rating"}
                 </Button>
             </div>

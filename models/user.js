@@ -38,9 +38,32 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    rating: {
+    ratings: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            rating: {
+                default: 0,
+                type: Number
+            }
+        }
+    ],
+    comments: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            comment: {
+                type: String
+            }
+        }
+    ],
+    overallRating: {
         default: 0,
-        type: Number
+        type: Number,
     },
     location: {
         required: true,

@@ -8,8 +8,10 @@ const getAll = (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(User => res.json(User));
 };
 
@@ -72,8 +74,10 @@ const getById = (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(user => {
             if (user === null) {
                 return res.status(404).json({ error: 'invalid id' });
@@ -94,8 +98,10 @@ const getByLocation = async (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(users => {
             const userResult = [];
 
@@ -120,8 +126,10 @@ const getByEmail = async (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(users => {
             users.forEach(user => {
                 if (user.email === email) {
@@ -132,6 +140,29 @@ const getByEmail = async (req, res) => {
             return res.status(404).json({ error: 'invalid email' });
         })
         .catch(err => res.status(500).end());
+};
+
+const getAllRatingsByUserId = (req, res) => {
+    User
+        .findById(req.params.id)
+        .then(user => {
+            return res.status(200).json({
+                ratings: user.ratings,
+                overall: user.ratings.length === 0
+                    ? 0
+                    : user.ratings.reduce((a, b) => a + b.rating, 0) / user.ratings.length
+            });
+        })
+        .catch(() => res.status(404).json({ error: 'invalid id' }));
+};
+
+const getAllCommentsByUserId = async (req, res) => {
+    User
+        .findById(req.params.id)
+        .then(user => {
+            return res.status(200).json(user.comments);
+        })
+        .catch(() => res.status(404).json({ error: 'invalid id' }));
 };
 
 const updateById = async (req, res) => {
@@ -147,12 +178,12 @@ const updateById = async (req, res) => {
         return res.status(404).json({ error: 'invalid id' });
     }
 
-    console.log((rating > 10 ? 10 : rating))
+    console.log((rating > 5 ? 5 : rating))
 
     const newUser = {
         name: name || user.name,
         listings: listings || user.listings,
-        rating: (rating > 10 ? 10 : rating),
+        rating: (rating > 5 ? 5 : rating),
         location: location || user.location
     };
 
@@ -163,8 +194,10 @@ const updateById = async (req, res) => {
         .populate('listings')
         .populate('cart')
         .populate('orders')
-        .populate('ratedUsers')
-        .populate('commentedUsers')
+        .populate('ratedUsers.user', 'name email')
+        .populate('commentedUsers.user', 'name email')
+        .populate('ratings.user', 'name email')
+        .populate('comments.user', 'name email')
         .then(updatedUser => res.json(updatedUser))
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };
@@ -200,21 +233,28 @@ const rateUserById = async (req, res) => {
         }
     });
 
-    // Remove the seller from the rated users if already rated.
+    // Remove the seller from the rated users and the buyer from the seller's rating list if already rated.
+    const newSellerObject = JSON.parse(JSON.stringify(sellerObject));
     if (alreadyRated) {
         newBuyerObject.ratedUsers = newBuyerObject.ratedUsers.filter(ratedUser => ratedUser.user !== seller);
+        newSellerObject.ratings = newSellerObject.ratings.filter(rating => rating.user !== buyer);
     }
 
-    // Update sellerObject's rating.
-    const newSellerObject = JSON.parse(JSON.stringify(sellerObject));
-    newSellerObject.rating = ((newSellerObject.rating + rating - oldRating) > 10)
-        ? 10
-        : (newSellerObject.rating + rating  - oldRating);
-
+    // Update buyer's list of rated sellers and seller's rating list.
     newBuyerObject.ratedUsers = newBuyerObject.ratedUsers.concat({
         user: seller,
-        rating: newSellerObject.rating
+        rating: (rating > 5) ? 5 : rating
     });
+
+    newSellerObject.ratings = newSellerObject.ratings.concat({
+        user: buyer,
+        rating: (rating > 5) ? 5 : rating
+    });
+
+    // Update the seller's overall rating.
+    newSellerObject.overallRating = newSellerObject.ratings.length === 0
+        ? 0
+        : newSellerObject.ratings.reduce((a, b) => a + b.rating, 0) / newSellerObject.ratings.length;
 
     User
         .findByIdAndUpdate(newSellerObject.id, newSellerObject, {new: true})
@@ -243,6 +283,7 @@ const commentUserById = async (req, res) => {
     }
 
     const newBuyerObject = JSON.parse(JSON.stringify(buyerObject));
+    const newSellerObject = JSON.parse(JSON.stringify(sellerObject));
 
     let alreadyCommented = false;
     newBuyerObject.commentedUsers.forEach(commentedUser => {
@@ -251,9 +292,10 @@ const commentUserById = async (req, res) => {
         }
     });
 
-    // Remove the seller from the commented users if already commented.
+    // Remove the seller from the commented users and buyer from the seller's list of comments if already commented.
     if (alreadyCommented) {
         newBuyerObject.commentedUsers = newBuyerObject.commentedUsers.filter(commentedUser => commentedUser.user !== seller);
+        newSellerObject.comments = newSellerObject.comments.filter(comment => comment.user !== buyer);
     }
 
     newBuyerObject.commentedUsers = newBuyerObject.commentedUsers.concat({
@@ -261,13 +303,24 @@ const commentUserById = async (req, res) => {
         comment: comment
     });
 
+    newSellerObject.comments = newSellerObject.comments.concat({
+        user: buyer,
+        comment: comment
+    });
+
     User
-        .findByIdAndUpdate(newBuyerObject.id, newBuyerObject, { new: true })
-        .then(() => res.status(200).end());
+        .findByIdAndUpdate(newSellerObject.id, newSellerObject, {new: true})
+        .then(() => {
+            User
+                .findByIdAndUpdate(newBuyerObject.id, newBuyerObject, {new: true})
+                .then(() => res.status(200).end());
+        });
 };
 
 module.exports = {
     getAll,
+    getAllRatingsByUserId,
+    getAllCommentsByUserId,
     create,
     deleteAll,
     deleteById,
