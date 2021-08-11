@@ -49,6 +49,9 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 4. sorting feature for reviews
 
 ## Final Project Report
+### 3. Tech
+We used basic web technologies HTML/CSS/JS to provide the content for our webpage. CSS is used to style React components and make our web application responsive. React is used to provide all frontend functionality. It provides design and interface users interact with and send requests to backend. We used Node with Express to set up ther server and provide REST services. They fulfill requests that are sent from frontend by interacting with databse. We used MongoDB with mongoose to connect to database and store our data. Atlas is used to host our database. Finally, we used Heroku with Git to deploy our application.
+
 ### 5. Next Steps 
 We believe that havig a chat feature to allow users to message each other within the app would further improve this application and create a better user experience, since communication is done within the app instead of using service outside (e.g., email). Also, being able to share links of listings on social media would be a great next step for this application. 
 
