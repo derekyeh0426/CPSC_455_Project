@@ -27,6 +27,14 @@ import ViewSellerProfile from "./ViewSellerProfile"
 import './DisplayAllFurniture.css';
 
 const useStyles = makeStyles((theme) => ({
+    alignCenter: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonMargin: {
+        margin: 8
+    },
     root: {
         flexGrow: 1,
     },
@@ -34,8 +42,13 @@ const useStyles = makeStyles((theme) => ({
         width: 400,
         maxHeight: 600
     },
+    filterButtons: {
+        right: '20vh',
+        position: 'absolute'
+    },
     formControl: {
         minWidth: 120,
+        marginRight: theme.spacing(1),
     },
     listingsSection: {
         height: '68vh',
@@ -50,9 +63,6 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(1),
-    },
-    sliderRoot: {
-        flexGrow: 1,
     },
     media: {
         height: 300,
@@ -87,7 +97,6 @@ function DisplayIndividualFurniture(props) {
         client.listing.getAllListingsDescendingOrder().then(listings => {
             setListings(listings.data);
             setOriginalListings(listings.data);
-            // console.log(listings.data);
         })
     }, []);
 
@@ -133,7 +142,7 @@ function DisplayIndividualFurniture(props) {
         return `$${priceRange}`;
     }
 
-    const handleChange = (newpriceRange) => {
+    const handleChange = (event, newpriceRange) => {
         setpriceRange(newpriceRange);
     };
 
@@ -141,12 +150,14 @@ function DisplayIndividualFurniture(props) {
         setListings(originalListings);
         setSearchTerm("");
         setTypeTerm("all");
+        setLocation("all")
         setpriceRange([min, max]);
     }
 
     return (
         <div>
-            <div>
+            <div className={classes.alignCenter}>
+                <div>
                 <TextField
                     className={classes.searchMargin}
                     placeholder="Search..."
@@ -183,8 +194,9 @@ function DisplayIndividualFurniture(props) {
                         })}
                     </Select>
                 </FormControl>
+
                 <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Select Location</InputLabel>
+                    <InputLabel id="select-location-filter">Select Location</InputLabel>
                     <Select
                         labelId="select-location-label"
                         id="select-location"
@@ -206,7 +218,14 @@ function DisplayIndividualFurniture(props) {
                         })}
                     </Select>
                 </FormControl>
-                <div className={classes.sliderRoot}>
+                </div>
+                    
+                <div className={classes.filterButtons}>
+                    <Button color="primary" className={classes.buttonMargin} onClick={handleSearch}>Search</Button>
+                    <Button color="primary" onClick={resetSearch}>Clear Filters</Button>
+                </div>
+            </div>
+            <div className={classes.root}>
                     <Typography id="range-slider" gutterBottom>
                         Price Range • ${priceRange[0]} - ${priceRange[1]}
                     </Typography>
@@ -222,12 +241,13 @@ function DisplayIndividualFurniture(props) {
                         max={max}
                     />
                 </div>
-                <Button onClick={handleSearch}>Search</Button>
-                <Button onClick={resetSearch}>Clear Filters</Button>
-            </div>
             <div className={classes.listingsSection}>
                 {listings.length === 0
-                    ? <p>No Matched Results</p>
+                    ? 
+                    <div>
+                        <p>No Matched Results</p>
+                        <p>Clear the filter to search again</p>
+                    </div>
                     :
                     <Grid
                         container
