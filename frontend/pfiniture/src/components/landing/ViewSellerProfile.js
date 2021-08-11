@@ -124,6 +124,7 @@ export default function ViewSellerProfile(props) {
     const [open, setOpen] = React.useState(false);
     const [user, setUser] = React.useState(props.userInfo);
     const [ratings, setRatings] = React.useState([]);
+    const [sellerRating, setSellerRating] = React.useState(0);
     const [comments, setComments] = React.useState([]);
     const [ratingValue, setRatingValue] = React.useState(0);
     const [comment, setComment] = React.useState('');
@@ -131,6 +132,16 @@ export default function ViewSellerProfile(props) {
 
     const handleOpen = () => {
         setOpen(true);
+        client.listing.getListingByUserId(user.id).then(listings => {
+            setListings(listings.data);
+            client.user.getAllRatingsByUserId(user.id).then(ratings => {
+                setRatings(ratings.data.ratings);
+                setSellerRating(ratings.data.overall)
+                client.user.getAllCommentsByUserId(user.id).then(comments => {
+                    setComments(comments.data);
+                })
+            })
+        })
     };
 
     const handleClose = () => {
@@ -168,22 +179,8 @@ export default function ViewSellerProfile(props) {
     useEffect(() => {
         if (user) {
             setUser(props.userInfo)
-            client.listing.getListingByUserId(user.id).then(listings => {
-                setListings(listings.data);
-                client.user.getAllRatingsByUserId(user.id).then(ratings => {
-                    setRatings(ratings.data);
-                    console.log(ratings.data)
-                    client.user.getAllCommentsByUserId(user.id).then(comments => {
-                        setComments(comments.data);
-                        console.log(comments.data)
-                    })
-                })
-            })
         } else {
             setUser({})
-            setListings([])
-            setRatings([])
-            setComments([])
         }
     }, [props.userInfo])
 
@@ -211,7 +208,7 @@ export default function ViewSellerProfile(props) {
                             ? "No seller found"
                             :
                             <div>
-                                <h2 id="view-seller-profile">{user.name}'s Profile ({user.rating})</h2>
+                                <h2 id="view-seller-profile">{user.name}'s Profile ({sellerRating})</h2>
                                 <p id="location-description">Based in {user.location}</p>
                             </div>
                         }
