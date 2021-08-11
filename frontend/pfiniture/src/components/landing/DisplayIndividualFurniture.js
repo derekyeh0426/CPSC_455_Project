@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 function DisplayIndividualFurniture(props) {
     let temFurnitureType = ["chair", "desk", "table"];
     const min = 0;
-    const max = 1000
+    const max = 1000;
     const classes = useStyles();
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
@@ -122,7 +122,7 @@ function DisplayIndividualFurniture(props) {
         return `$${priceRange}`;
     }
 
-    const handleChange = (newpriceRange) => {
+    const handleChange = (event, newpriceRange) => {
         setpriceRange(newpriceRange);
     };
 
