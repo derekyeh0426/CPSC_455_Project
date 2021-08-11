@@ -170,12 +170,12 @@ const updateById = async (req, res) => {
         return res.status(404).json({ error: 'invalid id' });
     }
 
-    console.log((rating > 10 ? 10 : rating))
+    console.log((rating > 5 ? 5 : rating))
 
     const newUser = {
         name: name || user.name,
         listings: listings || user.listings,
-        rating: (rating > 10 ? 10 : rating),
+        rating: (rating > 5 ? 5 : rating),
         location: location || user.location
     };
 
@@ -233,12 +233,12 @@ const rateUserById = async (req, res) => {
     // Update buyer's list of rated sellers and seller's rating list.
     newBuyerObject.ratedUsers = newBuyerObject.ratedUsers.concat({
         user: seller,
-        rating: (rating > 10) ? 10 : rating
+        rating: (rating > 5) ? 5 : rating
     });
 
     newSellerObject.ratings = newSellerObject.ratings.concat({
         user: buyer,
-        rating: (rating > 10) ? 10 : rating
+        rating: (rating > 5) ? 5 : rating
     });
 
     User
