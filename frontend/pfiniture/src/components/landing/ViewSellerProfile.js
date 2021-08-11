@@ -43,9 +43,6 @@ const StyledTab = withStyles((theme) => ({
 }))((props) => <Tab disableRipple {...props} />);
 
 const useStyles = makeStyles((theme) => ({
-    alignCenter: {
-
-    },
     root: {
         padding: theme.spacing(1),
         flexGrow: 1,
@@ -133,7 +130,6 @@ export default function ViewSellerProfile(props) {
 
     const handleOpen = () => {
         setOpen(true);
-        console.log(props.userInfo)
         client.listing.getListingByUserId(user.id).then(listings => {
             setListings(listings.data);
             client.user.getUserById(user.id).then(userInfo => {
@@ -161,9 +157,8 @@ export default function ViewSellerProfile(props) {
         setComment(event.target.value);
     };
 
-    const handleTabChange = (event, newTab) => {
+    const handleTabChange = (newTab) => {
         setTab(newTab);
-        console.log(newTab)
     };
 
     const getTabs = (tab) => {
@@ -238,7 +233,6 @@ export default function ViewSellerProfile(props) {
                                         <Button className={classes.alignCenter}>Submit Rating</Button>
                                     </div>
                                     <div className={classes.comment}>
-                                        {/* <p id="rate-seller-p">Leave a comment!</p> */}
                                         <TextField
                                             id="comment-seller-textfield"
                                             label="Leave a comment!"

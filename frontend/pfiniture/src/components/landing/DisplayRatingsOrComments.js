@@ -6,8 +6,6 @@ import {
     Paper,
     Button
 } from '@material-ui/core';
-import client from "../../API/api";
-import { RATINGS } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
     root: {

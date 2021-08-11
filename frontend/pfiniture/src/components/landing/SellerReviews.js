@@ -1,26 +1,7 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {
-    Grid,
-    Typography,
-    Paper,
-} from '@material-ui/core';
 import DisplayRatingsOrComments from './DisplayRatingsOrComments'
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: theme.spacing(1),
-        flexGrow: 1,
-    },
-    gridPaper: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 500,
-    }
-}));
-
 export default function SellerReviews(props) {
-    const classes = useStyles();
     const [commentsAndRatings, setCommentsAndRatings] = React.useState(false);
     const [isOpen, setIsOpen] = React.useState(props.isOpen);
     const [ratings, setRatings] = React.useState(props.ratings);
