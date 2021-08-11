@@ -9,7 +9,7 @@ import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
 // require('dotenv').config()
 // const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
-import { GOOGLE_CLIENT_ID } from '../../googleId'
+import { GOOGLE_CLIENT_ID } from '../../googleID'
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
