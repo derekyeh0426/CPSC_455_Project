@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 
 function DisplayIndividualFurniture(props) {
     let temFurnitureType = ["chair", "desk", "table"];
+    let temLocation = ["Surrey", "Langley", "Abbotsford", "Vancouver", "Richmond", "Burnaby", "Coquitlam", "Port Coquitlam", "Delta", "White Rock"]
     const min = 0;
     const max = 1000
     const classes = useStyles();
@@ -80,11 +81,13 @@ function DisplayIndividualFurniture(props) {
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
     const [priceRange, setpriceRange] = React.useState([min, max]);
+    const [location, setLocation] = React.useState("all")
 
     React.useEffect(() => {
         client.listing.getAllListingsDescendingOrder().then(listings => {
             setListings(listings.data);
             setOriginalListings(listings.data);
+            // console.log(listings.data);
         })
     }, []);
 
@@ -95,6 +98,14 @@ function DisplayIndividualFurniture(props) {
     const handleSearch = () => {
         const currentListing = listings;
         const filterListing = currentListing.filter((listing) => listing.furniture.price >= priceRange[0] && listing.furniture.price <= priceRange[1]).filter((listing) => {
+            if (location === "all") {
+                return listing;
+            } else if (location === listing.user.location) {
+                return listing;
+            } else {
+                return ""
+            }
+        }).filter((listing) => {
             if (typeTerm === "" || typeTerm === "all") {
                 if (searchTerm === "") {
                     return listing;
@@ -168,6 +179,29 @@ function DisplayIndividualFurniture(props) {
                                 value={type}
                                 default=''>
                                 {type}
+                            </MenuItem>
+                        })}
+                    </Select>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">Select Location</InputLabel>
+                    <Select
+                        labelId="select-location-label"
+                        id="select-location"
+                        value={location}
+                        onChange={(event) => { setLocation(event.target.value) }}
+                        displayEmpty
+                        className={classes.selectEmpty}
+                    >
+                        <MenuItem value="all">
+                            <em>All</em>
+                        </MenuItem>
+                        {temLocation.map((location) => {
+                            return <MenuItem
+                                key={location}
+                                value={location}
+                                default=''>
+                                {location}
                             </MenuItem>
                         })}
                     </Select>
