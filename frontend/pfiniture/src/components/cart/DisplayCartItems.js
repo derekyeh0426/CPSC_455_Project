@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Grid
 } from '@material-ui/core'
 import '../landing/DisplayAllFurniture.css'
 import { makeStyles } from '@material-ui/core/styles';
+import client from "../../API/api";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,57 +33,37 @@ export default function DisplayCartItems(props) {
     let cart = Array.from(props.allCartItems);
     const classes = useStyles()
 
+    const [listings, setListings] = useState([]);
+
+    useEffect(() => {
+        const userID = "6104918f9a92da1084fb7438";
+        client.user.getUserById(userID).then(response => {
+            if (response.status === 200) {
+                const cart = response.data.cart;
+                if (cart != null) {
+                    Promise.all(
+                            cart.listings.map((listing) => 
+                            client.listing.getListingById(listing))
+                            ).then((listings) => setListings(listings.map(({data}) => {
+                                return data;
+                            })))
+                }
+            }
+        })
+    }, [])
+
     return (
-        <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center">
-            {cart.map((cartItem, index) => (
-                <li key={index}> { cartItem } </li>
-                // <div key={index} className="furniture-spacing">
-                //     <Card key={index} className={classes.cardRoot}>
-                //         <CardActionArea>
-                //             <CardMedia
-                //                 className={classes.media}
-                //                 image={listing.images[0]}
-                //                 title={listing.furniture.name}
-                //             />
-                //             {console.log(listing.images[0])}
-                //         </CardActionArea>
-                //         <Typography gutterBottom variant="h6" component="h2">
-                //             ${listing.furniture.price} • {listing.furniture.name}
-                //         </Typography>
-                //         <Typography gutterBottom variant="h6" component="h2">
-                //         </Typography>
-                //         <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
-                //             <CardContent>
-                //                 <Typography variant="body2" color="textSecondary" component="p">
-                //                     Seller: {listing.user.name} ({listing.user.rating})
-                //                 </Typography>
-                //                 <Typography variant="body2" color="textSecondary" component="p">
-                //                     Type: {listing.type}
-                //                 </Typography>
-                //                 <Typography variant="body2" color="textSecondary" component="p">
-                //                     Description: {listing.description}
-                //                 </Typography>
-                //             </CardContent>
-                //         </Collapse>
-                //         <IconButton
-                //             onClick={() => { handleExpandClick(index) }}
-                //             aria-expanded={expandedId === index}
-                //             aria-label="show more">
-                //             <ExpandMoreIcon />
-                //         </IconButton>
-                //         <CardActions>
-                //             <ViewSellerProfile userInfo={listing.user} />
-                //             <Button size="small" color="primary">
-                //                 Add to Cart
-                //             </Button>
-                //         </CardActions>
-                //     </Card>
-                // </div>
-            ))}
-        </Grid>
+
+            <ul>
+                { listings.map((listing) => {
+                    return (
+                        <div>
+                            <p> { listing.title } </p>
+                            <img src={listing.images[0].imageUrl} width={200} height={200}/>
+                            <p> {listing.furniture.price} </p>
+                        </div>
+                    )
+                }) }
+            </ul>
     )
 }

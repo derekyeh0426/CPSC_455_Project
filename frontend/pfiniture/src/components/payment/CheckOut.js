@@ -59,7 +59,7 @@ const CheckOut = () => {
                     </Form>
                     {
                         <div>
-                            <ul>
+                            {/* <ul>
                                 { listings.map((listing) => {
                                     return (
                                         <div>
@@ -69,7 +69,7 @@ const CheckOut = () => {
                                         </div>
                                     )
                                 }) }
-                            </ul>
+                            </ul> */}
                             <p> Order Total: {getCartTotal()}</p>
                         </div>
                     }    
