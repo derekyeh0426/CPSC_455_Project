@@ -25,6 +25,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
 import './DisplayAllFurniture.css';
+import { LOCATIONS, FURNITURE_TYPES } from '../../constants'
 
 const useStyles = makeStyles((theme) => ({
     alignCenter: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute'
     },
     formControl: {
-        minWidth: 120,
+        minWidth: 130,
         marginRight: theme.spacing(1),
     },
     listingsSection: {
@@ -80,8 +81,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DisplayIndividualFurniture(props) {
-    let temFurnitureType = ["chair", "desk", "table"];
-    let temLocation = ["Surrey", "Langley", "Abbotsford", "Vancouver", "Richmond", "Burnaby", "Coquitlam", "Port Coquitlam", "Delta", "White Rock"]
     const min = 0;
     const max = 1000
     const classes = useStyles();
@@ -184,7 +183,7 @@ function DisplayIndividualFurniture(props) {
                         <MenuItem value="all">
                             <em>All</em>
                         </MenuItem>
-                        {temFurnitureType.map((type) => {
+                        {FURNITURE_TYPES.map((type) => {
                             return <MenuItem
                                 key={type}
                                 value={type}
@@ -208,7 +207,7 @@ function DisplayIndividualFurniture(props) {
                         <MenuItem value="all">
                             <em>All</em>
                         </MenuItem>
-                        {temLocation.map((location) => {
+                        {LOCATIONS.map((location) => {
                             return <MenuItem
                                 key={location}
                                 value={location}
