@@ -170,6 +170,14 @@ export default function ViewSellerProfile(props) {
             setUser(props.userInfo)
             client.listing.getListingByUserId(user.id).then(listings => {
                 setListings(listings.data);
+                client.user.getAllRatingsByUserId(user.id).then(ratings => {
+                    setRatings(ratings.data);
+                    console.log(ratings.data)
+                    client.user.getAllCommentsByUserId(user.id).then(comments => {
+                        setComments(comments.data);
+                        console.log(comments.data)
+                    })
+                })
             })
         } else {
             setUser({})

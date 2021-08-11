@@ -40,28 +40,38 @@ export default function SellerReviews(props) {
     return (
         <div className={classes.root}>
             <Paper className={classes.gridPaper}>
-                <Grid
-                    container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center">
-                    <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                            <Grid item xs>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                    Buyer's name
-                                </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                    Buyer's rating
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary">
-                                    None
-                                </Typography>
+                {/* {!ratings
+                    ? ""
+                    :
+                    ratings.map((rating, index) => {
+                        client.user.getUserById(rating.user).then(userInfo => {
+                            console.log(userInfo)
+                        })
+                        return 
+                        <Grid
+                            container
+                            spacing={2}
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center">
+                            <Grid item xs={12} sm container>
+                                <Grid item xs container direction="column" spacing={2}>
+                                    <Grid item xs>
+                                        <Typography gutterBottom variant="h6" component="h2">
+                                            Buyer's name
+                                        </Typography>
+                                        <Typography variant="body2" gutterBottom>
+                                            Buyer's rating
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary">
+                                            None
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
+                    })
+                } */}
             </Paper>
         </div>
     )
