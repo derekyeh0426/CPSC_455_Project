@@ -157,7 +157,7 @@ export default function ViewSellerProfile(props) {
         setComment(event.target.value);
     };
 
-    const handleTabChange = (newTab) => {
+    const handleTabChange = (event, newTab) => {
         setTab(newTab);
     };
 

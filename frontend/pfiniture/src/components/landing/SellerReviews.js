@@ -32,7 +32,10 @@ export default function SellerReviews(props) {
             let tempReviewArray = [];
             let tempUpdatedComments = JSON.parse(JSON.stringify(comments));
             let tempUpdatedRatings = JSON.parse(JSON.stringify(ratings));
-            if (!comments && !ratings) {
+            console.log(comments);
+            console.log(ratings);
+            console.log(!comments && !ratings)
+            if (comments.length === 0 && ratings.length === 0) {
                 setCommentsAndRatings(false)
             } else {
                 setCommentsAndRatings(true)
@@ -73,8 +76,8 @@ export default function SellerReviews(props) {
 
     return (
         <div>
-            {commentsAndRatings
-                ? "No reviews yet"
+            {!commentsAndRatings
+                ? "No reviews yet!"
                 :
                 <div>
                     {!reviewArray
@@ -85,14 +88,31 @@ export default function SellerReviews(props) {
                             ratingsOrComments={reviewArray} />
                     }
                     {!updatedComments
-                        ? ""
+                        ?
+                        <div>
+                            {!comments
+                                ? ""
+                                : <DisplayRatingsOrComments
+                                    isRatings={false}
+                                    isComments={true}
+                                    ratingsOrComments={comments} />
+                            }
+                        </div>
                         : <DisplayRatingsOrComments
                             isRatings={false}
                             isComments={true}
                             ratingsOrComments={updatedComments} />
                     }
                     {!updatedRatings
-                        ? ""
+                        ?
+                        <div>
+                            {!ratings
+                                ? ""
+                                : <DisplayRatingsOrComments
+                                    isRatings={true}
+                                    isComments={false}
+                                    ratingsOrComments={ratings} />}
+                        </div>
                         : <DisplayRatingsOrComments
                             isRatings={true}
                             isComments={false}
