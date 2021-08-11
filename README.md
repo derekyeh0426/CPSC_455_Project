@@ -48,6 +48,10 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 3. upvote/downvote reviews
 4. sorting feature for reviews
 
+## Final Project Report
+### 5. Next Steps 
+We believe that havig a chat feature to allow users to message each other within the app would further improve this application and create a better user experience, since communication is done within the app instead of using service outside (e.g., email). Also, being able to share links of listings on social media would be a great next step for this application. 
+
 ## Prototypes
 - Login Page
 ![Login Page](https://user-images.githubusercontent.com/57734613/120066681-688b8480-c02c-11eb-9e3d-e7feabfae2b7.png)
