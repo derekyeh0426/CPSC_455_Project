@@ -129,6 +129,7 @@ export default function ViewSellerProfile(props) {
     const [ratingValue, setRatingValue] = React.useState(0);
     const [comment, setComment] = React.useState('');
     const [listings, setListings] = React.useState([]);
+    const [tab, setTab] = React.useState(0);
 
     const handleOpen = () => {
         setOpen(true);
@@ -136,19 +137,20 @@ export default function ViewSellerProfile(props) {
         client.listing.getListingByUserId(user.id).then(listings => {
             setListings(listings.data);
             client.user.getUserById(user.id).then(userInfo => {
-                setRatings(userInfo.data.ratings)
-                setComments(userInfo.data.comments)
+                setRatings(userInfo.data.ratings);
+                setComments(userInfo.data.comments);
                 client.user.getAllRatingsByUserId(user.id).then(ratings => {
-                    setSellerRating(ratings.data.overall)
-                })
-            })
-        })
+                    setSellerRating(ratings.data.overall);
+                });
+            });
+        });
     };
 
     const handleClose = () => {
         setOpen(false);
         setRatingValue(0);
         setComment('');
+        setTab(0);
     };
 
     const handleRatingChange = (event) => {
@@ -158,8 +160,6 @@ export default function ViewSellerProfile(props) {
     const handleCommentChange = (event) => {
         setComment(event.target.value);
     };
-
-    const [tab, setTab] = React.useState(0);
 
     const handleTabChange = (event, newTab) => {
         setTab(newTab);
@@ -171,7 +171,7 @@ export default function ViewSellerProfile(props) {
             case 0:
                 return <SellerListings listings={listings} userInfo={user} />
             case 1:
-                return <SellerReviews ratings={ratings} comments={comments} userInfo={user} />
+                return <SellerReviews isOpen={open} ratings={ratings} comments={comments} userInfo={user} />
             default:
                 return <SellerListings userInfo={user} />
         }
