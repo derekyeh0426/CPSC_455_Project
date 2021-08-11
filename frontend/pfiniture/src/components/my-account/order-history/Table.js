@@ -30,13 +30,14 @@ const Table = () => {
                 <tbody>
                 {!orderHistory
                         ? "No Orders Have Been Made"
-                        :
-                        orderHistory.map((order, index) => {
-                            console.log(index)
-                            return (
-                                <Order key={index} index={index} order={order} />
-                            )
-                        })
+                        : ""
+                        // error orderhistory.map is not a function
+                        // orderHistory.map((order, index) => {
+                        //     console.log(index)
+                        //     return (
+                        //         <Order key={index} index={index} order={order} />
+                        //     )
+                        // })
                     }
                 </tbody>
             </table>
