@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SellerReviews(props) {
     const classes = useStyles();
+    const [commentsAndRatings, setCommentsAndRatings] = React.useState(false);
     const [isOpen, setIsOpen] = React.useState(props.isOpen);
     const [ratings, setRatings] = React.useState(props.ratings);
     const [comments, setComments] = React.useState(props.comments);
@@ -51,9 +52,9 @@ export default function SellerReviews(props) {
             let tempUpdatedComments = JSON.parse(JSON.stringify(comments));
             let tempUpdatedRatings = JSON.parse(JSON.stringify(ratings));
             if (!comments && !ratings) {
-                console.log("comments and ratings are empty")
+                setCommentsAndRatings(false)
             } else {
-                console.log("comments and ratings are here")
+                setCommentsAndRatings(true)
                 comments.forEach(comment => {
                     ratings.forEach(rating => {
                         if (comment.user.id === rating.user.id) {
@@ -66,9 +67,6 @@ export default function SellerReviews(props) {
                         }
                     });
                     setReviewArray(tempReviewArray);
-                    console.log(comments)
-                    console.log("----")
-                    console.log(tempReviewArray);
                 });
 
                 comments.forEach((comment, index) => {
@@ -94,26 +92,32 @@ export default function SellerReviews(props) {
 
     return (
         <div>
-            {!reviewArray
-                ? "!reviewArray"
-                : <DisplayRatingsOrComments
-                    isRatings={true}
-                    isComments={true}
-                    ratingsOrComments={reviewArray} />
-            }
-            {!updatedComments
-                ? ""
-                : <DisplayRatingsOrComments
-                    isRatings={false}
-                    isComments={true}
-                    ratingsOrComments={updatedComments} />
-            }
-            {!updatedRatings
-                ? ""
-                : <DisplayRatingsOrComments
-                    isRatings={true}
-                    isComments={false}
-                    ratingsOrComments={updatedRatings} />
+            {commentsAndRatings
+                ? "No reviews yet"
+                :
+                <div>
+                    {!reviewArray
+                        ? "!reviewArray"
+                        : <DisplayRatingsOrComments
+                            isRatings={true}
+                            isComments={true}
+                            ratingsOrComments={reviewArray} />
+                    }
+                    {!updatedComments
+                        ? ""
+                        : <DisplayRatingsOrComments
+                            isRatings={false}
+                            isComments={true}
+                            ratingsOrComments={updatedComments} />
+                    }
+                    {!updatedRatings
+                        ? ""
+                        : <DisplayRatingsOrComments
+                            isRatings={true}
+                            isComments={false}
+                            ratingsOrComments={updatedRatings} />
+                    }
+                </div>
             }
         </div>
     )
