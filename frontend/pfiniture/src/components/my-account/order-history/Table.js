@@ -21,7 +21,7 @@ const Table = () => {
                     <tr>
                         <th>Order #</th>
                         <th>Product</th>
-                        <th>Price</th>
+                        <th>Total</th>
                         <th>Seller</th>
                         <th>Payment Type</th>
                     </tr>
