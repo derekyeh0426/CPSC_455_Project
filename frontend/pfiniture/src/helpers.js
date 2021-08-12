@@ -16,3 +16,17 @@ export function onAddToCart(listingId, buyerId) {
 export function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
+
+export function updateToCart(listingIdToDelete, listings, buyerId, cartId) {
+    // TODO REMOVE LISTINGIDTODELETE FROM LISTINGIDS THEN MAKE API CALL
+    let listingsIds = []
+    if (listings.length !== 0) {
+        listings.forEach(listing => {
+            console.log(listing.id)
+            listingsIds.push(listing.id)
+        })
+    }
+    console.log(listingsIds)
+    console.log(listings)
+    // client.user.updateCartById({user: buyerId, listing: listings, id: cartId})
+}

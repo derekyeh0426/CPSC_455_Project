@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, Typography, Paper, ButtonBase, } from '@material-ui/core';
-import { onAddToCart } from '../../helpers';
+import { onAddToCart, updateToCart } from '../../helpers';
 import ViewSellerProfile from '../landing/ViewSellerProfile';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +48,7 @@ export default function DisplayListings(props) {
     const [listings, setListings] = useState(props.listings);
     const [buyer, setBuyer] = useState(props.userInfo);
     const [viewFromCart, setViewFromCart] = useState(false);
+    const [cartId, setCardId] = useState(props.cardId);
 
     useEffect(() => {
         if (buyer) {
@@ -55,11 +56,12 @@ export default function DisplayListings(props) {
             setListings(props.listings)
             setPage(props.page)
             setViewFromCart(props.viewFromCart)
+            setCardId(props.cardId)
         } else {
             setBuyer({})
             setListings([])
         }
-    }, [props.userInfo, props.listings, props.page, props.viewFromCart])
+    }, [props.userInfo, props.listings, props.page, props.viewFromCart, props.cardId])
 
     const getButtons = (page, listing) => {
         switch (page) {
@@ -78,9 +80,13 @@ export default function DisplayListings(props) {
                 return (
                     <div>
                         <ViewSellerProfile userInfo={listing.user} viewFromCart={true}/>
-                        <Button size="small" color="secondary" onClick={() => onAddToCart(listing.id, buyer.id)}>
-                        Remove
-                    </Button>
+                        <Button 
+                            size="small" 
+                            color="secondary" 
+                            onClick={() => updateToCart(listing.id, listings, buyer.id, cartId)}
+                        >
+                            Remove
+                        </Button>
                     </div>
                 )
             default:

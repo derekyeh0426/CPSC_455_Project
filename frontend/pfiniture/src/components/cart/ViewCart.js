@@ -11,13 +11,15 @@ import DisplayListings from '../landing/DisplayListings';
 export default function ViewCart() {
     const [buyer, setBuyer] = useState([]);
     const [cartListings, setCartListings] = useState([]);
+    const [cartId, setCardId] = useState("");
 
     useEffect(() => {
         let buyerId = store.getState().id
         client.user.getUserById(buyerId).then(userInfo => {
-            setBuyer(userInfo)
             let cart = userInfo.data.cart;
+            setBuyer(userInfo)
             if (cart !== null) {
+                setCardId(cart.id)
                 Promise.all(
                     cart.listings.map((listing) =>
                         client.listing.getListingById(listing))).then((listings) =>
@@ -37,7 +39,7 @@ export default function ViewCart() {
                         ? "No furniture in cart"
                         : 
                         <div>
-                            <DisplayListings page={"cart"} listings={cartListings} userInfo={buyer} />
+                            <DisplayListings page={"cart"} listings={cartListings} userInfo={buyer} cardId={cartId} />
                             <CheckOut 
                                 allCartItems={cartListings}
                             />
