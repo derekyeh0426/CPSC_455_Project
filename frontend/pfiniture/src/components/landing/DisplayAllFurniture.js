@@ -5,7 +5,6 @@ import DisplayIndividualFurniture from "./DisplayIndividualFurniture"
 
 
 export default function DisplayAllFurniture() {
-
     return (
         <div>
             <div className="grid-container">
