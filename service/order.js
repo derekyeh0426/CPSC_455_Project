@@ -1,45 +1,57 @@
 const User = require('../models/user');
 const Order = require('../models/order');
-const Furniture = require('../models/furniture')
-const getAll = (req, res) => {
-    Order
+const Furniture = require('../models/furniture');
+
+const getAll = async (req, res) => {
+    const orders = await Order
         .find({})
         .populate('buyer')
-        .populate('seller')
-        .then(order => res.json(order));
+        .populate('seller');
+
+    return res.status(200).json(orders);
 };
 
-const getById = (req, res) => {
-    Order
-        .findById(req.params.id)
-        .populate('buyer')
-        .populate('seller')
-        .then(order => {
-            if (order === null) {
-                return res.status(404).json({ error: 'invalid id' });
-            }
-            return res.json(order);
-        })
-        .catch(err => res.status(500).end());
+const getById = async (req, res) => {
+    try {
+        const order = await Order
+            .findById(req.params.id)
+            .populate('buyer')
+            .populate('seller');
+
+        if (order === null) {
+            return res.status(404).json({ error: 'invalid id' });
+        }
+
+        return res.status(200).json(order);
+    } catch (error) {
+        return res.status(404).json({ error: 'invalid id' });
+    }
 };
 
+const getByUserId = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
 
+        if (user === null) {
+            return res.status(404).json({ error: 'invalid id' });
+        }
 
-const getByUserId = (req, res) => {
-    User
-        .findById(req.params.id)
-        .then(user => {
-            if (user.orders.length === 0) {
-                return res.json({});
-            }
-            Order.find().where('_id').in(user.orders)
-                .populate('buyer')
-                .populate('seller')
-                .exec((err, records) => {
-                    return res.json(records);
-            });
-        })
-}
+        if (user.orders.length === 0) {
+            return res.json({});
+        }
+
+        const orders = Order
+            .find()
+            .where('_id')
+            .in(user.orders)
+            .populate('buyer')
+            .populate('seller');
+
+        return res.status(200).json(orders);
+    } catch (error) {
+        return res.status(404).json({ error: 'invalid id' });
+    }
+};
 
 const deleteById = async (req, res) => {
     try {
@@ -54,7 +66,6 @@ const deleteById = async (req, res) => {
     }
 };
 
-
 const create = async (req, res) => {
     const { buyer, seller, totalAmount, paymentType, furnitures, shippingAddress } = req.body;
     try {
@@ -65,8 +76,6 @@ const create = async (req, res) => {
         if (buyerObject === null || sellerObject === null) {
             return res.status(404).json({ error: 'invalid id' });
         }
-
-
 
         if (!buyer || !seller || !totalAmount || !paymentType || !furnitures || furnitures.length === 0 || !shippingAddress) {
             return res.status(404).json({ error: 'bad request - cannot take null values' });
