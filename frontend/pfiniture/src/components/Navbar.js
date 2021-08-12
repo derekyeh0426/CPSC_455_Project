@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import { Toolbar, Button } from '@material-ui/core'
@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import image from "../assets/FF_12.png";
 import GoogleLogin from './login/GoogleLogIn'
+import client from '../API/api'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,11 +34,25 @@ const useStyles = makeStyles(() => ({
   Name: {
     flex: 1,
     color: `#004aad`,
+    marginTop: 15,
+    marginRight: 15,
   }
 }));
 
 function Navbar(props) {
   const classes = useStyles();
+  const [cartLength, setCartLength] = useState(0);
+
+  useEffect(() => {
+    client.user.getUserById(props.id).then(buyerInfo => {
+      const cart = buyerInfo.data.cart;
+      if (!cart) {
+        setCartLength(0);
+      } else {
+        setCartLength(cart.listings.length);
+      }
+    })
+  }, [props.id]);
 
   return (
     <div style={{ paddingTop: 68 }}>
@@ -52,23 +67,21 @@ function Navbar(props) {
           <Link to={"/about"}>
             <Button className={classes.link}>About</Button>
           </Link>
-          {props.isLogIn?
-          <Link exact path to={"/my-account"}>
-            <Button className={classes.link}>My Account</Button>
-          </Link> : ""
-          } 
           <div className={classes.toolbarButtons}>
             {
-              props.isLogIn?
-              <Link exact path to={"/cart"}>
-              <Button className={classes.cartButton}>
-                  <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
-              </Button>
-            </Link> : ""
+              props.isLogIn ?
+                <Link exact path to={"/cart"}>
+                  <Button className={classes.cartButton}>
+                    <i style={{ padding: "6px" }} className={"fas fa-shopping-cart"} />
+                    <p>{cartLength}</p>
+                  </Button>
+                </Link> : ""
             }
             {
-              props.isLogIn?
-              <p5 className = {classes.Name}>{props.name}</p5> : ""
+              props.isLogIn ?
+                <Link className={classes.Name} exact path to={"/my-account"}>
+                  <p>{props.name}</p>
+                </Link> : ""
             }
             <GoogleLogin />
           </div>
@@ -80,7 +93,7 @@ function Navbar(props) {
 
 function mapStateToProps(state) {
   return {
-      isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+    isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
   }
 }
 

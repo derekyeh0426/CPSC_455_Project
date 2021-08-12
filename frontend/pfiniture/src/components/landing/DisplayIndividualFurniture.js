@@ -78,7 +78,7 @@ function DisplayIndividualFurniture(props) {
     const [priceRange, setPriceRange] = useState([min, max]);
     const [location, setLocation] = useState("all");
 
-    React.useEffect(() => {
+    useEffect(() => {
         setBuyerId(store.getState().id)
         client.listing.getAllListingsDescendingOrder().then(listings => {
             setListings(listings.data);
@@ -310,25 +310,6 @@ function DisplayIndividualFurniture(props) {
                                                             </Button>
                                                         }
                                                     </div>
-                                                    // cartListings.map((cartListing) => {
-                                                    //     if (cartListing === listing.id) {
-                                                    //         console.log("true")
-                                                    //         return <Button
-                                                    //             size="small"
-                                                    //             color="secondary"
-                                                    //             onClick={() => updateToCart(listing.id, listings, cartId)}
-                                                    //         >
-                                                    //             Remove from Cart
-                                                    //         </Button>
-                                                    //     } else {
-                                                    //         console.log("false")
-                                                    //         return <Button
-                                                    //             size="small" color="primary"
-                                                    //             onClick={() => onAddToCart(listing.id, buyerId)}>
-                                                    //             Add to Cart
-                                                    //         </Button>
-                                                    //     }
-                                                    // })
                                                 }
                                             </div>
                                             : ""
