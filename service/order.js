@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
         const orders = await Order
             .find({})
             .populate('buyer')
-            .populate('seller');
+            .populate('sellers');
 
         return res.status(200).json(orders);
     } catch (error) {
@@ -20,7 +20,7 @@ const getById = async (req, res) => {
         const order = await Order
             .findById(req.params.id)
             .populate('buyer')
-            .populate('seller');
+            .populate('sellers');
 
         if (order === null) {
             return res.status(404).json({ error: 'invalid id' });
@@ -49,7 +49,7 @@ const getByUserId = async (req, res) => {
             .where('_id')
             .in(user.orders)
             .populate('buyer')
-            .populate('seller');
+            .populate('sellers');
 
         return res.status(200).json(orders);
     } catch (error) {
@@ -71,17 +71,23 @@ const deleteById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    const { buyer, seller, totalAmount, paymentType, furnitures, shippingAddress } = req.body;
     try {
-        const buyerObject = await User.findById(buyer);
-        const sellerObject = await User.findById(seller);
-        const furnitureObjects = await Furniture.find().where('_id').in(furnitures);
+        const { buyer, sellers, totalAmount, paymentType, furnitures, shippingAddress } = req.body;
 
-        if (buyerObject === null || sellerObject === null) {
+        const buyerObject = await User.findById(buyer);
+        const furnitureObjects = await Furniture.find().where('_id').in(furnitures);
+        const sellersObject = await User.find().where('_id').in(sellers);
+
+        if (buyerObject === null || sellersObject === null) {
             return res.status(404).json({ error: 'invalid id' });
         }
 
-        if (!buyer || !seller || !totalAmount || !paymentType || !furnitures || furnitures.length === 0 || !shippingAddress) {
+        // Check if we have an array of valid sellers.
+        if (sellersObject.length !== sellers.length) {
+            return res.status(404).json({ error: 'missing seller' });
+        }
+
+        if (!buyer || !sellers || sellers.length === 0 || !totalAmount || !paymentType || !furnitures || furnitures.length === 0 || !shippingAddress) {
             return res.status(404).json({ error: 'bad request - cannot take null values' });
         }
         const furnitureHistory = furnitureObjects.map(furniture => ({
@@ -91,7 +97,7 @@ const create = async (req, res) => {
 
         const order = new Order({
             buyer: buyerObject,
-            seller: sellerObject,
+            sellers: sellersObject,
             totalAmount: totalAmount,
             paymentType: paymentType.toLowerCase(),
             furnitureObjects: furnitureObjects,
