@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
     Button,
     Modal,
@@ -9,9 +9,43 @@ import {
     Typography,
     Paper,
     ButtonBase,
+    Radio,
+    TextField,
+    Tabs,
+    Tab,
+    Typography
 } from '@material-ui/core';
 import client from "../../API/api";
+import { RATINGS } from "../../constants"
+import SellerListings from './SellerListings';
+import SellerReviews from './SellerReviews';
 import ReviewSeller from "../my-account/order-history/ReviewSeller"
+
+const StyledTabs = withStyles({
+    indicator: {
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        '& > span': {
+            maxWidth: 40,
+            width: '100%',
+            backgroundColor: '#405dc5',
+        },
+    },
+})((props) => <Tabs centered {...props} TabIndicatorProps={{ children: <span /> }} />);
+
+const StyledTab = withStyles((theme) => ({
+    root: {
+        textTransform: 'none',
+        color: '#405dc5',
+        fontWeight: theme.typography.fontWeightRegular,
+        fontSize: theme.typography.pxToRem(15),
+        marginRight: theme.spacing(1),
+        '&:focus': {
+            opacity: 1,
+        },
+    },
+}))((props) => <Tab disableRipple {...props} />);
 
 const useStyles = makeStyles((theme) => ({
     alignCenter: {
@@ -28,12 +62,26 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
         maxWidth: 500,
     },
+    alignCenter: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    demo2: {
+        backgroundColor: 'transparent',
+    },
+    padding: {
+        padding: theme.spacing(3),
+    },
+    tabPadding: {
+        padding: theme.spacing(1),
+    },
     paper: {
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
         width: '50%',
-        maxHeight: '80%',
+        height: '80%',
         overflowY: 'auto'
     },
     image: {
@@ -55,26 +103,64 @@ export default function ViewSellerProfile(props) {
     let page = props.page
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [listings, setListings] = React.useState([]);
     const [user, setUser] = React.useState(props.userInfo);
+    const [ratings, setRatings] = React.useState([]);
+    const [sellerRating, setSellerRating] = React.useState(0);
+    const [comments, setComments] = React.useState([]);
+    const [ratingValue, setRatingValue] = React.useState(0);
+    const [comment, setComment] = React.useState('');
+    const [listings, setListings] = React.useState([]);
+    const [tab, setTab] = React.useState(0);
 
     const handleOpen = () => {
         setOpen(true);
+        client.listing.getListingByUserId(user.id).then(listings => {
+            setListings(listings.data);
+            client.user.getUserById(user.id).then(userInfo => {
+                setRatings(userInfo.data.ratings);
+                setComments(userInfo.data.comments);
+                client.user.getAllRatingsByUserId(user.id).then(ratings => {
+                    setSellerRating(ratings.data.overall);
+                });
+            });
+        });
     };
 
     const handleClose = () => {
         setOpen(false);
+        setRatingValue(0);
+        setComment('');
+        setTab(0);
     };
+
+    const handleRatingChange = (event) => {
+        setRatingValue(event.target.value);
+    };
+
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    };
+
+    const handleTabChange = (event, newTab) => {
+        setTab(newTab);
+    };
+
+    const getTabs = (tab) => {
+        switch (tab) {
+            case 0:
+                return <SellerListings listings={listings} userInfo={user} />
+            case 1:
+                return <SellerReviews isOpen={open} ratings={ratings} comments={comments} userInfo={user} />
+            default:
+                return <SellerListings userInfo={user} />
+        }
+    }
 
     useEffect(() => {
         if (user) {
             setUser(props.userInfo)
-            client.listing.getListingByUserId(user.id).then(listings => {
-                setListings(listings.data);
-            })
         } else {
             setUser({})
-            setListings([])
         }
     }, [props.userInfo])
 
@@ -102,7 +188,7 @@ export default function ViewSellerProfile(props) {
                             ? "No seller found"
                             :
                             <div>
-                                <h2 id="view-seller-profile">{user.name}'s Profile ({user.rating})</h2>
+                                <h2 id="view-seller-profile">{user.name}'s Profile ({sellerRating})</h2>
                                 <p id="location-description">Based in {user.location}</p>
                             </div>
                         }
@@ -110,57 +196,14 @@ export default function ViewSellerProfile(props) {
                             ? <ReviewSeller userInfo={user}/>
                             : ""
                         }
-                        {!listings
-                            ? "No listings posted."
-                            :
-                            <div>
-                                <h5 className={classes.listingsTitle} id="profile-modal-description">All listings </h5>
-                                {listings.map((listing, index) => (
-                                    <div key={index} className={classes.root}>
-                                        <Paper className={classes.gridPaper}>
-                                            <Grid
-                                                container
-                                                spacing={2}
-                                                direction="row"
-                                                justifyContent="center"
-                                                alignItems="center">
-                                                <Grid item>
-                                                    <ButtonBase className={classes.image}>
-                                                        <img
-                                                            className={classes.img}
-                                                            alt={listing.furniture.name}
-                                                            src={listing.images[0] ? listing.images[0].imageUrl : ""} />
-                                                    </ButtonBase>
-                                                </Grid>
-                                                <Grid item xs={12} sm container>
-                                                    <Grid item xs container direction="column" spacing={2}>
-                                                        <Grid item xs>
-                                                            <Typography gutterBottom variant="h6" component="h2">
-                                                                {listing.furniture.name}
-                                                            </Typography>
-                                                            <Typography variant="body2" gutterBottom>
-                                                                {listing.description}
-                                                            </Typography>
-                                                            <Typography variant="body2" color="textSecondary">
-                                                                Type: {listing.type}
-                                                            </Typography>
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
-                                                                Add to Cart
-                                                            </Button>
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        <Typography variant="subtitle1">${listing.furniture.price}</Typography>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Paper>
-                                    </div>
-                                ))}
-                            </div>
-                        }
+                        <div className={classes.demo2}>
+                            <StyledTabs value={tab} onChange={handleTabChange} aria-label="styled-tabs">
+                                <StyledTab label="Listings" />
+                                <StyledTab label="Reviews" />
+                            </StyledTabs>
+                            <Typography className={classes.tabPadding} />
+                            {getTabs(tab)}
+                        </div>
                     </div>
                 </Fade>
             </Modal>
@@ -168,18 +211,3 @@ export default function ViewSellerProfile(props) {
     )
 }
 
-function onAddToCart(listingID) {
-    const userID = "6104918f9a92da1084fb7438";
-    client.user.getUserById(userID).then((response) => {
-        const cart = response.data.cart;
-        if (!cart) {
-            client.cart.addCartToUser({ user: userID, listing: listingID }).then((response) => console.log(response));
-        }
-        else {
-            console.log("user already has cart");
-            client.cart.updateCartById({ user: userID, listing: listingID, id: cart.id }).then((response) => {
-                console.log(response)
-            });
-        }
-    })
-}

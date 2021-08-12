@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import client from '../../../API/api';
 import { store } from '../../../redux/store';
+import { isEmpty } from '../../../helpers';
 import Order from './Order'
 
 const Table = () => {
-    const [orderHistory, setOrderHistory] = useState([]);
+    const [orderHistory, setOrderHistory] = useState({});
 
     useEffect(() => {
         let buyerId = store.getState().id
@@ -26,7 +27,7 @@ const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {!orderHistory
+                {isEmpty(orderHistory)
                         ? "No Orders Have Been Made"
                         :
                         orderHistory.map((order, index) => {

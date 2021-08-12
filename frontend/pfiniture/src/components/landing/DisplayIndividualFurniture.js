@@ -25,8 +25,17 @@ import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
 import './DisplayAllFurniture.css';
+import { LOCATIONS, FURNITURE_TYPES } from '../../constants'
 
 const useStyles = makeStyles((theme) => ({
+    alignCenter: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonMargin: {
+        margin: 8
+    },
     root: {
         flexGrow: 1,
     },
@@ -34,8 +43,13 @@ const useStyles = makeStyles((theme) => ({
         width: 400,
         maxHeight: 600
     },
+    filterButtons: {
+        right: '20vh',
+        position: 'absolute'
+    },
     formControl: {
-        minWidth: 120,
+        minWidth: 130,
+        marginRight: theme.spacing(1),
     },
     listingsSection: {
         height: '68vh',
@@ -50,9 +64,6 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(1),
-    },
-    sliderRoot: {
-        flexGrow: 1,
     },
     media: {
         height: 300,
@@ -70,9 +81,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DisplayIndividualFurniture(props) {
-    let temFurnitureType = ["chair", "desk", "table"];
     const min = 0;
-    const max = 1000
+    const max = 1000;
     const classes = useStyles();
     const [expandedId, setExpandedId] = React.useState(-1);
     const [searchTerm, setSearchTerm] = React.useState('');
@@ -80,6 +90,7 @@ function DisplayIndividualFurniture(props) {
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
     const [priceRange, setpriceRange] = React.useState([min, max]);
+    const [location, setLocation] = React.useState("all")
 
     React.useEffect(() => {
         client.listing.getAllListingsDescendingOrder().then(listings => {
@@ -95,6 +106,14 @@ function DisplayIndividualFurniture(props) {
     const handleSearch = () => {
         const currentListing = listings;
         const filterListing = currentListing.filter((listing) => listing.furniture.price >= priceRange[0] && listing.furniture.price <= priceRange[1]).filter((listing) => {
+            if (location === "all") {
+                return listing;
+            } else if (location === listing.user.location) {
+                return listing;
+            } else {
+                return ""
+            }
+        }).filter((listing) => {
             if (typeTerm === "" || typeTerm === "all") {
                 if (searchTerm === "") {
                     return listing;
@@ -122,7 +141,7 @@ function DisplayIndividualFurniture(props) {
         return `$${priceRange}`;
     }
 
-    const handleChange = (newpriceRange) => {
+    const handleChange = (event, newpriceRange) => {
         setpriceRange(newpriceRange);
     };
 
@@ -130,12 +149,14 @@ function DisplayIndividualFurniture(props) {
         setListings(originalListings);
         setSearchTerm("");
         setTypeTerm("all");
+        setLocation("all")
         setpriceRange([min, max]);
     }
 
     return (
         <div>
-            <div>
+            <div className={classes.alignCenter}>
+                <div>
                 <TextField
                     className={classes.searchMargin}
                     placeholder="Search..."
@@ -162,7 +183,7 @@ function DisplayIndividualFurniture(props) {
                         <MenuItem value="all">
                             <em>All</em>
                         </MenuItem>
-                        {temFurnitureType.map((type) => {
+                        {FURNITURE_TYPES.map((type) => {
                             return <MenuItem
                                 key={type}
                                 value={type}
@@ -172,7 +193,38 @@ function DisplayIndividualFurniture(props) {
                         })}
                     </Select>
                 </FormControl>
-                <div className={classes.sliderRoot}>
+
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="select-location-filter">Select Location</InputLabel>
+                    <Select
+                        labelId="select-location-label"
+                        id="select-location"
+                        value={location}
+                        onChange={(event) => { setLocation(event.target.value) }}
+                        displayEmpty
+                        className={classes.selectEmpty}
+                    >
+                        <MenuItem value="all">
+                            <em>All</em>
+                        </MenuItem>
+                        {LOCATIONS.map((location) => {
+                            return <MenuItem
+                                key={location}
+                                value={location}
+                                default=''>
+                                {location}
+                            </MenuItem>
+                        })}
+                    </Select>
+                </FormControl>
+                </div>
+                    
+                <div className={classes.filterButtons}>
+                    <Button color="primary" className={classes.buttonMargin} onClick={handleSearch}>Search</Button>
+                    <Button color="primary" onClick={resetSearch}>Clear Filters</Button>
+                </div>
+            </div>
+            <div className={classes.root}>
                     <Typography id="range-slider" gutterBottom>
                         Price Range • ${priceRange[0]} - ${priceRange[1]}
                     </Typography>
@@ -188,12 +240,13 @@ function DisplayIndividualFurniture(props) {
                         max={max}
                     />
                 </div>
-                <Button onClick={handleSearch}>Search</Button>
-                <Button onClick={resetSearch}>Clear Filters</Button>
-            </div>
             <div className={classes.listingsSection}>
                 {listings.length === 0
-                    ? <p>No Matched Results</p>
+                    ? 
+                    <div>
+                        <p>No Matched Results</p>
+                        <p>Clear the filter to search again</p>
+                    </div>
                     :
                     <Grid
                         container

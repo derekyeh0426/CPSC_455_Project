@@ -1,11 +1,19 @@
 import { Form, Button, Row, Col, Modal, ModalBody } from "react-bootstrap";
-import { Select } from '@material-ui/core'
+import { Select, MenuItem, FormControl, TextField } from '@material-ui/core'
 import { useState, useEffect } from "react";
 import { store } from '../../redux/store';
-import { MESSAGE_TYPES, MAX_IMAGE_COUNT } from '../../constants'
+import { makeStyles } from '@material-ui/core/styles';
+import { MESSAGE_TYPES, MAX_IMAGE_COUNT, FURNITURE_TYPES } from '../../constants'
 import client from "../../API/api";
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        minWidth: '100%',
+    },
+}));
+
 export default function AddListingForm(props) {
+    const classes = useStyles();
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
@@ -41,14 +49,16 @@ export default function AddListingForm(props) {
         setType("");
         setMessage("");
     }
-    
+
     return (
         <div>
             <Button variant="outline-dark" onClick={() => setShow(true)}>
                 Add Listing
             </Button>
             <Modal size="lg" scrollable={true} show={show} onHide={handleCloseModal} centered>
-                <Modal.Header closeButton>Add Listing</Modal.Header>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Listing</Modal.Title>
+                </Modal.Header>
                 <ModalBody>
                     <Form>
                         <Form.Group as={Row}>
@@ -56,10 +66,12 @@ export default function AddListingForm(props) {
                                 Name
                             </Form.Label>
                             <Col sm="10">
-                                <Form.Control
-                                    type="text"
-                                    onChange={(e) => setName(e.target.value)}
-                                />
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    id="outlined-basic"
+                                    variant="outlined"
+                                    onChange={(e) => setName(e.target.value)} />
                             </Col>
                         </Form.Group>
 
@@ -68,10 +80,12 @@ export default function AddListingForm(props) {
                                 Price
                             </Form.Label>
                             <Col sm="10">
-                                <Form.Control
-                                    type="text"
-                                    onChange={(e) => setPrice(e.target.value)}
-                                />
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    id="outlined-basic"
+                                    variant="outlined"
+                                    onChange={(e) => setPrice(e.target.value)} />
                             </Col>
                         </Form.Group>
 
@@ -80,33 +94,39 @@ export default function AddListingForm(props) {
                                 Description
                             </Form.Label>
                             <Col sm="10">
-                                <Form.Control
-                                    type="text"
-                                    onChange={(e) => setDescription(e.target.value)}
-                                />
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    id="outlined-basic"
+                                    variant="outlined"
+                                    onChange={(e) => setDescription(e.target.value)} />
                             </Col>
                         </Form.Group>
 
                         <Form.Group as={Row}>
                             <Form.Label column sm="2">
-                                Type
+                                Furniture Type
                             </Form.Label>
-
-                            <Select
-                                native
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
-                                inputProps={{
-                                    name: 'type',
-                                    id: 'type',
-                                }}
-                            >
-                                <option aria-label="None" value="" />
-                                <option value={"Chair"}>Chair</option>
-                                <option value={"Desk"}>Desk</option>
-                                <option value={"Table"}>Table</option>
-                            </Select>
+                            <Col sm="10">
+                                <FormControl variant="outlined" className={classes.formControl}>
+                                    <Select
+                                        className={classes.selectForm}
+                                        value={type}
+                                        onChange={(e) => setType(e.target.value)}
+                                    >
+                                        {FURNITURE_TYPES.map((type) => {
+                                            return <MenuItem
+                                                key={type}
+                                                value={type}
+                                                default=''>
+                                                {type}
+                                            </MenuItem>
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Col>
                         </Form.Group>
+
 
                         <div className="add-image-container">
                             <input type="file" id="myFile" name="filename" onChange={onFileChange} />

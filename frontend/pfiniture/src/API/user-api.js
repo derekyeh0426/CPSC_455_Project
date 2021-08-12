@@ -52,16 +52,24 @@ export default class userClient {
         try {
             const response = axios.put(BASE_URL + `/api/v1/users/${buyer}/rates`, 
             {seller, rating});
+
+    static async getAllRatingsByUserId(id) {
+        try {
+            const response = axios.get(BASE_URL + `/api/v1/users/${id}/ratings`);
             return response
         } catch (e) {
             console.log(e.message())
         }
     }
-
+          
     static async commentSeller({seller, comment, buyer}) {
         try {
             const response = axios.put(BASE_URL + `/api/v1/users/${buyer}/comments`, 
             {seller, comment});
+          
+    static async getAllCommentsByUserId(id) {
+        try {
+            const response = axios.get(BASE_URL + `/api/v1/users/${id}/comments`);
             return response
         } catch (e) {
             console.log(e.message())
