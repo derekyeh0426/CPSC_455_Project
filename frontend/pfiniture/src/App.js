@@ -9,6 +9,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Navbar from '../src/components/Navbar'
 import { Provider } from 'react-redux'
 import store from './redux/store'
+import {NotificationContainer} from "react-notifications";
+import 'react-notifications/lib/notifications.css';
 
 export default function App() {
   return (
@@ -16,6 +18,7 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Navbar/>
+        <NotificationContainer/>
         <Route exact path="/" component={Landing}/>
         <Route exact path="/about" component={About}/>
         <Route exact path="/my-account" component={MyAccountDisplay}/>
