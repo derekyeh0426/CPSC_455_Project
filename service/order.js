@@ -3,12 +3,16 @@ const Order = require('../models/order');
 const Furniture = require('../models/furniture');
 
 const getAll = async (req, res) => {
-    const orders = await Order
-        .find({})
-        .populate('buyer')
-        .populate('seller');
+    try {
+        const orders = await Order
+            .find({})
+            .populate('buyer')
+            .populate('seller');
 
-    return res.status(200).json(orders);
+        return res.status(200).json(orders);
+    } catch (error) {
+        return res.status(500).end();
+    }
 };
 
 const getById = async (req, res) => {
