@@ -141,6 +141,7 @@ function DisplayIndividualFurniture(props) {
                     placeholder="Search..."
                     id="input-with-icon-textfield"
                     onChange={(event) => { setSearchTerm(event.target.value) }}
+                    value = {searchTerm}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
