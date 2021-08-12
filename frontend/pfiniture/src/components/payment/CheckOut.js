@@ -84,7 +84,6 @@ const CheckOut = (props) => {
 
     const onPlaceOrder = () => {
         let totalAmount = getTotal("total");
-        console.log(address)
         let shippingAddress = {
             "address": address,
             "city": city,
@@ -96,28 +95,18 @@ const CheckOut = (props) => {
             NotificationManager.error("Please fill out your shipping information!", "", TIME_OUT)
             return;
         } else {
-            console.log(totalAmount)
-            console.log(shippingAddress)
-            console.log(buyerId)
-            console.log(listings.map((listing) => listing.furniture.id))
             let sellers = []
             listings.forEach((listing) => {
                 sellers.push(listing.user.id);
             })
-            console.log(sellers)
-            console.log(listings.map((listing) => listing.furniture.id))
             client.order.addToOrders({
                 sellers: sellers, buyer: buyerId, totalAmount: totalAmount, paymentType: "PayPal", shippingAddress: shippingAddress,
                 furnitures: listings.map((listing) => listing.furniture.id)
-                //TODO REMOVE CART LISTINGS FROM LISTINGS AND CART LISTINGS
             }).then((response) => {
-                console.log(response);
                 client.cart.updateCartById({listing: [], id: cartId})
                 listings.forEach((listing => {
-                    console.log(listing.id)
                     client.listing.deleteListingById(listing.id)
                 }))
-                // props.UserCheckout();
             })
         }
     }

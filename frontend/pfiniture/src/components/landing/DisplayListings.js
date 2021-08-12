@@ -70,21 +70,18 @@ function DisplayListings(props) {
     }, [props.userInfo, props.listings, props.page, props.viewFromCart, props.cardId])
 
     const removeFromCart = (listingIdToDelete) => {
-        // updateToCart(listingIdToDelete, listings, cartId, "cart");
         let listing = [];
         listings.forEach(listingId => {
             if (listingId.id !== listingIdToDelete) {
                 listing.push(listingId.id);
             }
         })
-        console.log(listing)
         client.cart.updateCartById({listing: listing, id: cartId}).then(() => {
             props.UserRemoveCartItem();
             let tempListing = [];
             setRender(true);
             listing.forEach(listingId => {
-                client.listing.getListingById(listingId).then((info) =>
-                console.log(info.data))
+                client.listing.getListingById(listingId)
             })
         })
     }
