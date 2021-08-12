@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
 import { Button, Grid, Typography, Paper, ButtonBase, } from '@material-ui/core';
 import { onAddToCart, updateToCart } from '../../helpers';
 import ViewSellerProfile from '../landing/ViewSellerProfile';
 import client from '../../API/api'
+import UserAddCartItem from '../../redux/users/UserAddCartItem'
+import UserRemoveCartItem from '../../redux/users/UserRemoveCartItem'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DisplayListings(props) {
+function DisplayListings(props) {
     const classes = useStyles();
     const [page, setPage] = useState(props.page)
     const [listings, setListings] = useState(props.listings);
@@ -65,16 +68,8 @@ export default function DisplayListings(props) {
     }, [props.userInfo, props.listings, props.page, props.viewFromCart, props.cardId])
 
     const removeFromCart = (listingId) => {
-        updateToCart(listingId, listings, cartId);
-        client.cart.getCartById(cartId).then(cartInfo => {
-            Promise.all(
-                // console.log(cartInfo.data)
-                cartInfo.data.listings.map((listing) =>
-                    client.listing.getListingById(listing))).then((listings) =>
-                        setListings(listings.map(({ data }) => {
-                            return data;
-                        })))
-        })
+        updateToCart(listingId, listings, cartId, "cart");
+        props.UserRemoveCartItem();
     }
 
     const getButtons = (page, listing) => {
@@ -160,3 +155,19 @@ export default function DisplayListings(props) {
         </div>
     )
 }
+
+function mapStateToProps(state) {
+    return {
+        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id, cartQuantity: state.cartQuantity
+    }
+}
+
+const mapDispatchToProps = {
+    UserAddCartItem,
+    UserRemoveCartItem
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DisplayListings)

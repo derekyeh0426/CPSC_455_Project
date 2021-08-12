@@ -6,7 +6,7 @@ import {
     Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button,
     IconButton, Collapse, TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Slider
 } from '@material-ui/core'
-import { onAddToCart, updateToCart } from '../../helpers'
+import { updateToCart } from '../../helpers'
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
@@ -14,6 +14,7 @@ import { store } from '../../redux/store';
 import './DisplayAllFurniture.css';
 import { LOCATIONS, FURNITURE_TYPES } from '../../constants'
 import UserAddCartItem from '../../redux/users/UserAddCartItem'
+import UserRemoveCartItem from '../../redux/users/UserRemoveCartItem'
 
 const useStyles = makeStyles((theme) => ({
     alignCenter: {
@@ -148,6 +149,25 @@ function DisplayIndividualFurniture(props) {
         setTypeTerm("all");
         setLocation("all")
         setPriceRange([min, max]);
+    }
+
+    const onAddToCart = (listingId, buyerId) => {
+        client.user.getUserById(buyerId).then((response) => {
+            const cart = response.data.cart;
+            if (!cart) {
+                client.cart.addCartToUser({ user: buyerId, listing: listingId })
+                props.UserAddCartItem()
+            }
+            else {
+                let tempListings = JSON.parse(JSON.stringify(cart.listings));
+                if (!tempListings.includes(listingId)) {
+                    tempListings.push(listingId)
+                    client.cart.updateCartById({ listing: tempListings, id: cart.id })
+                    props.UserAddCartItem()
+                }
+            }
+                
+        })
     }
 
     return (
@@ -291,7 +311,7 @@ function DisplayIndividualFurniture(props) {
                                                 {!cartListings
                                                     ?
                                                     <Button size="small" color="primary"
-                                                        onClick={() => {props.UserAddCartItem(); onAddToCart(listing.id, buyerId)}}>
+                                                        onClick={() => onAddToCart(listing.id, buyerId)}>
                                                         Add to Cart
                                                     </Button>
                                                     :
@@ -300,13 +320,14 @@ function DisplayIndividualFurniture(props) {
                                                             ? <Button
                                                                 size="small"
                                                                 color="secondary"
-                                                                onClick={() => updateToCart(listing.id, cartListings, cartId)}
+                                                                onClick={() => {
+                                                                    props.UserRemoveCartItem(); updateToCart(listing.id, cartListings, cartId, "landing")}}
                                                             > Remove From Cart
                                                             </Button>
                                                             :
                                                             <Button
                                                                 size="small" color="primary"
-                                                                onClick={() => {props.UserAddCartItem();onAddToCart(listing.id, buyerId)}}>
+                                                                onClick={() => onAddToCart(listing.id, buyerId)}>
                                                                 Add to Cart
                                                             </Button>
                                                         }
@@ -333,7 +354,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    UserAddCartItem
+    UserAddCartItem,
+    UserRemoveCartItem
 }
 
 export default connect(

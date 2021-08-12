@@ -35,6 +35,12 @@ function userReducer(state = initialState, action) {
             cartQuantity: state.cartQuantity + 1
         }
 
+        case "Remove_Item":
+        return {
+            ...state,
+            cartQuantity: state.cartQuantity - 1
+        }
+
         default: return state
     }
 }
