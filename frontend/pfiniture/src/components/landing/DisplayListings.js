@@ -53,6 +53,7 @@ function DisplayListings(props) {
     const [buyer, setBuyer] = useState(props.userInfo);
     const [viewFromCart, setViewFromCart] = useState(false);
     const [cartId, setCardId] = useState(props.cardId);
+    const [render, setRender] = useState(false)
 
     useEffect(() => {
         if (buyer) {
@@ -61,15 +62,31 @@ function DisplayListings(props) {
             setPage(props.page)
             setViewFromCart(props.viewFromCart)
             setCardId(props.cardId)
+            setRender(false)
         } else {
             setBuyer({})
             setListings([])
         }
     }, [props.userInfo, props.listings, props.page, props.viewFromCart, props.cardId])
 
-    const removeFromCart = (listingId) => {
-        updateToCart(listingId, listings, cartId, "cart");
-        props.UserRemoveCartItem();
+    const removeFromCart = (listingIdToDelete) => {
+        // updateToCart(listingIdToDelete, listings, cartId, "cart");
+        let listing = [];
+        listings.forEach(listingId => {
+            if (listingId.id !== listingIdToDelete) {
+                listing.push(listingId.id);
+            }
+        })
+        console.log(listing)
+        client.cart.updateCartById({listing: listing, id: cartId}).then(() => {
+            props.UserRemoveCartItem();
+            let tempListing = [];
+            setRender(true);
+            listing.forEach(listingId => {
+                client.listing.getListingById(listingId).then((info) =>
+                console.log(info.data))
+            })
+        })
     }
 
     const getButtons = (page, listing) => {
@@ -91,13 +108,6 @@ function DisplayListings(props) {
                 return (
                     <div>
                         <ViewSellerProfile userInfo={listing.user} viewFromCart={true}/>
-                        <Button 
-                            size="small" 
-                            color="secondary" 
-                            onClick={() => removeFromCart(listing.id)}
-                        >
-                            Remove
-                        </Button>
                     </div>
                 )
             default:

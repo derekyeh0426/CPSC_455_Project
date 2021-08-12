@@ -100,18 +100,24 @@ const CheckOut = (props) => {
             console.log(shippingAddress)
             console.log(buyerId)
             console.log(listings.map((listing) => listing.furniture.id))
+            let sellers = []
             listings.forEach((listing) => {
-                console.log(listing.user.id)
-                console.log(listing.furniture.id)
-                client.order.addToOrders({
-                    seller: listing.user.id, buyer: buyerId, totalAmount: totalAmount, paymentType: "PayPal", shippingAddress: shippingAddress,
-                    furnitures: listings.map((listing) => listing.furniture.id)
-                    //TODO REMOVE CART LISTINGS FROM LISTINGS AND CART LISTINGS
-                }).then((response) => {
-                    console.log(response);
-                    client.cart.updateCartById({listing: [], id: cartId})
-                    props.UserCheckout();
-                })
+                sellers.push(listing.user.id);
+            })
+            console.log(sellers)
+            console.log(listings.map((listing) => listing.furniture.id))
+            client.order.addToOrders({
+                sellers: sellers, buyer: buyerId, totalAmount: totalAmount, paymentType: "PayPal", shippingAddress: shippingAddress,
+                furnitures: listings.map((listing) => listing.furniture.id)
+                //TODO REMOVE CART LISTINGS FROM LISTINGS AND CART LISTINGS
+            }).then((response) => {
+                console.log(response);
+                client.cart.updateCartById({listing: [], id: cartId})
+                listings.forEach((listing => {
+                    console.log(listing.id)
+                    client.listing.deleteListingById(listing.id)
+                }))
+                // props.UserCheckout();
             })
         }
     }
@@ -211,10 +217,10 @@ const CheckOut = (props) => {
 
                         <Paypal total={getTotal("total")} />
 
-                        <Button
+                        {/* <Button
                             className={classes.checkoutButton}
                             variant="outline-dark"
-                            onClick={onPlaceOrder}>Complete Order</Button>
+                            onClick={onPlaceOrder}>Complete Order</Button> */}
                     </div>
                 </Fade>
             </Modal>

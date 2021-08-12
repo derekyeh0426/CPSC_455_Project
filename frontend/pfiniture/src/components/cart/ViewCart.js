@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import CheckOut from '../payment/CheckOut'
 import client from "../../API/api";
 import {
-    Container
+    Container, 
+    Button
 } from '@material-ui/core'
 import { store } from '../../redux/store';
 import '../landing/DisplayAllFurniture.css'
@@ -30,6 +31,13 @@ export default function ViewCart() {
         })
     }, [store.getState().id])
 
+    const clearCart = () => {
+        client.cart.updateCartById({listing: [], id: cartId}).then((cartInfo) => {
+                setCartListings([])
+            }
+        )
+    }
+
     return (
         <div>
             <div className="about-header">
@@ -42,6 +50,7 @@ export default function ViewCart() {
                         :
                         <div>
                             <CheckOut />
+                            <Button onClick={clearCart}>Clear Cart</Button>
                             <DisplayListings page={"cart"} listings={cartListings} userInfo={buyer} cardId={cartId} />
                         </div>
                     }

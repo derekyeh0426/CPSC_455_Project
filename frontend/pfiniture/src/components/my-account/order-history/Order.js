@@ -16,8 +16,16 @@ const Order = (props) => {
                         )
                     })}
             </td>
+            <td>
+            {!order.sellers
+                    ? ""
+                    : order.sellers.map((seller, index) => {
+                        return (
+                            <ViewSellerProfile userInfo={seller} page="order-history" />
+                        )
+                    })}
+                </td>
             <td>{order.totalAmount}</td>
-            <td><ViewSellerProfile userInfo={order.seller} page="order-history" /></td>
             <td>{order.paymentType}</td>
         </tr>
     )

@@ -317,13 +317,7 @@ function DisplayIndividualFurniture(props) {
                                                     :
                                                     <div>
                                                         {cartListings.includes(listing.id)
-                                                            ? <Button
-                                                                size="small"
-                                                                color="secondary"
-                                                                onClick={() => {
-                                                                    props.UserRemoveCartItem(); updateToCart(listing.id, cartListings, cartId, "landing")}}
-                                                            > Remove From Cart
-                                                            </Button>
+                                                            ? <div></div>
                                                             :
                                                             <Button
                                                                 size="small" color="primary"
