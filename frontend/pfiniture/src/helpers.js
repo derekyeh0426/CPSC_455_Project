@@ -8,7 +8,11 @@ export function onAddToCart(listingId, buyerId) {
         }
         else {
             console.log("user already has cart");
-            client.cart.updateCartById({ user: buyerId, listing: listingId, id: cart.id })
+            let tempListings = JSON.parse(JSON.stringify(cart.listings));
+            if (!tempListings.includes(listingId)) {
+                tempListings.push(listingId)
+                client.cart.updateCartById({listing: tempListings, id: cart.id })
+            }
         }
     })
 }
@@ -17,16 +21,17 @@ export function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
 
-export function updateToCart(listingIdToDelete, listings, buyerId, cartId) {
-    // TODO REMOVE LISTINGIDTODELETE FROM LISTINGIDS THEN MAKE API CALL
-    let listingsIds = []
+export function updateToCart(listingIdToDelete, listings, cartId) {
+    let id = cartId;
+    console.log(id)
+    console.log(listingIdToDelete)
+    let listing = []
     if (listings.length !== 0) {
-        listings.forEach(listing => {
-            console.log(listing.id)
-            listingsIds.push(listing.id)
+        listings.forEach(listingId => {
+            if (listingId.id !== listingIdToDelete) {
+                listing.push(listingId.id)
+            }
         })
     }
-    console.log(listingsIds)
-    console.log(listings)
-    // client.user.updateCartById({user: buyerId, listing: listings, id: cartId})
+    client.cart.updateCartById({listing, id})
 }

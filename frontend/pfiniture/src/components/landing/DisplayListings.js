@@ -83,7 +83,7 @@ export default function DisplayListings(props) {
                         <Button 
                             size="small" 
                             color="secondary" 
-                            onClick={() => updateToCart(listing.id, listings, buyer.id, cartId)}
+                            onClick={() => updateToCart(listing.id, listings, cartId)}
                         >
                             Remove
                         </Button>
