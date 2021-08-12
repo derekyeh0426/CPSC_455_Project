@@ -7,13 +7,12 @@ import Order from './Order'
 const Table = () => {
     const [orderHistory, setOrderHistory] = useState({});
 
-    useEffect(() => { 
-        let userID = store.getState().id
-        client.order.getOrderByUserId(userID).then(allOrders => {
+    useEffect(() => {
+        let buyerId = store.getState().id
+        client.order.getOrderByUserId(buyerId).then(allOrders => {
             setOrderHistory(allOrders.data)
         })
-        
-    }, [])
+    }, [store.getState().id])
 
     return (
         <div className="table-responsive">
