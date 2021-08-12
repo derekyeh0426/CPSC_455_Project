@@ -3,7 +3,10 @@ const Cart = require('../models/cart');
 
 const getAll = async (req, res) => {
     try {
-        const cart = await Cart.find({});
+        const cart = await Cart
+            .find({})
+            .populate('user')
+            .populate('listings');
         return res.json(cart);
     } catch (err) {
         return res.status(500).end();
@@ -12,7 +15,10 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
     try {
-        const cart = await Cart.findById(req.params.id);
+        const cart = await Cart
+            .findById(req.params.id)
+            .populate('user')
+            .populate('listings');
         if (cart === null) {
             return res.status(404).json({ error: 'invalid id' });
         }
@@ -25,11 +31,8 @@ const getById = async (req, res) => {
 const deleteById = async (req, res) => {
     try {
         const cartObject = await Cart.findById(req.params.id);
-        console.log(cartObject);
         const newCart = JSON.parse(JSON.stringify(cartObject));
-        console.log(newCart);
         newCart.listings.splice(0, newCart.listings.length);
-        console.log(newCart.listings);
         await Cart.findByIdAndUpdate(newCart.id, newCart, {new: true});
         return res.status(200).end();
     } catch (err) {
@@ -64,7 +67,7 @@ const create = async (req, res) => {
         const cart = new Cart({
             user: userObject,
             listings: listings
-        })
+        });
 
         const savedCart = await cart.save();
         const newUser = JSON.parse(JSON.stringify(userObject));

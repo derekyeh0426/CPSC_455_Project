@@ -1,15 +1,18 @@
 //referenced from https://zoejoyuliao.medium.com/add-google-sign-in-and-sign-out-to-your-react-app-and-get-the-accesstoken-2ee16bfd8297
 import React from 'react';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
-import logIn from '../../redux/users/userActions'
-import userLogOutAction from '../../redux/users/userLogOutAction';
+import UserLogInAction from '../../redux/users/UserLogInAction'
+import UserLogOutAction from '../../redux/users/UserLogOutAction';
 import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-// import { GOOGLE_CLIENT_ID } from '../../googleID'
+import {NotificationManager} from "react-notifications";
+import { TIME_OUT } from '../../constants';
+import { getCartQuantity } from '../../helpers';
 require('dotenv').config()
-// const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -24,14 +27,8 @@ class GoogleLogIn extends React.Component {
         this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
     }
 
-    componentDidMount(){
-        // console.log(GOOGLE_CLIENT_ID)
-        // console.log(REACT_APP_GOOGLE_CLIENT_ID);
-    }
-
     handleSuccessfulLogIn = (response) => {
         refreshTokenSetup(response);
-        this.props.logIn(response.profileObj)
         const newUser = {
             name: response.profileObj.name,
             email: response.profileObj.email,
@@ -41,33 +38,38 @@ class GoogleLogIn extends React.Component {
 
 
         client.user.addUsers(newUser).then(res => {
-            const reduxUser = {
-                name: response.profileObj.name,
-                email: response.profileObj.email,
-                id: res.data.id
-            }
-            this.props.logIn(reduxUser);    
-            this.setState({ accessToken: newUser.token, isLogined: true });
-            client.user.getAllUsers().then(res => {
-                console.log(res.data)
+            client.user.getUserById(res.data.id).then(buyerInfo => {
+                let cartNum = 0;
+                const cart = buyerInfo.data.cart;
+                if (!cart) {
+                    cartNum = 0;
+                } else {
+                    cartNum = cart.listings.length;
+                }
+                const reduxUser = {
+                    name: response.profileObj.name,
+                    email: response.profileObj.email,
+                    id: res.data.id,
+                    cartQuantity: cartNum
+                }
+                this.props.UserLogInAction(reduxUser)
             })
+            this.setState({ accessToken: newUser.token, isLogined: true });
         });
     }
 
     handleSuccessfulLogOut = (response) => {
         this.setState({accessToken: '', isLogined: false})
-        this.props.userLogOutAction();
+        this.props.UserLogOutAction();
     }
 
     handleLoginFailure(response) {
-        // alert('Failed to log in')
-        console.log('Failed to log in')
+        NotificationManager.error("Login unsuccessful, please try it again", "", TIME_OUT)
     }
 
 
     handleLogoutFailure(response) {
-        // alert('Failed to log out')
-        console.log('Failed to log out')
+        NotificationManager.error("Log out unsuccessful, please try it again", "", TIME_OUT)
     }
 
 
@@ -76,7 +78,6 @@ class GoogleLogIn extends React.Component {
             <div>
                 {this.state.isLogined ?
                     <GoogleLogout
-                        // clientId= "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         clientId = "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         buttonText="Logout"
                         onLogoutSuccess={this.handleSuccessfulLogOut}
@@ -85,7 +86,6 @@ class GoogleLogIn extends React.Component {
                     </GoogleLogout>
                     :
                     <GoogleLogin className="google-login-button"
-                        // clientId= "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         clientId = "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         buttonText="Log in with Google!"
                         onSuccess={this.handleSuccessfulLogIn}
@@ -106,8 +106,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    logIn,
-    userLogOutAction
+    UserLogInAction,
+    UserLogOutAction
 }
 
 export default connect(

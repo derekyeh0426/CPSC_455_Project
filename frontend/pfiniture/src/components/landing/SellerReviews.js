@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DisplayRatingsOrComments from './DisplayRatingsOrComments'
 
 export default function SellerReviews(props) {
-    const [commentsAndRatings, setCommentsAndRatings] = React.useState(false);
-    const [isOpen, setIsOpen] = React.useState(props.isOpen);
-    const [ratings, setRatings] = React.useState(props.ratings);
-    const [comments, setComments] = React.useState(props.comments);
-    const [user, setUser] = React.useState(props.userInfo);
-    const [reviewArray, setReviewArray] = React.useState([]);
-    const [updatedComments, setUpdatedComments] = React.useState([]);
-    const [updatedRatings, setUpdatedRatings] = React.useState([]);
+    const [commentsAndRatings, setCommentsAndRatings] = useState(false);
+    const [isOpen, setIsOpen] = useState(props.isOpen);
+    const [ratings, setRatings] = useState(props.ratings);
+    const [comments, setComments] = useState(props.comments);
+    const [user, setUser] = useState(props.userInfo);
+    const [reviewArray, setReviewArray] = useState([]);
+    const [updatedComments, setUpdatedComments] = useState([]);
+    const [updatedRatings, setUpdatedRatings] = useState([]);
 
     useEffect(() => {
         if (user) {
@@ -32,9 +32,6 @@ export default function SellerReviews(props) {
             let tempReviewArray = [];
             let tempUpdatedComments = JSON.parse(JSON.stringify(comments));
             let tempUpdatedRatings = JSON.parse(JSON.stringify(ratings));
-            console.log(comments);
-            console.log(ratings);
-            console.log(!comments && !ratings)
             if (comments.length === 0 && ratings.length === 0) {
                 setCommentsAndRatings(false)
             } else {

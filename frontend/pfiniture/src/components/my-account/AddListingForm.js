@@ -5,6 +5,8 @@ import { store } from '../../redux/store';
 import { makeStyles } from '@material-ui/core/styles';
 import { MESSAGE_TYPES, MAX_IMAGE_COUNT, FURNITURE_TYPES } from '../../constants'
 import client from "../../API/api";
+import {NotificationManager} from "react-notifications";
+import { TIME_OUT, MAX_PRICE_RANGE } from '../../constants'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -127,7 +129,6 @@ export default function AddListingForm(props) {
                             </Col>
                         </Form.Group>
 
-
                         <div className="add-image-container">
                             <input type="file" id="myFile" name="filename" onChange={onFileChange} />
                             <Button variant="outline-dark" onClick={onAddImage}>Add Image</Button>
@@ -158,8 +159,22 @@ export default function AddListingForm(props) {
 
 
     function onAddListing() {
+        let reg = /^-?\d+\.?\d*$/;
+        if (name === "" || price === "" || type === "") {
+            NotificationManager.error("Please fill in all the form!", "", TIME_OUT)
+            return;
+        }
+
+        if (!reg.test(price)){
+            NotificationManager.error("Please input price as number without white space!", "", TIME_OUT)
+            return;
+        }
+
+        if (parseFloat(price) > MAX_PRICE_RANGE) {
+            NotificationManager.error("This item is too expensive; we don't sell it here... Maximum is $1000!", "", TIME_OUT)
+            return;
+        }
         client.image.addImages(imageFiles).then((imageResponse) => {
-            console.log(imageResponse)
             client.furniture.addFurniture({ name, price }).then((response) => {
                 client.listing.addListing({
                     title: name,
@@ -188,7 +203,6 @@ export default function AddListingForm(props) {
 
     function onAddImage() {
         if (!selectedFile) {
-            console.log("no file selected");
             setMessage(messages.NO_FILE_SELECTED);
         } else if (!isFileImage(selectedFile)) {
             setMessage(messages.WRONG_FILE_TYPE);

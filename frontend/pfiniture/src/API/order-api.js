@@ -30,10 +30,10 @@ export default class orderClient {
         }
     }
 
-    static async addToOrders({seller, buyer, totalAmount, paymentType, furnitures, shippingAddress}) {
+    static async addToOrders({sellers, buyer, totalAmount, paymentType, furnitures, shippingAddress}) {
         try {
             const response = axios.post(BASE_URL + `/api/v1/orders/`, 
-            {seller, buyer, totalAmount, paymentType, furnitures, shippingAddress});
+            {sellers, buyer, totalAmount, paymentType, furnitures, shippingAddress});
             return response
         } catch (e) {
             console.log(e.message())

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import RateSeller from "./RateSeller"
 import CommentSeller from "./CommentSeller"
@@ -13,13 +13,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ReviewSeller(props) {
     const classes = useStyles();
-    const [user, setUser] = React.useState(props.userInfo);
+    const [user, setUser] = useState(props.userInfo);
 
     useEffect(() => {
         if (user) {
             setUser(props.userInfo)
             console.log(props.userInfo)
-            // client.user.getUserById(props.userInfo.id).then
         } else {
             setUser({})
         }
