@@ -93,9 +93,6 @@ const create = async (req, res) => {
         paymentType: paymentType.toLowerCase(),
         furnitures: furnitures,
         orderDate: new Date(),
-<<<<<<< HEAD
-        shippingAddress: shippingAddress
-=======
         shippingAddress: {
             address: shippingAddress.address.trim().toLowerCase(),
             city: shippingAddress.city.trim().toLowerCase(),
@@ -103,7 +100,6 @@ const create = async (req, res) => {
             country: shippingAddress.country.trim().toLowerCase(),
             postalCode: shippingAddress.postalCode.replace(/\s+/g, '').toLowerCase()
         }
->>>>>>> project_6
     });
 
     console.log(order);
@@ -115,16 +111,8 @@ const create = async (req, res) => {
             const newBuyer = JSON.parse(JSON.stringify(buyerObject));
             newBuyer.orders = newBuyer.orders.concat(savedOrder);
             User
-<<<<<<< HEAD
-                .findByIdAndUpdate(newUser.id, newUser, { new: true })
-                .then(() => {
-                    res.json(savedOrder);
-                    res.status(200).end();
-                });
-=======
                 .findByIdAndUpdate(newBuyer.id, newBuyer, { new: true })
                 .then(() => res.status(200).end());
->>>>>>> project_6
         })
         .catch(err => res.status(400).json({ error: 'invalid id' }));
 };
