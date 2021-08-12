@@ -32,7 +32,11 @@ We used basic web technologies HTML/CSS/JS to provide the content for our webpag
 ### 4. 'Above and Beyond'
 
 ### 5. Next Steps 
-We believe that havig a chat feature to allow users to message each other within the app would further improve this application and create a better user experience, since communication is done within the app instead of using service outside (e.g., email). Also, being able to share links of listings on social media would be a great next step for this application. 
+We believe that havig a chat feature to allow users to message each other within the app would further improve this application and create a better user experience, since communication is done within the app instead of using service outside (e.g., email). Also, being able to share links of listings on social media would be a great next step for this application.
+
+### 6. List of Contributions
+Derek (x7c1b):
+I worked in between backend and frontend. I helped set up the backend for user endpoints and I set up the log in system(Google log in) for our web app. On the front end side, I set up redux so that we can store import data in store and have it be accessible across all our components. I also write search functions so that users can look up for the furniture he/she wants. Finally, I set up the payment system using PayPal to allow for transactions in our web app.
 
 ------
 
