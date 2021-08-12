@@ -64,7 +64,6 @@ const getByType = async (req, res) => {
 
     const filteredListings = listings.filter(listing => listing.type.toLowerCase() === type.toLowerCase());
 
-    console.log(filteredListings)
 
     return res.status(200).json(filteredListings);
 };
@@ -91,38 +90,18 @@ const getByCreatedDateInOrder = async (req, res) => {
 };
 
 const deleteById = async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
-
-    if (listing === null) {
-        return res.status(404).end();
+    try {
+        const listing = await Listing.findByIdAndRemove(req.params.id);
+        
+        await Furniture.findByIdAndRemove(listing.furniture);
+        const user = await User.findById(listing.user);
+        const newUser = JSON.parse(JSON.stringify(user));
+        newUser.listings = newUser.listings.filter(listingId => listingId !== req.params.id);
+        await User.findByIdAndUpdate(newUser.id, newUser, { new: true });
+        return res.status(200).end();
+    } catch (err) {
+        return res.status(500).end();
     }
-
-    const user = listing.user;
-    const furniture = listing.furniture;
-
-    Listing
-        .findByIdAndRemove(req.params.id)
-        .then(() => {
-            console.log(furniture);
-
-            Furniture
-                .findByIdAndRemove(furniture)
-                .then(() => {
-                    console.log(user);
-
-                    User
-                        .findById(user)
-                        .then(userObject => {
-                            const newUser = JSON.parse(JSON.stringify(userObject));
-                            newUser.listings = newUser.listings.filter(listingId => listingId !== req.params.id);
-
-                            User
-                                .findByIdAndUpdate(newUser.id, newUser, { new: true })
-                                .then(() => res.status(200).end());
-                        })
-                })
-        })
-        .catch(err => res.status(500).end());
 };
 
 const updateById = async (req, res) => {
@@ -134,7 +113,6 @@ const updateById = async (req, res) => {
         return res.status(404).json({ error: 'invalid id' });
     }
 
-    console.log(listing);
 
     const newListing = {
         title: title || listing.title,
@@ -153,28 +131,21 @@ const updateById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    console.log("create")
     const { title, images, description, user, furniture, type } = req.body;
 
     const userObject = await User.findById(user);
     const furnitureObject = await Furniture.findById(furniture);
 
-    console.log("after user, furniture");
 
-    // console.log(userObject);
-    // console.log(furnitureObject);
 
     if (userObject === null || furnitureObject === null) {
-        console.log("not found")
         return res.status(404).json({ error: 'invalid id' });
     }
 
     if (type === undefined) {
-        console.log("no type")
         return res.status(404).json({ error: 'type missing' });
     }
 
-    console.log("before creation")
 
     const listing = new Listing({
         title: title,
@@ -186,7 +157,6 @@ const create = async (req, res) => {
         type: type
     });
 
-    console.log("created listing")
 
     listing
         .save()
