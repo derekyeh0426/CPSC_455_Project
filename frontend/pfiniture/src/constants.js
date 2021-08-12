@@ -3,8 +3,8 @@ import Orders from "./components/my-account/order-history/Orders";
 import Cart from "./components/cart/ViewCart";
 import DisplayMyListings from "./components/my-account/DisplayMyListings";
 
-export const BASE_URL = 'http://localhost:8080';
-// export const BASE_URL = 'https://fresh-furniture.herokuapp.com';
+// export const BASE_URL = 'http://localhost:8080';
+export const BASE_URL = 'https://fresh-furniture.herokuapp.com';
 
 export const FURNITURE_TYPES = ["chair", "desk", "table", "couch", "drawers", "shelves", "bed", "cabinet", "dresser"];
 
