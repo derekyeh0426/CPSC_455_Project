@@ -66,11 +66,6 @@ function Navbar(props) {
               </Button>
             </Link> : ""
             }
-            {/* <Link exact path to={"/cart"}>
-              <Button className={classes.cartButton}>
-                  <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
-              </Button>
-            </Link> */}
             {
               props.isLogIn?
               <p5 className = {classes.Name}>{props.name}</p5> : ""

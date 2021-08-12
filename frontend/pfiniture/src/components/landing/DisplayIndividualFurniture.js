@@ -291,9 +291,7 @@ function onAddToCart(listingID) {
             client.cart.addCartToUser({ user: userID, listing: listingID }).then((response) => console.log(response));
         }
         else {
-            console.log("user already has cart");
             client.cart.updateCartById({ user: userID, listing: listingID, id: cart.id }).then((response) => {
-                console.log(response)
             });
         }
     })

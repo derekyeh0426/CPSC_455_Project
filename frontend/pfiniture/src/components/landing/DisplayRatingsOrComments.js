@@ -28,9 +28,10 @@ export default function DisplayRatingsOrComments(props) {
 
     return (
         <div>
-            {!ratingsOrComments
-                ? console.log(ratingsOrComments)
-                : ratingsOrComments.map((ratingOrComment, index) => {
+            {!ratingsOrComments?
+                ""
+                : 
+                ratingsOrComments.map((ratingOrComment, index) => {
                     return (
                         <div key={index} className={classes.root}>
                             <Paper className={classes.gridPaper}>
