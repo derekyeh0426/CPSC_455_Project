@@ -1,7 +1,7 @@
 ## CPSC_455_Project: Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
 ## Fresh Furniture
-We are Fresh Furniture and ready to help you find the best second-hand or even handmade furniture at the best value and quality! Our furniture not only helps reduce waste for the environment but also supports local carpenters. You can even sell your own handcrafted and second-hand furniture as well, and if you do well, your ratings and reviews will reflect that! Visit Fresh Furniture and begin your furniture journey there!
+We are Fresh Furniture and ready to help you find the best second-hand or even handmade furniture at the best value and quality! Our furniture not only helps reduce waste for the environment but also supports local carpenters. You can even sell your own handcrafted and second-hand furniture, and if you do well, your ratings and reviews will reflect that! Visit Fresh Furniture and begin your furniture journey there!
 
 ## Final Project Report
 ### 2. Project Task Requirements
