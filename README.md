@@ -38,6 +38,12 @@ We believe that havig a chat feature to allow users to message each other within
 Derek (x7c1b):
 I worked in between backend and frontend. I helped set up the backend for user endpoints and I set up the log in system(Google log in) for our web app. On the front end side, I set up redux so that we can store import data in store and have it be accessible across all our components. I also write search functions so that users can look up for the furniture he/she wants. Finally, I set up the payment system using PayPal to allow for transactions in our web app.
 
+Peter (o8n2b): 
+I mostly worked on the server side code, where Daniel and I set up the database and connected our backend to it, and implemented all the backend API endpoints. I also implemented API endpoints for filtering users by locations or email, sorting listings by dates, filtering listings by types, and adding / updating user's reviews and comments, so that the frontend code can easily retrieve what it needs without having to do all the work. I deployed the application on Heroku for the demos as well, and fixed the problems that we've encountered while deploying the application (e.g., app not fetching env variables). 
+
+Abdurahman (w3q1b) :
+I worked on the frontend and backend but the frontend mostly. I set up react-router for the project which I used to implement the Navbar. I worked on the AddListing Modal which required setting up image upload from the frontend, I made it robust to the different pitfalls a user might face while filling the form. I also implemented the cart system and checkout. I worked on some backend endpoints which include getUserById and deleteUserById. I also implemented the APIs which would enable the frontend to access the backend APIs.
+
 ------
 
 ## Project Description (Original Idea)
