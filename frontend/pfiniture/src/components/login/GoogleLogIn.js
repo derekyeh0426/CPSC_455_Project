@@ -7,9 +7,7 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-// import { GOOGLE_CLIENT_ID } from '../../googleID'
 require('dotenv').config()
-// const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -22,11 +20,6 @@ class GoogleLogIn extends React.Component {
         this.handleLoginFailure = this.handleLoginFailure.bind(this);
         this.handleSuccessfulLogOut = this.handleSuccessfulLogOut.bind(this);
         this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
-    }
-
-    componentDidMount(){
-        // console.log(GOOGLE_CLIENT_ID)
-        // console.log(REACT_APP_GOOGLE_CLIENT_ID);
     }
 
     handleSuccessfulLogIn = (response) => {
@@ -76,7 +69,6 @@ class GoogleLogIn extends React.Component {
             <div>
                 {this.state.isLogined ?
                     <GoogleLogout
-                        // clientId= "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         clientId = "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         buttonText="Logout"
                         onLogoutSuccess={this.handleSuccessfulLogOut}
@@ -85,7 +77,6 @@ class GoogleLogIn extends React.Component {
                     </GoogleLogout>
                     :
                     <GoogleLogin className="google-login-button"
-                        // clientId= "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         clientId = "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         buttonText="Log in with Google!"
                         onSuccess={this.handleSuccessfulLogIn}

@@ -159,7 +159,6 @@ export default function AddListingForm(props) {
 
     function onAddListing() {
         client.image.addImages(imageFiles).then((imageResponse) => {
-            console.log(imageResponse)
             client.furniture.addFurniture({ name, price }).then((response) => {
                 client.listing.addListing({
                     title: name,
@@ -188,7 +187,6 @@ export default function AddListingForm(props) {
 
     function onAddImage() {
         if (!selectedFile) {
-            console.log("no file selected");
             setMessage(messages.NO_FILE_SELECTED);
         } else if (!isFileImage(selectedFile)) {
             setMessage(messages.WRONG_FILE_TYPE);
