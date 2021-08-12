@@ -4,8 +4,6 @@ export default function Paypal(props) {
     const paypal = useRef()
 
     useEffect(() => {
-        console.log(props.address);
-        console.log(props.total);
         let total = props.total
         console.log(total);
         window.paypal.Buttons({
@@ -25,6 +23,7 @@ export default function Paypal(props) {
             },
             onApprove: async (data, actions) => {
                 const order = await actions.order.capture()
+                console.log("order")
                 console.log(order);
             },
             onError: (err) => {

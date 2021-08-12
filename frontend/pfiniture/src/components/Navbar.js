@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import { Toolbar, Button } from '@material-ui/core'
@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import image from "../assets/FF_12.png";
 import GoogleLogin from './login/GoogleLogIn'
-import client from '../API/api'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -41,12 +40,6 @@ const useStyles = makeStyles(() => ({
 
 function Navbar(props) {
   const classes = useStyles();
-  const [cartLength, setCartLength] = useState(0);
-
-  // useEffect(() => {
-  //   console.log(props.cartQuantity)
-  //     setCartLength(props.cartQuantity);
-  // }, [props.id, props.cartQuantity]);
 
   return (
     <div style={{ paddingTop: 68 }}>

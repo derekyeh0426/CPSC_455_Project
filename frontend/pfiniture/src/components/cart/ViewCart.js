@@ -29,20 +29,20 @@ export default function ViewCart() {
             }
         })
     }, [store.getState().id])
-    
+
     return (
         <div>
-            <h1>My Cart</h1>
+            <div className="about-header">
+                <p className="card_header">My Cart</p>
+            </div>
             <div className="grid-container">
                 <Container>
                     {cartListings.length === 0
                         ? "No furniture in cart"
-                        : 
+                        :
                         <div>
+                            <CheckOut />
                             <DisplayListings page={"cart"} listings={cartListings} userInfo={buyer} cardId={cartId} />
-                            <CheckOut 
-                                allCartItems={cartListings}
-                            />
                         </div>
                     }
                 </Container>

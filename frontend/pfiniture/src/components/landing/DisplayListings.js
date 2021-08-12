@@ -76,7 +76,9 @@ function DisplayListings(props) {
         switch (page) {
             case "seller":
                     if (viewFromCart) {
-                        return <div></div>
+                        return ( 
+                            <div></div>
+                        )
                     } else {
                         return (
                             <Button size="small" color="primary" onClick={() => onAddToCart(listing.id, buyer.id)}>

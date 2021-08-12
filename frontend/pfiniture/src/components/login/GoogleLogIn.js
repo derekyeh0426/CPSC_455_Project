@@ -53,7 +53,7 @@ class GoogleLogIn extends React.Component {
                     id: res.data.id,
                     cartQuantity: cartNum
                 }
-                this.props.logIn(reduxUser)
+                this.props.UserLogInAction(reduxUser)
             })
             this.setState({ accessToken: newUser.token, isLogined: true });
         });
