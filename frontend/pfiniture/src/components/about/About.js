@@ -3,7 +3,7 @@ import "./About.css"
 import image from '../../assets/FF_12.png';
 import { Container } from 'react-bootstrap';
 
-class About extends React.Component {
+export default class About extends React.Component {
 
     render() {
         return (
@@ -11,7 +11,7 @@ class About extends React.Component {
                 <div className="about-header">
                     <img src={image} className="about-image" alt="FF Logo"/>
                     <br/>
-                    <text className="card_header">Fresh Furniture</text>
+                    <p className="card_header">Fresh Furniture</p>
                 </div>
                 <br />
                 <div className="about-center">
@@ -32,5 +32,3 @@ class About extends React.Component {
         )
     }
 }
-
-export default About;

@@ -1,104 +1,343 @@
 const User = require('../models/user');
-const { OAuth2Client } = require('google-auth-library')
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-const getAll = (req, res) => {
-    User
-        .find({})
-        .then(User => res.json(User));
+const getAll = async (req, res) => {
+    try {
+        const users = await User
+            .find({})
+            .populate('listings')
+            .populate('cart')
+            .populate('orders')
+            .populate('ratedUsers.user', 'name email')
+            .populate('commentedUsers.user', 'name email')
+            .populate('ratings.user', 'name email')
+            .populate('comments.user', 'name email');
+
+        return res.status(200).json(users);
+    } catch (error) {
+        return res.status(500).end();
+    }
 };
 
-const deleteAll = (req, res) => {
-    User
-        .deleteMany({})
-        .then(result => res.status(200).end());
+const deleteAll = async (req, res) => {
+    try {
+        await User.deleteMany({});
+        return res.status(200).end();
+    } catch (error) {
+        return res.status(500).end();
+    }
 };
 
-async function create (req, res) {
-    let { token, name, email, location } = req.body;
+const create = async (req, res) => {
+    try {
+        let { token, name, email, location, cart, order } = req.body;
 
-    if (token !== undefined) {
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID
+        if (token !== undefined) {
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: process.env.GOOGLE_CLIENT_ID
+            });
+
+            name = ticket.getPayload().name;
+            email = ticket.getPayload().email;
+        }
+
+        // Check for email duplicates.
+        let users = await User.find({});
+        users = users.filter(user => user.email === email);
+
+        // User with the given email already exists, so return the user.
+        if (users.length > 0) {
+            return res.status(200).json(users[0]);
+        }
+
+        const user = new User({
+            name: name,
+            email: email,
+            cart: cart,
+            order: order,
+            location: location || 'Vancouver'
         });
-        name = ticket.getPayload().name;
-        email = ticket.getPayload().email;
+
+        const savedUser = await user.save();
+        return res.status(200).json(savedUser);
+    } catch (error) {
+        return res.status(500).end();
     }
-
-    // Check for email duplicates.
-    let users = await User.find({});
-    users = users.filter(user => user.email === email);
-
-    if (users.length > 0) {
-        return res.status(200).json(users[0]);
-    }
-
-    const user = new User({
-        name: name,
-        email: email,
-        location: location || 'Vancouver'
-    });
-
-    user
-        .save().then(savedUser => res.json(savedUser));
 };
 
-const deleteById = (req, res) => {
-    User
-        .findByIdAndRemove(req.params.id)
-        .then(result => {
-            if (result === null) {
-                return res.status(404).end();
-            }
-
-            return res.status(200).end();
-        })
-        .catch(err => res.status(500));
+const deleteById = async (req, res) => {
+    try {
+        const user = await User.findByIdAndRemove(req.params.id);
+        return res.status(200).end();
+    } catch (error) {
+        return res.status(404).end({ error: 'invalid id' });
+    }
 };
 
-const getById = (req, res) => {
-    User
-        .findById(req.params.id)
-        .then(user => {
-            if (user === null) {
-                return res.status(404).json({ error: 'invalid id' });
+const getById = async (req, res) => {
+    try {
+        const user = await User
+            .findById(req.params.id)
+            .populate('listings')
+            .populate('cart')
+            .populate('orders')
+            .populate('ratedUsers.user', 'name email')
+            .populate('commentedUsers.user', 'name email')
+            .populate('ratings.user', 'name email')
+            .populate('comments.user', 'name email');
+
+        if (user === null) {
+            return res.status(404).json({ error: 'invalid id' });
+        }
+
+        return res.status(200).json(user);
+    } catch (error) {
+        return res.status(500).end();
+    }
+};
+
+// Return users based on the given location.
+// E.g., "/api/v1/users/locations?location=coquitlam".
+const getByLocation = async (req, res) => {
+    try {
+        const { location } = req.query;
+        const users = await User
+            .find({})
+            .populate('listings')
+            .populate('cart')
+            .populate('orders')
+            .populate('ratedUsers.user', 'name email')
+            .populate('commentedUsers.user', 'name email')
+            .populate('ratings.user', 'name email')
+            .populate('comments.user', 'name email');
+
+        const userResult = [];
+
+        users.forEach(user => {
+            if (user.location.toLowerCase() === location.toLowerCase()) {
+                userResult.push(user);
             }
+        });
 
-            return res.json(user);
-        })
-        .catch(err => res.status(500).end());
-}
+        return res.status(200).json(userResult);
+    } catch (error) {
+        return res.status(500).end();
+    }
+};
 
-const updateById = async (req, res) => {
-    const { name, listings, rating, location } = req.body;
+// Return users based on the given email.
+// E.g., "/api/v1/users/emails?email=admin@gmail.com".
+const getByEmail = async (req, res) => {
+    try {
+        const { email } = req.query;
+        const users = await User
+            .find({})
+            .populate('listings')
+            .populate('cart')
+            .populate('orders')
+            .populate('ratedUsers.user', 'name email')
+            .populate('commentedUsers.user', 'name email')
+            .populate('ratings.user', 'name email')
+            .populate('comments.user', 'name email');
 
-    const user = await User.findById(req.params.id);
+        users.forEach(user => {
+            if (user.email === email) {
+                return res.status(200).json(user);
+            }
+        });
 
-    if (user === null) {
+        return res.status(404).json({ error: 'invalid email' });
+    } catch (error) {
+        return res.status(500).end();
+    }
+};
+
+const getAllRatingsByUserId = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        return res.status(200).json({
+            ratings: user.ratings,
+            overall: user.ratings.length === 0
+                ? 0
+                : user.ratings.reduce((a, b) => a + b.rating, 0) / user.ratings.length
+        });
+    } catch (error) {
         return res.status(404).json({ error: 'invalid id' });
     }
+};
 
-    console.log(user);
+const getAllCommentsByUserId = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        return res.status(200).json(user.comments);
+    } catch (error) {
+        return res.status(404).json({ error: 'invalid id' });
+    }
+};
 
-    const newUser = {
-        name: name || user.name,
-        listings: listings || user.listings,
-        rating: (rating > 10 ? 10 : rating) || user.rating,
-        location: location || user.location
-    };
+const updateById = async (req, res) => {
+    try {
+        const { name, listings, rating, location } = req.body;
+        const user = await User.findById(req.params.id);
 
-    User
-        .findByIdAndUpdate(req.params.id, newUser, { new: true })
-        .then(updatedUser => res.json(updatedUser))
-        .catch(err => res.status(400).json({ error: 'invalid id' }));
+        if (rating === undefined || isNaN(rating) || rating < 0) {
+            return res.status(404).json({ error: 'invalid rating' });
+        }
+
+        if (user === null) {
+            return res.status(404).json({ error: 'invalid id' });
+        }
+
+        const newUser = {
+            name: name || user.name,
+            listings: listings || user.listings,
+            overallRating: (rating > 5 ? 5 : rating),
+            location: location || user.location
+        };
+
+        const updatedUser = await User
+            .findByIdAndUpdate(req.params.id, newUser, { new: true })
+            .populate('listings')
+            .populate('cart')
+            .populate('orders')
+            .populate('ratedUsers.user', 'name email')
+            .populate('commentedUsers.user', 'name email')
+            .populate('ratings.user', 'name email')
+            .populate('comments.user', 'name email');
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        return res.status(400).json({ error: 'invalid id' });
+    }
+};
+
+const rateUserById = async (req, res) => {
+    try {
+        const buyer = req.params.buyer;
+        const { seller, rating } = req.body;
+
+        if (!buyer || !seller || rating === undefined || isNaN(rating)) {
+            return res.status(404).json({error: 'bad request - cannot take null values'});
+        }
+
+        const buyerObject = await User.findById(buyer);
+        const sellerObject = await User.findById(seller);
+
+        if (buyerObject === null || sellerObject === null) {
+            return res.status(404).json({error: 'invalid id'});
+        }
+
+        // Add sellerObject to the buyerObject's list of rated users.
+        // Must check if the buyer has rated the seller already.
+        // If already rated, just update the ratings. Otherwise, add the rating.
+        const newBuyerObject = JSON.parse(JSON.stringify(buyerObject));
+        let oldRating = 0;
+
+        let alreadyRated = false;
+        newBuyerObject.ratedUsers.forEach(ratedUser => {
+            if (ratedUser.user === seller) {
+                oldRating = ratedUser.rating;
+                alreadyRated = true;
+            }
+        });
+
+        // Remove the seller from the rated users and the buyer from the seller's rating list if already rated.
+        const newSellerObject = JSON.parse(JSON.stringify(sellerObject));
+        if (alreadyRated) {
+            newBuyerObject.ratedUsers = newBuyerObject.ratedUsers.filter(ratedUser => ratedUser.user !== seller);
+            newSellerObject.ratings = newSellerObject.ratings.filter(rating => rating.user !== buyer);
+        }
+
+        // Update buyer's list of rated sellers and seller's rating list.
+        newBuyerObject.ratedUsers = newBuyerObject.ratedUsers.concat({
+            user: seller,
+            rating: (rating > 5) ? 5 : rating
+        });
+
+        newSellerObject.ratings = newSellerObject.ratings.concat({
+            user: buyer,
+            rating: (rating > 5) ? 5 : rating
+        });
+
+        // Update the seller's overall rating.
+        newSellerObject.overallRating = newSellerObject.ratings.length === 0
+            ? 0
+            : newSellerObject.ratings.reduce((a, b) => a + b.rating, 0) / newSellerObject.ratings.length;
+
+        await User.findByIdAndUpdate(newSellerObject.id, newSellerObject, {new: true});
+        await User.findByIdAndUpdate(newBuyerObject.id, newBuyerObject, {new: true});
+
+        return res.status(200).end();
+    } catch (error) {
+        return res.status(500).end();
+    }
+};
+
+const commentUserById = async (req, res) => {
+    try {
+        const buyer = req.params.buyer;
+        const { seller, comment } = req.body;
+
+        if (!buyer || !seller || !comment) {
+            return res.status(404).json({error: 'bad request - cannot take null values'});
+        }
+
+        const buyerObject = await User.findById(buyer);
+        const sellerObject = await User.findById(seller);
+
+        if (buyerObject === null || sellerObject === null) {
+            return res.status(404).json({error: 'invalid id'});
+        }
+
+        const newBuyerObject = JSON.parse(JSON.stringify(buyerObject));
+        const newSellerObject = JSON.parse(JSON.stringify(sellerObject));
+
+        let alreadyCommented = false;
+        newBuyerObject.commentedUsers.forEach(commentedUser => {
+            if (commentedUser.user === seller) {
+                alreadyCommented = true;
+            }
+        });
+
+        // Remove the seller from the commented users and buyer from the seller's list of comments if already commented.
+        if (alreadyCommented) {
+            newBuyerObject.commentedUsers = newBuyerObject.commentedUsers.filter(commentedUser => commentedUser.user !== seller);
+            newSellerObject.comments = newSellerObject.comments.filter(comment => comment.user !== buyer);
+        }
+
+        newBuyerObject.commentedUsers = newBuyerObject.commentedUsers.concat({
+            user: seller,
+            comment: comment
+        });
+
+        newSellerObject.comments = newSellerObject.comments.concat({
+            user: buyer,
+            comment: comment
+        });
+
+        await User.findByIdAndUpdate(newSellerObject.id, newSellerObject, {new: true});
+        await User.findByIdAndUpdate(newBuyerObject.id, newBuyerObject, {new: true});
+
+        return res.status(200).end();
+    } catch (error) {
+        return res.status(500).end();
+    }
 };
 
 module.exports = {
     getAll,
+    getAllRatingsByUserId,
+    getAllCommentsByUserId,
     create,
     deleteAll,
     deleteById,
     getById,
-    updateById
+    updateById,
+    getByEmail,
+    getByLocation,
+    rateUserById,
+    commentUserById,
 };

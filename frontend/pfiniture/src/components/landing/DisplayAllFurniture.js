@@ -1,19 +1,17 @@
 import React from 'react';
 import './DisplayAllFurniture.css';
-import {
-    Container
-} from '@material-ui/core'
+import {Container} from '@material-ui/core'
 import DisplayIndividualFurniture from "./DisplayIndividualFurniture"
 
-function Landing() {
 
+export default function DisplayAllFurniture() {
     return (
-        <div className="grid-container">
+        <div>
+            <div className="grid-container">
             <Container>
-                    <DisplayIndividualFurniture />
+                    <DisplayIndividualFurniture/>
             </Container>
+        </div>
         </div>
     )
 }
-
-export default Landing;

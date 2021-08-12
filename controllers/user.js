@@ -1,21 +1,30 @@
 const router = require('express').Router();
 const userService = require('../service/user');
 
-router.use((req, res, next) => {
-    console.log('user router');
-    next();
-});
+router.use((req, res, next) => next());
 
-router.get('/', (req, res, next) => userService.getAll(req, res));
+router.get('/emails', (req, res) => userService.getByEmail(req, res));
 
-router.get('/:id', (req, res, next) => userService.getById(req, res));
+router.get('/locations', (req, res) => userService.getByLocation(req, res));
 
-router.post('/', (req, res, next) => userService.create(req, res));
+router.get('/:id/ratings', (req, res) => userService.getAllRatingsByUserId(req, res));
 
-router.delete('/', (req, res, next) => userService.deleteAll(req, res));
+router.get('/:id/comments', (req, res) => userService.getAllCommentsByUserId(req, res));
 
-router.delete('/:id', (req, res, next) => userService.deleteById(req, res));
+router.get('/:id', (req, res) => userService.getById(req, res));
 
-router.put('/:id', (req, res, next) => userService.updateById(req, res));
+router.get('/', (req, res) => userService.getAll(req, res));
+
+router.post('/', (req, res) => userService.create(req, res));
+
+router.delete('/:id', (req, res) => userService.deleteById(req, res));
+
+router.delete('/', (req, res) => userService.deleteAll(req, res));
+
+router.put('/:buyer/rates', (req, res) => userService.rateUserById(req, res));
+
+router.put('/:buyer/comments', (req, res) => userService.commentUserById(req, res));
+
+router.put('/:id', (req, res) => userService.updateById(req, res));
 
 module.exports = router;

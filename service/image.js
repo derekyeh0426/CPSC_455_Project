@@ -23,12 +23,10 @@ const upload =  multer({
             cb(null, {originalname: file.originalname});
         },
         key: (req, file, cb) => {
-            console.log(file)
             cb(null, Date.now().toString() + path.extname(file.originalname))
         }
     }),
     fileFilter: (req, file, cb) => {
-        console.log(file.originalname);
         const filetypes = /jpeg|jpg|png/;
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = filetypes.test(file.mimetype);
@@ -40,35 +38,26 @@ const upload =  multer({
     }
 });
 
-const deleteById = async (req, res, next) => {
-    const image = await Image.findById(req.params.id);
-
-    if (image === null) {
-        return res.status(404).end();
-    }
-
+const deleteById = (req, res) => {
     Image
         .findByIdAndRemove(req.params.id)
-        .then(() => res.status(200).end())
-        .catch(err => res.status(404).json({ error: 'invalid id' }));
-
-    s3.deleteObject({
-        Bucket: bucketName,
-        Key: image.key
-    }, (err, data) => {
-        if (err) {
-            console.log(err)
-            return res.status(500).end();
-        }
-    
-        return res.status(200).end();
-    });
+        .then(image => {
+            s3.deleteObject({
+                Bucket: bucketName,
+                Key: image.key
+            }, (err, data) => {
+                if (err) {
+                    return res.status(500).end();
+                }
+                return res.status(200).end();
+            });
+        }).catch(err => res.status(404).json({ error: 'invalid id' }));
 };
 
-const create = (req, res, next) => {
+const create = (req, res) => {
     const uploadArray = upload.array('photo', 3);
     uploadArray(req, res, err => {
-        let jsonArray = [];
+        let imagePromises = [];
         if (err) {
             res.status(404).end();
         }
@@ -77,10 +66,12 @@ const create = (req, res, next) => {
                 key: file.key,
                 imageUrl: file.location
             });
-            image
-                .save()
+            imagePromises.push(image.save())
         })
-        res.status(200).end();
+        Promise.all(imagePromises).then(savedImages => {
+            res.json(savedImages)
+            res.status(200).end();
+        })
     })
 };
 
