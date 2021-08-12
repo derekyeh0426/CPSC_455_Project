@@ -1,8 +1,8 @@
 //referenced from https://zoejoyuliao.medium.com/add-google-sign-in-and-sign-out-to-your-react-app-and-get-the-accesstoken-2ee16bfd8297
 import React from 'react';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
-import logIn from '../../redux/users/userActions'
-import userLogOutAction from '../../redux/users/userLogOutAction';
+import UserLogInAction from '../../redux/users/UserLogInAction'
+import UserLogOutAction from '../../redux/users/UserLogOutAction';
 import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
@@ -27,7 +27,6 @@ class GoogleLogIn extends React.Component {
 
     handleSuccessfulLogIn = (response) => {
         refreshTokenSetup(response);
-        this.props.logIn(response.profileObj)
         const newUser = {
             name: response.profileObj.name,
             email: response.profileObj.email,
@@ -42,7 +41,7 @@ class GoogleLogIn extends React.Component {
                 email: response.profileObj.email,
                 id: res.data.id
             }
-            this.props.logIn(reduxUser);    
+            this.props.UserLogInAction(reduxUser);    
             this.setState({ accessToken: newUser.token, isLogined: true });
             client.user.getAllUsers().then(res => {
             })
@@ -51,7 +50,7 @@ class GoogleLogIn extends React.Component {
 
     handleSuccessfulLogOut = (response) => {
         this.setState({accessToken: '', isLogined: false})
-        this.props.userLogOutAction();
+        this.props.UserLogOutAction();
     }
 
     handleLoginFailure(response) {
@@ -97,8 +96,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    logIn,
-    userLogOutAction
+    UserLogInAction,
+    UserLogOutAction
 }
 
 export default connect(
