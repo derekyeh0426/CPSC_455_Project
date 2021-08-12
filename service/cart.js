@@ -22,7 +22,6 @@ const getById = (req, res) => {
 const deleteById = async (req, res) => {
     const cartObject = await Cart.findById(req.params.id);
     const newCart = JSON.parse(JSON.stringify(cartObject));
-    console.log(newCart);
     newCart.listing.splice(0, newCart.listing.length);
     Cart
         .findByIdAndUpdate(newCart.id, newCart, { new: true })
@@ -60,13 +59,11 @@ const create = async (req, res) => {
     cart
         .save()
         .then(savedCart => {
-            // console.log(userObject);
             const newUser = JSON.parse(JSON.stringify(userObject));
             newUser.cart = savedCart;
             User
                 .findByIdAndUpdate(newUser.id, newUser, { new: true })
                 .then(() => {
-                    console.log(savedCart);
                     res.json(savedCart)
                     res.status(200).end()
                 });

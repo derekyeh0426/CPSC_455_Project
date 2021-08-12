@@ -23,7 +23,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         type: String
     },
-    furnitures: [
+    furnitureObjects: [
         {
             required: true,
             type: mongoose.Schema.Types.ObjectId,
@@ -51,7 +51,17 @@ const orderSchema = new mongoose.Schema({
             required: true,
             type: String
         }
-    }
+    },
+    furnitures: [
+        {
+            name: {
+                type: String
+            },
+            price: {
+                type: String
+            }
+        }
+    ]
 });
 
 orderSchema.set('toJSON', {
