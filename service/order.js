@@ -40,7 +40,7 @@ const getByUserId = async (req, res) => {
             return res.json({});
         }
 
-        const orders = Order
+        const orders = await Order
             .find()
             .where('_id')
             .in(user.orders)

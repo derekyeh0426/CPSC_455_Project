@@ -7,9 +7,10 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
-// import { GOOGLE_CLIENT_ID } from '../../googleID'
+import {NotificationManager} from "react-notifications";
+import { TIME_OUT } from '../../constants'
 require('dotenv').config()
-// const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -22,11 +23,6 @@ class GoogleLogIn extends React.Component {
         this.handleLoginFailure = this.handleLoginFailure.bind(this);
         this.handleSuccessfulLogOut = this.handleSuccessfulLogOut.bind(this);
         this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
-    }
-
-    componentDidMount(){
-        // console.log(GOOGLE_CLIENT_ID)
-        // console.log(REACT_APP_GOOGLE_CLIENT_ID);
     }
 
     handleSuccessfulLogIn = (response) => {
@@ -49,7 +45,6 @@ class GoogleLogIn extends React.Component {
             this.props.logIn(reduxUser);    
             this.setState({ accessToken: newUser.token, isLogined: true });
             client.user.getAllUsers().then(res => {
-                console.log(res.data)
             })
         });
     }
@@ -60,14 +55,12 @@ class GoogleLogIn extends React.Component {
     }
 
     handleLoginFailure(response) {
-        // alert('Failed to log in')
-        console.log('Failed to log in')
+        NotificationManager.error("Log in unsuccessful, please try it again", "", TIME_OUT)
     }
 
 
     handleLogoutFailure(response) {
-        // alert('Failed to log out')
-        console.log('Failed to log out')
+        NotificationManager.error("Log out unsuccessful, please try it again", "", TIME_OUT)
     }
 
 
@@ -76,7 +69,6 @@ class GoogleLogIn extends React.Component {
             <div>
                 {this.state.isLogined ?
                     <GoogleLogout
-                        // clientId= "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         clientId = "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         buttonText="Logout"
                         onLogoutSuccess={this.handleSuccessfulLogOut}
@@ -85,7 +77,6 @@ class GoogleLogIn extends React.Component {
                     </GoogleLogout>
                     :
                     <GoogleLogin className="google-login-button"
-                        // clientId= "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         clientId = "897654971286-mmm9opi6prrb9s8c0fe0qha1iqhr22uk.apps.googleusercontent.com"
                         buttonText="Log in with Google!"
                         onSuccess={this.handleSuccessfulLogIn}

@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Grid,
-    Typography,
-    Paper,
-    Button
-} from '@material-ui/core';
+import {Grid,Typography,Paper} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DisplayRatingsOrComments(props) {
     const classes = useStyles();
-    const [isComments, setIsComments] = React.useState(props.isComments)
-    const [isRatings, setIsRatings] = React.useState(props.isRatings)
-    const [ratingsOrComments, setRatingsOrComments] = React.useState(props.ratingsOrComments);
+    const [isComments, setIsComments] = useState(props.isComments)
+    const [isRatings, setIsRatings] = useState(props.isRatings)
+    const [ratingsOrComments, setRatingsOrComments] = useState(props.ratingsOrComments);
 
     useEffect(() => {
         setIsComments(props.isComments);
@@ -33,9 +28,10 @@ export default function DisplayRatingsOrComments(props) {
 
     return (
         <div>
-            {!ratingsOrComments
-                ? console.log(ratingsOrComments)
-                : ratingsOrComments.map((ratingOrComment, index) => {
+            {!ratingsOrComments?
+                ""
+                : 
+                ratingsOrComments.map((ratingOrComment, index) => {
                     return (
                         <div key={index} className={classes.root}>
                             <Paper className={classes.gridPaper}>

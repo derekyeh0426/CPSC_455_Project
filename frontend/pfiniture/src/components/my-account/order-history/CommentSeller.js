@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Button,
-    TextField,
-} from '@material-ui/core';
+import {Button,TextField,} from '@material-ui/core';
 import { store } from '../../../redux/store';
 import client from "../../../API/api";
 
@@ -30,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CommentSeller(props) {
     const classes = useStyles();
-    const [sellerInfo, setSellerInfo] = React.useState(props.userInfo);
-    const [comment, setComment] = React.useState('');
-    const [buyerId, setBuyerId] = React.useState(store.getState().id)
-    const [alreadyCommented, setAlreadyCommented] = React.useState(false)
+    const [sellerInfo, setSellerInfo] = useState(props.userInfo);
+    const [comment, setComment] = useState('');
+    const [buyerId, setBuyerId] = useState(store.getState().id)
+    const [alreadyCommented, setAlreadyCommented] = useState(false)
 
     useEffect(() => {
         if (sellerInfo) {
