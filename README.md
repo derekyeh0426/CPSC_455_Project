@@ -45,6 +45,10 @@ I mostly worked on the server side code, where Daniel and I set up the database 
 Abdurahman (w3q1b) :
 I worked on the frontend and backend but the frontend mostly. I set up react-router for the project which I used to implement the Navbar. I worked on the AddListing Modal which required setting up image upload from the frontend, I made it robust to the different pitfalls a user might face while filling the form. I also implemented the cart system and checkout. I worked on some backend endpoints which include getUserById and deleteUserById. I also implemented the APIs which would enable the frontend to access the backend APIs.
 
+Yukie(a9r2b):
+I worked on review ratings and sellers so that user can provide their feedback when they buy items and other users can see it. I also work on implementing checkout and cart so that upon intitialization of PayPal payment system, the items reflected in the carts are accurate. I also worked on order history so that users can check what they previously ordered in our web-app.
+
+
 ------
 
 ## Project Description (Original Idea)
