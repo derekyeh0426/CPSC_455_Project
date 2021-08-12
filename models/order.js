@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const orderSchema = new mongoose.Schema({
+    orderNumber: {
+        type: Number
+    },
     seller: {
         required: true,
         type: mongoose.Schema.Types.ObjectId,
@@ -71,5 +75,7 @@ orderSchema.set('toJSON', {
         delete returnedObject.__v;
     }
 });
+
+orderSchema.plugin(AutoIncrement, { inc_field: 'orderNumber', start_seq: 1000 });
 
 module.exports = mongoose.model('Order', orderSchema);
