@@ -5,6 +5,8 @@ import { store } from '../../redux/store';
 import { makeStyles } from '@material-ui/core/styles';
 import { MESSAGE_TYPES, MAX_IMAGE_COUNT, FURNITURE_TYPES } from '../../constants'
 import client from "../../API/api";
+import {NotificationManager} from "react-notifications";
+import { TIME_OUT } from '../../constants'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -158,6 +160,16 @@ export default function AddListingForm(props) {
 
 
     function onAddListing() {
+        let reg = /^-?\d+\.?\d*$/;
+        if (name === "" || price === "" || type === "") {
+            NotificationManager.error("please fill in out the form", "", TIME_OUT)
+            return;
+        }
+
+        if (!reg.test(price)){
+            NotificationManager.error("please input price as number", "", TIME_OUT)
+            return;
+        }
         client.image.addImages(imageFiles).then((imageResponse) => {
             client.furniture.addFurniture({ name, price }).then((response) => {
                 client.listing.addListing({

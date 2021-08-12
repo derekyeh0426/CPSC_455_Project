@@ -8,8 +8,11 @@ import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
 import { GOOGLE_CLIENT_ID } from '../../googleID'
+import {NotificationManager} from "react-notifications";
+import { TIME_OUT } from '../../constants'
 require('dotenv').config()
 const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -44,7 +47,6 @@ class GoogleLogIn extends React.Component {
             this.props.logIn(reduxUser);    
             this.setState({ accessToken: newUser.token, isLogined: true });
             client.user.getAllUsers().then(res => {
-                console.log(res.data)
             })
         });
     }
@@ -55,14 +57,12 @@ class GoogleLogIn extends React.Component {
     }
 
     handleLoginFailure(response) {
-        // alert('Failed to log in')
-        console.log('Failed to log in')
+        NotificationManager.error("Log in unsuccessful, please try it again", "", TIME_OUT)
     }
 
 
     handleLogoutFailure(response) {
-        // alert('Failed to log out')
-        console.log('Failed to log out')
+        NotificationManager.error("Log out unsuccessful, please try it again", "", TIME_OUT)
     }
 
 

@@ -19,7 +19,6 @@ export default function ReviewSeller(props) {
         if (user) {
             setUser(props.userInfo)
             console.log(props.userInfo)
-            // client.user.getUserById(props.userInfo.id).then
         } else {
             setUser({})
         }
