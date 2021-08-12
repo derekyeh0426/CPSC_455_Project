@@ -29,38 +29,42 @@ const deleteAll = async (req, res) => {
     }
 };
 
-async function create (req, res) {
-    let { token, name, email, location, cart, order } = req.body;
+const create = async (req, res) => {
+    try {
+        let { token, name, email, location, cart, order } = req.body;
 
-    if (token !== undefined) {
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID
+        if (token !== undefined) {
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: process.env.GOOGLE_CLIENT_ID
+            });
+
+            name = ticket.getPayload().name;
+            email = ticket.getPayload().email;
+        }
+
+        // Check for email duplicates.
+        let users = await User.find({});
+        users = users.filter(user => user.email === email);
+
+        // User with the given email already exists, so return the user.
+        if (users.length > 0) {
+            return res.status(200).json(users[0]);
+        }
+
+        const user = new User({
+            name: name,
+            email: email,
+            cart: cart,
+            order: order,
+            location: location || 'Vancouver'
         });
 
-        name = ticket.getPayload().name;
-        email = ticket.getPayload().email;
+        const savedUser = await user.save();
+        return res.status(200).json(savedUser);
+    } catch (error) {
+        return res.status(500).end();
     }
-
-    // Check for email duplicates.
-    let users = await User.find({});
-    users = users.filter(user => user.email === email);
-
-    // User with the given email already exists, so return the user.
-    if (users.length > 0) {
-        return res.status(200).json(users[0]);
-    }
-
-    const user = new User({
-        name: name,
-        email: email,
-        cart: cart,
-        order: order,
-        location: location || 'Vancouver'
-    });
-
-    user
-        .save().then(savedUser => res.json(savedUser));
 };
 
 const deleteById = async (req, res) => {
@@ -72,32 +76,33 @@ const deleteById = async (req, res) => {
     }
 };
 
-const getById = (req, res) => {
-    User
-        .findById(req.params.id)
-        .populate('listings')
-        .populate('cart')
-        .populate('orders')
-        .populate('ratedUsers.user', 'name email')
-        .populate('commentedUsers.user', 'name email')
-        .populate('ratings.user', 'name email')
-        .populate('comments.user', 'name email')
-        .then(user => {
-            if (user === null) {
-                return res.status(404).json({ error: 'invalid id' });
-            }
+const getById = async (req, res) => {
+    try {
+        const user = await User
+            .findById(req.params.id)
+            .populate('listings')
+            .populate('cart')
+            .populate('orders')
+            .populate('ratedUsers.user', 'name email')
+            .populate('commentedUsers.user', 'name email')
+            .populate('ratings.user', 'name email')
+            .populate('comments.user', 'name email');
 
-            return res.json(user);
-        })
-        .catch(err => res.status(500).end());
+        if (user === null) {
+            return res.status(404).json({ error: 'invalid id' });
+        }
+
+        return res.status(200).json(user);
+    } catch (error) {
+        return res.status(500).end();
+    }
 };
 
 // Return users based on the given location.
 // E.g., "/api/v1/users/locations?location=coquitlam".
 const getByLocation = async (req, res) => {
-    const { location } = req.query;
-
     try {
+        const { location } = req.query;
         const users = await User
             .find({})
             .populate('listings')
@@ -125,9 +130,8 @@ const getByLocation = async (req, res) => {
 // Return users based on the given email.
 // E.g., "/api/v1/users/emails?email=admin@gmail.com".
 const getByEmail = async (req, res) => {
-    const { email } = req.query;
-
     try {
+        const { email } = req.query;
         const users = await User
             .find({})
             .populate('listings')
