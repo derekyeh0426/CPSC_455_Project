@@ -32,9 +32,6 @@ export default function SellerReviews(props) {
             let tempReviewArray = [];
             let tempUpdatedComments = JSON.parse(JSON.stringify(comments));
             let tempUpdatedRatings = JSON.parse(JSON.stringify(ratings));
-            console.log(comments);
-            console.log(ratings);
-            console.log(!comments && !ratings)
             if (comments.length === 0 && ratings.length === 0) {
                 setCommentsAndRatings(false)
             } else {

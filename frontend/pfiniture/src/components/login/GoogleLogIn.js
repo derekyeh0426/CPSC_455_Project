@@ -7,7 +7,10 @@ import { connect } from 'react-redux'
 import client from '../../API/api'
 import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
+import {NotificationManager} from "react-notifications";
+import { TIME_OUT } from '../../constants'
 require('dotenv').config()
+
 
 class GoogleLogIn extends React.Component {
     constructor(props) {
@@ -42,7 +45,6 @@ class GoogleLogIn extends React.Component {
             this.props.logIn(reduxUser);    
             this.setState({ accessToken: newUser.token, isLogined: true });
             client.user.getAllUsers().then(res => {
-                console.log(res.data)
             })
         });
     }
@@ -53,14 +55,12 @@ class GoogleLogIn extends React.Component {
     }
 
     handleLoginFailure(response) {
-        // alert('Failed to log in')
-        console.log('Failed to log in')
+        NotificationManager.error("Log in unsuccessful, please try it again", "", TIME_OUT)
     }
 
 
     handleLogoutFailure(response) {
-        // alert('Failed to log out')
-        console.log('Failed to log out')
+        NotificationManager.error("Log out unsuccessful, please try it again", "", TIME_OUT)
     }
 
 
