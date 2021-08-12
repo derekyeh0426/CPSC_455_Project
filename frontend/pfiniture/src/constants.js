@@ -9,6 +9,8 @@ export const FURNITURE_TYPES = ["chair", "desk", "table", "couch", "drawers", "s
 
 export const TIME_OUT = 1500;
 
+export const MAX_PRICE_RANGE = 1000.0;
+
 export const MY_ACCOUNT_VIEWS = {
     dashboard: {
         title: "Dashboard",
