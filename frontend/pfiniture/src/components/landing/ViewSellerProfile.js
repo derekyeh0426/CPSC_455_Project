@@ -94,9 +94,11 @@ export default function ViewSellerProfile(props) {
     const [comments, setComments] = useState([]);
     const [listings, setListings] = useState([]);
     const [tab, setTab] = useState(0);
+    const [viewFromCart, setViewFromCart] = useState(props.userInfo);
 
     const handleOpen = () => {
         setOpen(true);
+        setViewFromCart(props.viewFromCart)
         client.listing.getListingByUserId(user.id).then(listings => {
             setListings(listings.data);
             client.user.getUserById(user.id).then(userInfo => {
@@ -121,11 +123,11 @@ export default function ViewSellerProfile(props) {
     const getTabs = (tab) => {
         switch (tab) {
             case 0:
-                return <DisplayListings display={"seller"} listings={listings} userInfo={user} />
+                return <DisplayListings page={"seller"} listings={listings} userInfo={user} viewFromCart={viewFromCart}/>
             case 1:
                 return <SellerReviews isOpen={open} ratings={ratings} comments={comments} userInfo={user} />
             default:
-                return <DisplayListings display={"seller"} userInfo={user} />
+                return <DisplayListings page={"seller"} userInfo={user} viewFromCart={viewFromCart}/>
         }
     }
 
