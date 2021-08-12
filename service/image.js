@@ -39,22 +39,19 @@ const upload =  multer({
 });
 
 const deleteById = (req, res) => {
-
     Image
         .findByIdAndRemove(req.params.id)
-        .then(() => res.status(200).end())
-        .catch(err => res.status(404).json({ error: 'invalid id' }));
-
-    s3.deleteObject({
-        Bucket: bucketName,
-        Key: image.key
-    }, (err, data) => {
-        if (err) {
-            return res.status(500).end();
-        }
-    
-        return res.status(200).end();
-    });
+        .then(image => {
+            s3.deleteObject({
+                Bucket: bucketName,
+                Key: image.key
+            }, (err, data) => {
+                if (err) {
+                    return res.status(500).end();
+                }
+                return res.status(200).end();
+            });
+        }).catch(err => res.status(404).json({ error: 'invalid id' }));
 };
 
 const create = (req, res) => {
