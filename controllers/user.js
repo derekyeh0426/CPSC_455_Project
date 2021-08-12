@@ -3,7 +3,6 @@ const userService = require('../service/user');
 
 router.use((req, res, next) => next());
 
-
 router.get('/emails', (req, res) => userService.getByEmail(req, res));
 
 router.get('/locations', (req, res) => userService.getByLocation(req, res));

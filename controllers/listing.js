@@ -3,7 +3,6 @@ const listingService = require('../service/listing');
 
 router.use((req, res, next) => next());
 
-
 router.get('/users/:id', (req, res) => listingService.getByUserId(req, res));
 
 router.get('/createdDates', (req, res) => listingService.getByCreatedDateInOrder(req, res));

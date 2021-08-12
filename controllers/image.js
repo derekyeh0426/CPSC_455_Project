@@ -7,7 +7,7 @@ router.get('/:id', (req, res) => imageService.getById(req, res));
 
 router.get('/', (req, res) => imageService.getAll(req, res));
 
-router.post('/', (req, res) => imageService.create(req, res, next));
+router.post('/', (req, res) => imageService.create(req, res));
 
 router.delete('/:id', (req, res) => imageService.deleteById(req, res));
     

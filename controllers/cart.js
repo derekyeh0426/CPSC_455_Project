@@ -3,7 +3,6 @@ const cartService = require('../service/cart');
 
 router.use((req, res, next) => next());
 
-
 router.get('/:id', (req, res) => cartService.getById(req, res));
 
 router.get('/', (req, res) => cartService.getAll(req, res));
