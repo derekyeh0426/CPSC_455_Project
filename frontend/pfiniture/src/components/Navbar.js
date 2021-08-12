@@ -43,16 +43,10 @@ function Navbar(props) {
   const classes = useStyles();
   const [cartLength, setCartLength] = useState(0);
 
-  useEffect(() => {
-    client.user.getUserById(props.id).then(buyerInfo => {
-      const cart = buyerInfo.data.cart;
-      if (!cart) {
-        setCartLength(0);
-      } else {
-        setCartLength(cart.listings.length);
-      }
-    })
-  }, [props.id]);
+  // useEffect(() => {
+  //   console.log(props.cartQuantity)
+  //     setCartLength(props.cartQuantity);
+  // }, [props.id, props.cartQuantity]);
 
   return (
     <div style={{ paddingTop: 68 }}>
@@ -73,7 +67,7 @@ function Navbar(props) {
                 <Link exact path to={"/cart"}>
                   <Button className={classes.cartButton}>
                     <i style={{ padding: "6px" }} className={"fas fa-shopping-cart"} />
-                    <p>{cartLength}</p>
+                    <p>{props.cartQuantity}</p>
                   </Button>
                 </Link> : ""
             }
@@ -93,7 +87,7 @@ function Navbar(props) {
 
 function mapStateToProps(state) {
   return {
-    isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+    isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id, cartQuantity: state.cartQuantity
   }
 }
 

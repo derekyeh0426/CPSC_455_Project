@@ -57,7 +57,7 @@ class GoogleLogIn extends React.Component {
     }
 
     handleLoginFailure(response) {
-        NotificationManager.error("Log in unsuccessful, please try it again", "", TIME_OUT)
+        NotificationManager.error("Login unsuccessful, please try it again", "", TIME_OUT)
     }
 
 

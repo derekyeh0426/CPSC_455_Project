@@ -299,13 +299,13 @@ function DisplayIndividualFurniture(props) {
                                                             ? <Button
                                                                 size="small"
                                                                 color="secondary"
-                                                                onClick={() => updateToCart(listing.id, listings, cartId)}
+                                                                onClick={() => updateToCart(listing.id, cartListings, cartId)}
                                                             > Remove From Cart
                                                             </Button>
                                                             :
                                                             <Button
                                                                 size="small" color="primary"
-                                                                onClick={() => onAddToCart(listing.id, buyerId)}>
+                                                                onClick={() => onAddToCart(listing.id, buyerId, props)}>
                                                                 Add to Cart
                                                             </Button>
                                                         }
