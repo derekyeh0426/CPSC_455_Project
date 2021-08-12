@@ -1,9 +1,7 @@
 import React from 'react'
 import Table from './order-history/Table'
 import DisplayMyListings from './DisplayMyListings'
-import {
-    Container
-} from '@material-ui/core'
+import {Container} from '@material-ui/core'
 
 export default class Dashboard extends React.Component {
 

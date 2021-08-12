@@ -1,12 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Button,
-    Grid,
-    Typography,
-    Paper,
-    ButtonBase,
-} from '@material-ui/core';
+import {Button,Grid,Typography,Paper,ButtonBase,} from '@material-ui/core';
 import client from "../../API/api";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SellerListings(props) {
     const classes = useStyles();
-    const [listings, setListings] = React.useState(props.listings);
-    const [user, setUser] = React.useState(props.userInfo);
+    const [listings, setListings] = useState(props.listings);
+    const [user, setUser] = useState(props.userInfo);
 
     useEffect(() => {
         if (user) {

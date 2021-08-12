@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { RATINGS } from "../../../constants"
 import {
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RateSeller(props) {
     const classes = useStyles();
-    const [sellerInfo, setSellerInfo] = React.useState(props.userInfo);
-    const [ratingValue, setRatingValue] = React.useState(0);
-    const [buyerId, setBuyerId] = React.useState(store.getState().id)
-    const [alreadyRated, setAlreadyRated] = React.useState(false)
+    const [sellerInfo, setSellerInfo] = useState(props.userInfo);
+    const [ratingValue, setRatingValue] = useState(0);
+    const [buyerId, setBuyerId] = useState(store.getState().id)
+    const [alreadyRated, setAlreadyRated] = useState(false)
 
     useEffect(() => {
         if (sellerInfo) {
