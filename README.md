@@ -6,25 +6,25 @@ We are Fresh Furniture and ready to help you find the best second-hand or handcr
 ## Final Project Report
 ### 2. Project Task Requirements
 #### Minimal Requirements (will definitely complete)
-1. buy and sell furniture
-2. users can post furniture to sell on their account
-3. rate sellers
-4. login/register feature
+- [x] buy and sell furniture
+- [x] users can post furniture to sell on their account
+- [x] rate sellers
+- [x] login/register feature
 
 #### Standard Requirements (will most likely complete)
-1. provide delivery service
-2. price matching feature (filter)
-3. search for location (filter)
-4. type of furniture (filter)
+- [ ] provide delivery service
+- [ ] price matching feature (filter)
+- [x] search for location (filter)
+- [x] type of furniture (filter)
 
 #### Stretch Requirements (plan to complete at least 1)
-1. chat feature that allows meeting arragenment
-2. contactless drop off functionality
-3. trade furniture
-4. individuals can set up their own service
-5. comment on stores/services 
-6. individuals can set up their own store
-7. sharing links on social media
+- [ ] chat feature that allows meeting arragenment
+- [ ] contactless drop off functionality
+- [ ] trade furniture
+- [ ] individuals can set up their own service
+- [x] comment on stores/services
+- [x] individuals can set up their own store
+- [ ] sharing links on social media
 
 ### 3. Tech
 We used basic web technologies HTML/CSS/JS to provide the content for our webpage. CSS is used to style React components and make our web application responsive. React is used to provide all frontend functionality. It provides design and interface users interact with and send requests to backend. We used Node with Express to set up ther server and provide REST services. They fulfill requests that are sent from frontend by interacting with databse. We used MongoDB with mongoose to connect to database and store our data. Atlas is used to host our database. Finally, we used Heroku with Git to deploy our application.
@@ -46,7 +46,7 @@ Abdurahman (w3q1b) :
 I worked on the frontend and backend but the frontend mostly. I set up react-router for the project which I used to implement the Navbar. I worked on the AddListing Modal which required setting up image upload from the frontend, I made it robust to the different pitfalls a user might face while filling the form. I also implemented the cart system and checkout. I worked on some backend endpoints which include getUserById and deleteUserById. I also implemented the APIs which would enable the frontend to access the backend APIs.
 
 Yukie(a9r2b):
-I worked on review ratings and sellers so that user can provide their feedback when they buy items and other users can see it. I also work on implementing checkout and cart so that upon intitialization of PayPal payment system, the items reflected in the carts are accurate. I also worked on order history so that users can check what they previously ordered in our web-app.
+I worked on review ratings for sellers so that user can provide their feedback when they buy items and other users can see the seller's ratings. I also worked on implementing checkout and cart so that upon intitialization of PayPal payment system, the items reflected in the carts are accurate. I implemented order history so that users can check what they previously ordered. I also designed most of the website.
 
 Daniel (m1b3b):
 I mostly worked on backend side code alongside with Peter. We set up the server and connection to database together. I implemented image endpoints for uploading and downloading images with Amazon S3 so we can use images just with image url provided by S3 saved in our database. I also implemented adding/removing/updating cart items, order history as well as furnitures. I also helped fix any problems and made quality of life changes for the frontend to easily implement user interface.
