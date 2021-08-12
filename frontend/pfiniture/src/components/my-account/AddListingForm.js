@@ -162,7 +162,7 @@ export default function AddListingForm(props) {
     function onAddListing() {
         let reg = /^-?\d+\.?\d*$/;
         if (name === "" || price === "" || type === "") {
-            NotificationManager.error("please fill in out the form", "", TIME_OUT)
+            NotificationManager.error("please fill in all the form", "", TIME_OUT)
             return;
         }
 
