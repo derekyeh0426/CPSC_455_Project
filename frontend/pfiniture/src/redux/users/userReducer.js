@@ -6,8 +6,7 @@ export const initialState = {
     cartQuantity: 0
 }
 
-function userReducer(state = initialState, action) {
-    console.log(action)
+function UserReducer(state = initialState, action) {
     switch(action.type) {
         case "Log_In":
         return {
@@ -45,4 +44,4 @@ function userReducer(state = initialState, action) {
     }
 }
 
-export default userReducer
+export default UserReducer

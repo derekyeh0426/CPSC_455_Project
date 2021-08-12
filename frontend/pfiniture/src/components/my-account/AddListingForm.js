@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { MESSAGE_TYPES, MAX_IMAGE_COUNT, FURNITURE_TYPES } from '../../constants'
 import client from "../../API/api";
 import {NotificationManager} from "react-notifications";
-import { TIME_OUT } from '../../constants'
+import { TIME_OUT, MAX_PRICE_RANGE } from '../../constants'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -162,12 +162,17 @@ export default function AddListingForm(props) {
     function onAddListing() {
         let reg = /^-?\d+\.?\d*$/;
         if (name === "" || price === "" || type === "") {
-            NotificationManager.error("please fill in out the form", "", TIME_OUT)
+            NotificationManager.error("please fill in all the form", "", TIME_OUT)
             return;
         }
 
         if (!reg.test(price)){
-            NotificationManager.error("please input price as number", "", TIME_OUT)
+            NotificationManager.error("please input price as number without white space", "", TIME_OUT)
+            return;
+        }
+
+        if (parseFloat(price) > MAX_PRICE_RANGE) {
+            NotificationManager.error("This item is too expensive we don't sell it here. Maximum is 1000", "", TIME_OUT)
             return;
         }
         client.image.addImages(imageFiles).then((imageResponse) => {

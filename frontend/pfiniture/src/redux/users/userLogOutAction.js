@@ -1,7 +1,7 @@
-function userLogOutAction (){
+function UserLogOutAction (){
     return {
         type: "Log_Out",
     };
 };
 
-export default userLogOutAction;
+export default UserLogOutAction;
