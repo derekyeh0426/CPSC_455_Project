@@ -2,18 +2,20 @@ import { Form, Button, Row, Col, Modal, ModalBody } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import Paypal from "./Paypal";
 import client from "../../API/api";
+import { store } from '../../redux/store';
 
 const CheckOut = () => {
     const [checkout, setCheckOut] = useState(false);
     const [show, setShow] = useState(false);
     const [shippingAddress, setShippingAddress] = useState("");
     const [listings, setListings] = useState([]);
+    const [buyerId, setBuyerId] = useState(store.getState().id);
 
     var totalAmount;
 
     useEffect(() => {
-        const userID = "6104918f9a92da1084fb7438";
-        client.user.getUserById(userID).then(response => {
+        setBuyerId(store.getState().id)
+        client.user.getUserById(store.getState().id).then(response => {
             if (response.status === 200) {
                 const cart = response.data.cart;
                 if (cart != null) {
@@ -26,7 +28,7 @@ const CheckOut = () => {
                 }
             }
         })
-    }, [])
+    }, [store.getState().id])
     console.log(listings);
     return (
         <div className="checkout">

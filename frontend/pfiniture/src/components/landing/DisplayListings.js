@@ -7,7 +7,7 @@ import {
     Paper,
     ButtonBase,
 } from '@material-ui/core';
-import client from "../../API/api";
+import { onAddToCart } from '../../helpers'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,17 +47,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SellerListings(props) {
+export default function DisplayListings(props) {
     const classes = useStyles();
     const [listings, setListings] = React.useState(props.listings);
-    const [user, setUser] = React.useState(props.userInfo);
+    const [buyer, setBuyer] = React.useState(props.userInfo);
 
     useEffect(() => {
-        if (user) {
-            setUser(props.userInfo)
+        if (buyer) {
+            setBuyer(props.userInfo)
             setListings(props.listings)
         } else {
-            setUser({})
+            setBuyer({})
             setListings([])
         }
     }, [props.userInfo, props.listings])
@@ -98,7 +98,7 @@ export default function SellerListings(props) {
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
+                                        <Button size="small" color="primary" onClick={() => onAddToCart(listing.id, buyer.id)}>
                                             Add to Cart
                                         </Button>
                                     </Grid>
@@ -114,20 +114,4 @@ export default function SellerListings(props) {
         }
         </div>
     )
-}
-
-function onAddToCart(listingID) {
-    const userID = "6104918f9a92da1084fb7438";
-    client.user.getUserById(userID).then((response) => {
-        const cart = response.data.cart;
-        if (!cart) {
-            client.cart.addCartToUser({ user: userID, listing: listingID }).then((response) => console.log(response));
-        }
-        else {
-            console.log("user already has cart");
-            client.cart.updateCartById({ user: userID, listing: listingID, id: cart.id }).then((response) => {
-                console.log(response)
-            });
-        }
-    })
 }

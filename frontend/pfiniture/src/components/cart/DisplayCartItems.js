@@ -3,6 +3,7 @@ import {
     Grid
 } from '@material-ui/core'
 import '../landing/DisplayAllFurniture.css'
+import { store } from '../../redux/store';
 import { makeStyles } from '@material-ui/core/styles';
 import client from "../../API/api";
 
@@ -33,29 +34,30 @@ export default function DisplayCartItems(props) {
     let cart = Array.from(props.allCartItems);
     const classes = useStyles()
 
-    const [listings, setListings] = useState([]);
+    const [cartListings, setCartListings] = useState([]);
 
     useEffect(() => {
-        const userID = "6104918f9a92da1084fb7438";
-        client.user.getUserById(userID).then(response => {
-            if (response.status === 200) {
-                const cart = response.data.cart;
-                if (cart != null) {
-                    Promise.all(
-                            cart.listings.map((listing) => 
-                            client.listing.getListingById(listing))
-                            ).then((listings) => setListings(listings.map(({data}) => {
+        let buyerId = store.getState().id
+        client.user.getUserById(buyerId).then(response => {
+            let cart = response.data.cart;
+            console.log(cart.listings)
+            if (cart !== null) {
+                Promise.all(
+                    cart.listings.map((listing) =>
+                        client.listing.getListingById(listing))).then((listings) =>
+                            setCartListings(listings.map(({ data }) => {
                                 return data;
                             })))
-                }
             }
+
+
         })
-    }, [])
+    }, [store.getState().id])
 
     return (
 
-            <ul>
-                { listings.map((listing) => {
+        <ul>
+            { cartListings.map((listing) => {
                     return (
                         <div>
                             <p> { listing.title } </p>
@@ -64,6 +66,6 @@ export default function DisplayCartItems(props) {
                         </div>
                     )
                 }) }
-            </ul>
+        </ul>
     )
 }

@@ -1,11 +1,8 @@
 import React from 'react'
 import ViewSellerProfile from '../../landing/ViewSellerProfile'
-import client from '../../../API/api';
 
 const Order = (props) => {
     let order = props.order
-    console.log(order)
-    console.log(order.seller)
     return (
         <tr key={props.index}>
             <td>{order.id}</td>

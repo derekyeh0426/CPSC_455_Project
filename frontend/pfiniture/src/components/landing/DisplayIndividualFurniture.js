@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import client from "../../API/api";
+import { onAddToCart } from '../../helpers'
 import {
     Grid,
     Card,
@@ -24,6 +25,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
+import { store } from '../../redux/store';
 import './DisplayAllFurniture.css';
 import { LOCATIONS, FURNITURE_TYPES } from '../../constants'
 
@@ -42,10 +44,6 @@ const useStyles = makeStyles((theme) => ({
     cardRoot: {
         width: 400,
         maxHeight: 600
-    },
-    filterButtons: {
-        right: '20vh',
-        position: 'absolute'
     },
     formControl: {
         minWidth: 130,
@@ -84,8 +82,9 @@ function DisplayIndividualFurniture(props) {
     const min = 0;
     const max = 1000;
     const classes = useStyles();
+    const [buyerId, setBuyerId] = React.useState("");
     const [expandedId, setExpandedId] = React.useState(-1);
-    const [searchTerm, setSearchTerm] = React.useState('');
+    const [searchTerm, setSearchTerm] = React.useState("");
     const [typeTerm, setTypeTerm] = React.useState("all");
     const [listings, setListings] = React.useState([]);
     const [originalListings, setOriginalListings] = React.useState([]);
@@ -93,11 +92,12 @@ function DisplayIndividualFurniture(props) {
     const [location, setLocation] = React.useState("all")
 
     React.useEffect(() => {
+        setBuyerId(store.getState().id)
         client.listing.getAllListingsDescendingOrder().then(listings => {
             setListings(listings.data);
             setOriginalListings(listings.data);
         })
-    }, []);
+    }, [store.getState().id]);
 
     const handleExpandClick = (index) => {
         setExpandedId(expandedId === index ? -1 : index);
@@ -219,7 +219,7 @@ function DisplayIndividualFurniture(props) {
                 </FormControl>
                 </div>
                     
-                <div className={classes.filterButtons}>
+                <div>
                     <Button color="primary" className={classes.buttonMargin} onClick={handleSearch}>Search</Button>
                     <Button color="primary" onClick={resetSearch}>Clear Filters</Button>
                 </div>
@@ -253,8 +253,7 @@ function DisplayIndividualFurniture(props) {
                         direction="row"
                         justifyContent="center"
                         alignItems="center">
-                        {
-                            listings.map((listing, index) => (
+                        {listings.map((listing, index) => (
                                 <div key={index} className="furniture-spacing">
                                     <Card key={index} className={classes.cardRoot}>
                                         <CardActionArea>
@@ -289,7 +288,7 @@ function DisplayIndividualFurniture(props) {
                                         <CardActions>
                                             <ViewSellerProfile userInfo={listing.user} />
                                             {props.isLogIn ?
-                                                <Button size="small" color="primary" onClick={() => onAddToCart(listing.id)}>
+                                                <Button size="small" color="primary" onClick={() => onAddToCart(listing.id, buyerId)}>
                                                     Add to Cart
                                                 </Button>
                                                 : ""
@@ -303,22 +302,6 @@ function DisplayIndividualFurniture(props) {
             </div>
         </div>
     )
-}
-
-function onAddToCart(listingID) {
-    const userID = "6104918f9a92da1084fb7438";
-    client.user.getUserById(userID).then((response) => {
-        const cart = response.data.cart;
-        if (!cart) {
-            client.cart.addCartToUser({ user: userID, listing: listingID }).then((response) => console.log(response));
-        }
-        else {
-            console.log("user already has cart");
-            client.cart.updateCartById({ user: userID, listing: listingID, id: cart.id }).then((response) => {
-                console.log(response)
-            });
-        }
-    })
 }
 
 function mapStateToProps(state) {

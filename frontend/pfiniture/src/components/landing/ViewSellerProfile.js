@@ -5,16 +5,14 @@ import {
     Modal,
     Backdrop,
     Fade,
-    Radio,
-    TextField,
+    Typography,
     Tabs,
     Tab,
-    Typography
 } from '@material-ui/core';
 import client from "../../API/api";
-import { RATINGS } from "../../constants"
-import SellerListings from './SellerListings';
+import DisplayListings from './DisplayListings';
 import SellerReviews from './SellerReviews';
+import ReviewSeller from "../my-account/order-history/ReviewSeller"
 
 const StyledTabs = withStyles({
     indicator: {
@@ -43,6 +41,11 @@ const StyledTab = withStyles((theme) => ({
 }))((props) => <Tab disableRipple {...props} />);
 
 const useStyles = makeStyles((theme) => ({
+    alignCenter: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     root: {
         padding: theme.spacing(1),
         flexGrow: 1,
@@ -84,34 +87,8 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '100%',
         maxHeight: '100%',
     },
-    review: {
-        display: 'flex',
-    },
-    rating: {
-        float: "left",
-        marginRight: 5,
-        border: "1px solid #bdbdbd",
-        borderRadius: 5,
-        padding: 10,
-        '&:hover': {
-            borderColor: "black"
-        },
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    comment: {
-        float: "right",
-        marginLeft: 5,
-        border: "1px solid #bdbdbd",
-        borderRadius: 5,
-        padding: 8,
-        '&:hover': {
-            borderColor: "black"
-        },
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column'
+    listingsTitle: {
+        marginTop: 10
     }
 }));
 
@@ -123,8 +100,6 @@ export default function ViewSellerProfile(props) {
     const [ratings, setRatings] = React.useState([]);
     const [sellerRating, setSellerRating] = React.useState(0);
     const [comments, setComments] = React.useState([]);
-    const [ratingValue, setRatingValue] = React.useState(0);
-    const [comment, setComment] = React.useState('');
     const [listings, setListings] = React.useState([]);
     const [tab, setTab] = React.useState(0);
 
@@ -144,17 +119,7 @@ export default function ViewSellerProfile(props) {
 
     const handleClose = () => {
         setOpen(false);
-        setRatingValue(0);
-        setComment('');
         setTab(0);
-    };
-
-    const handleRatingChange = (event) => {
-        setRatingValue(event.target.value);
-    };
-
-    const handleCommentChange = (event) => {
-        setComment(event.target.value);
     };
 
     const handleTabChange = (event, newTab) => {
@@ -164,11 +129,11 @@ export default function ViewSellerProfile(props) {
     const getTabs = (tab) => {
         switch (tab) {
             case 0:
-                return <SellerListings listings={listings} userInfo={user} />
+                return <DisplayListings display={"seller"} listings={listings} userInfo={user} />
             case 1:
                 return <SellerReviews isOpen={open} ratings={ratings} comments={comments} userInfo={user} />
             default:
-                return <SellerListings userInfo={user} />
+                return <DisplayListings display={"seller"} userInfo={user} />
         }
     }
 
@@ -209,42 +174,7 @@ export default function ViewSellerProfile(props) {
                             </div>
                         }
                         {page === "order-history"
-                            ?
-                            <div>
-                                <p className={classes.alignCenter}>Since you bought furniture from {!user ? "this seller" : user.name}...</p>
-                                <div className={classes.alignCenter}>
-                                    <div className={classes.rating}>
-                                        <p id="rate-seller-p">Leave a rating!</p>
-                                        <div className={classes.alignCenter}>
-                                            {RATINGS.map((rating, index) => {
-                                                return (
-                                                    <Radio
-                                                        key={index}
-                                                        checked={ratingValue === rating}
-                                                        onChange={handleRatingChange}
-                                                        value={rating}
-                                                        name={rating}
-                                                        inputProps={{ 'aria-label': 'A' }}
-                                                    />
-                                                )
-                                            })
-                                            }
-                                        </div>
-                                        <Button className={classes.alignCenter}>Submit Rating</Button>
-                                    </div>
-                                    <div className={classes.comment}>
-                                        <TextField
-                                            id="comment-seller-textfield"
-                                            label="Leave a comment!"
-                                            multiline
-                                            rows={3}
-                                            value={comment}
-                                            onChange={handleCommentChange}
-                                        />
-                                        <Button>Submit Comment</Button>
-                                    </div>
-                                </div>
-                            </div>
+                            ? <ReviewSeller userInfo={user}/>
                             : ""
                         }
                         <div className={classes.demo2}>
