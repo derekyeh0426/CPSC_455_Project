@@ -9,7 +9,6 @@ export function onAddToCart(listingId, buyerId, props) {
             client.cart.addCartToUser({ user: buyerId, listing: listingId })
         }
         else {
-            console.log("user already has cart");
             let tempListings = JSON.parse(JSON.stringify(cart.listings));
             if (!tempListings.includes(listingId)) {
                 tempListings.push(listingId)
@@ -42,7 +41,6 @@ export function updateToCart(listingIdToDelete, listings, cartId) {
     let id = cartId;
     console.log(id)
     console.log(listingIdToDelete)
-    let tempListings = JSON.parse(JSON.stringify(listings));
     let listing = []
     if (!listings) {
         listings.forEach(listingId => {
