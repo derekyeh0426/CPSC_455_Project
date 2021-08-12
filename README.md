@@ -1,31 +1,23 @@
 ## CPSC_455_Project: Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
 ## Fresh Furniture
-Fresh Furniture is a web application that supports selling and buying new or second-hand furniture through PayPal. Users can login with their Google accounts and add, edit, and delete their listings. They can also view their order history and rate sellers. 
+We are Fresh Furniture and ready to help you find the best second-hand or handcrafted furniture at the best value and quality! Our furniture not only helps reduce waste for the environment but also supports local carpenters. You can even sell your own furniture, and if you do well, your ratings and reviews will reflect that! Visit Fresh Furniture and begin your furniture journey there!
 
-## Project Description (original idea)
-Note: Due to the time frame of our course, we realized our original idea would require more time for completion. Thus, we have changed it accordingly. 
-
-Fresh Furniture is a web application that aims to facilitate furniture trading on the market. It will support selling, buying, and even loaning second-hand or newly made furniture. Users have the option of opening their own store to sell their pre-owned furniture or service to build customized or fix furniture. Otherwise, users can just shop or order a service. Our app will aid in reducing waste and provide affordable furniture.
-
-Furthermore, our app will store personal data, such as the user's name, address, and login information. We will encrypt simple data such as passwords ourselves. Financial data for payments will not be stored because third party service(s) like PayPal will be used instead. These specific data are selected and stored so that users do not have to re-enter these data every time they make a purchase. Other data such as store/service ratings from users will also be stored to promote those with great products and services.
-
-Depending on the time we have, it will be in our best interest to allow buyers to arrange a meeting with the sellers to examine the condition of the products (designed to cope with situations in the pandemic). On top of that, maybe we can create functionality that supports contactless drop off of the product(s) sold.
-
-## Project Task Requirements
-### Minimal Requirements (will definitely complete)
+## Final Project Report
+### 2. Project Task Requirements
+#### Minimal Requirements (will definitely complete)
 1. buy and sell furniture
 2. users can post furniture to sell on their account
 3. rate sellers
 4. login/register feature
 
-### Standard Requirements (will most likely complete)
+#### Standard Requirements (will most likely complete)
 1. provide delivery service
 2. price matching feature (filter)
 3. search for location (filter)
 4. type of furniture (filter)
 
-### Stretch Requirements (plan to complete at least 1)
+#### Stretch Requirements (plan to complete at least 1)
 1. chat feature that allows meeting arragenment
 2. contactless drop off functionality
 3. trade furniture
@@ -33,6 +25,25 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 5. comment on stores/services 
 6. individuals can set up their own store
 7. sharing links on social media
+
+### 3. Tech
+We used basic web technologies HTML/CSS/JS to provide the content for our webpage. CSS is used to style React components and make our web application responsive. React is used to provide all frontend functionality. It provides design and interface users interact with and send requests to backend. We used Node with Express to set up ther server and provide REST services. They fulfill requests that are sent from frontend by interacting with databse. We used MongoDB with mongoose to connect to database and store our data. Atlas is used to host our database. Finally, we used Heroku with Git to deploy our application.
+
+### 4. 'Above and Beyond'
+
+### 5. Next Steps 
+We believe that havig a chat feature to allow users to message each other within the app would further improve this application and create a better user experience, since communication is done within the app instead of using service outside (e.g., email). Also, being able to share links of listings on social media would be a great next step for this application. 
+
+------
+
+## Project Description (Original Idea)
+Note: Due to the time frame of our course, we realized our original idea would require more time for completion. Thus, we have changed it accordingly. 
+
+Fresh Furniture is a web application that aims to facilitate furniture trading on the market. It will support selling, buying, and even loaning second-hand or newly made furniture. Users have the option of opening their own store to sell their pre-owned furniture or service to build customized or fix furniture. Otherwise, users can just shop or order a service. Our app will aid in reducing waste and provide affordable furniture.
+
+Furthermore, our app will store personal data, such as the user's name, address, and login information. We will encrypt simple data such as passwords ourselves. Financial data for payments will not be stored because third party service(s) like PayPal will be used instead. These specific data are selected and stored so that users do not have to re-enter these data every time they make a purchase. Other data such as store/service ratings from users will also be stored to promote those with great products and services.
+
+Depending on the time we have, it will be in our best interest to allow buyers to arrange a meeting with the sellers to examine the condition of the products (designed to cope with situations in the pandemic). On top of that, maybe we can create functionality that supports contactless drop off of the product(s) sold.
 
 ## Task Breakdown
 ### Break Down of Minimal Requirement #2:
@@ -47,13 +58,6 @@ Depending on the time we have, it will be in our best interest to allow buyers t
 2. if bought from the store or used the service, then is a verified customer 
 3. upvote/downvote reviews
 4. sorting feature for reviews
-
-## Final Project Report
-### 3. Tech
-We used basic web technologies HTML/CSS/JS to provide the content for our webpage. CSS is used to style React components and make our web application responsive. React is used to provide all frontend functionality. It provides design and interface users interact with and send requests to backend. We used Node with Express to set up ther server and provide REST services. They fulfill requests that are sent from frontend by interacting with databse. We used MongoDB with mongoose to connect to database and store our data. Atlas is used to host our database. Finally, we used Heroku with Git to deploy our application.
-
-### 5. Next Steps 
-We believe that havig a chat feature to allow users to message each other within the app would further improve this application and create a better user experience, since communication is done within the app instead of using service outside (e.g., email). Also, being able to share links of listings on social media would be a great next step for this application. 
 
 ## Prototypes
 - Login Page

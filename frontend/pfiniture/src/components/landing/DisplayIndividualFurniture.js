@@ -1,27 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import client from "../../API/api";
+import {Grid,Card,CardActionArea,CardMedia,CardContent,Typography,CardActions,Button,
+    IconButton,Collapse,TextField,InputAdornment,FormControl,InputLabel,Select,MenuItem,Slider} from '@material-ui/core'
 import { onAddToCart } from '../../helpers'
-import {
-    Grid,
-    Card,
-    CardActionArea,
-    CardMedia,
-    CardContent,
-    Typography,
-    CardActions,
-    Button,
-    IconButton,
-    Collapse,
-    TextField,
-    InputAdornment,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Slider
-} from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ViewSellerProfile from "./ViewSellerProfile"
@@ -82,14 +65,14 @@ function DisplayIndividualFurniture(props) {
     const min = 0;
     const max = 1000;
     const classes = useStyles();
-    const [buyerId, setBuyerId] = React.useState("");
-    const [expandedId, setExpandedId] = React.useState(-1);
-    const [searchTerm, setSearchTerm] = React.useState("");
-    const [typeTerm, setTypeTerm] = React.useState("all");
-    const [listings, setListings] = React.useState([]);
-    const [originalListings, setOriginalListings] = React.useState([]);
-    const [priceRange, setpriceRange] = React.useState([min, max]);
-    const [location, setLocation] = React.useState("all")
+    const [buyerId, setBuyerId] = useState("");
+    const [expandedId, setExpandedId] = useState(-1);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [typeTerm, setTypeTerm] = useState("all");
+    const [listings, setListings] = useState([]);
+    const [originalListings, setOriginalListings] = useState([]);
+    const [priceRange, setPriceRange] = useState([min, max]);
+    const [location, setLocation] = useState("all")
 
     React.useEffect(() => {
         setBuyerId(store.getState().id)
@@ -142,7 +125,7 @@ function DisplayIndividualFurniture(props) {
     }
 
     const handleChange = (event, newpriceRange) => {
-        setpriceRange(newpriceRange);
+        setPriceRange(newpriceRange);
     };
 
     const resetSearch = () => {
@@ -150,7 +133,7 @@ function DisplayIndividualFurniture(props) {
         setSearchTerm("");
         setTypeTerm("all");
         setLocation("all")
-        setpriceRange([min, max]);
+        setPriceRange([min, max]);
     }
 
     return (
@@ -162,6 +145,7 @@ function DisplayIndividualFurniture(props) {
                     placeholder="Search..."
                     id="input-with-icon-textfield"
                     onChange={(event) => { setSearchTerm(event.target.value) }}
+                    value = {searchTerm}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">

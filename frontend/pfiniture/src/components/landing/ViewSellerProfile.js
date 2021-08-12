@@ -1,14 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import {
-    Button,
-    Modal,
-    Backdrop,
-    Fade,
-    Typography,
-    Tabs,
-    Tab,
-} from '@material-ui/core';
+import {Button,Modal,Backdrop,Fade,Typography,Tabs,Tab,} from '@material-ui/core';
 import client from "../../API/api";
 import DisplayListings from './DisplayListings';
 import SellerReviews from './SellerReviews';
@@ -95,13 +87,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ViewSellerProfile(props) {
     let page = props.page
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const [user, setUser] = React.useState(props.userInfo);
-    const [ratings, setRatings] = React.useState([]);
-    const [sellerRating, setSellerRating] = React.useState(0);
-    const [comments, setComments] = React.useState([]);
-    const [listings, setListings] = React.useState([]);
-    const [tab, setTab] = React.useState(0);
+    const [open, setOpen] = useState(false);
+    const [user, setUser] = useState(props.userInfo);
+    const [ratings, setRatings] = useState([]);
+    const [sellerRating, setSellerRating] = useState(0);
+    const [comments, setComments] = useState([]);
+    const [listings, setListings] = useState([]);
+    const [tab, setTab] = useState(0);
 
     const handleOpen = () => {
         setOpen(true);

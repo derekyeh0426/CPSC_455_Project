@@ -24,11 +24,6 @@ class GoogleLogIn extends React.Component {
         this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
     }
 
-    componentDidMount(){
-        // console.log(GOOGLE_CLIENT_ID)
-        // console.log(REACT_APP_GOOGLE_CLIENT_ID);
-    }
-
     handleSuccessfulLogIn = (response) => {
         refreshTokenSetup(response);
         this.props.logIn(response.profileObj)
