@@ -3,7 +3,10 @@ const Cart = require('../models/cart');
 
 const getAll = async (req, res) => {
     try {
-        const cart = await Cart.find({});
+        const cart = await Cart
+            .find({})
+            .populate('user')
+            .populate('listings');
         return res.json(cart);
     } catch (err) {
         return res.status(500).end();
@@ -12,7 +15,10 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
     try {
-        const cart = await Cart.findById(req.params.id);
+        const cart = await Cart
+            .findById(req.params.id)
+            .populate('user')
+            .populate('listings');
         if (cart === null) {
             return res.status(404).json({ error: 'invalid id' });
         }
