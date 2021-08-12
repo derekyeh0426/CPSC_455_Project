@@ -1,4 +1,4 @@
-## CPSC_455_Project: Peter Ko (o8n2b), Daniel Lee, Derek Yeh, Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
+## CPSC_455_Project: Peter Ko (o8n2b), Daniel Lee, Derek Yeh (x7c1b), Yukie Man (a9r2b), Abdurahman Mudasiru (w3q1b)
 
 ## Fresh Furniture
 Fresh Furniture is a web application that supports selling and buying new or second-hand furniture through PayPal. Users can login with their Google accounts and add, edit, and delete their listings. They can also view their order history and rate sellers. 
