@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import { Toolbar, Button } from '@material-ui/core'
@@ -33,6 +33,8 @@ const useStyles = makeStyles(() => ({
   Name: {
     flex: 1,
     color: `#004aad`,
+    marginTop: 15,
+    marginRight: 15,
   }
 }));
 
@@ -52,23 +54,21 @@ function Navbar(props) {
           <Link to={"/about"}>
             <Button className={classes.link}>About</Button>
           </Link>
-          {props.isLogIn?
-          <Link exact path to={"/my-account"}>
-            <Button className={classes.link}>My Account</Button>
-          </Link> : ""
-          } 
           <div className={classes.toolbarButtons}>
             {
-              props.isLogIn?
-              <Link exact path to={"/cart"}>
-              <Button className={classes.cartButton}>
-                  <i style={{padding: "6px"}}className={"fas fa-shopping-cart"} />
-              </Button>
-            </Link> : ""
+              props.isLogIn ?
+                <Link exact path to={"/cart"}>
+                  <Button className={classes.cartButton}>
+                    <i style={{ padding: "6px" }} className={"fas fa-shopping-cart"} />
+                    <p>{props.cartQuantity}</p>
+                  </Button>
+                </Link> : ""
             }
             {
-              props.isLogIn?
-              <p5 className = {classes.Name}>{props.name}</p5> : ""
+              props.isLogIn ?
+                <Link className={classes.Name} exact path to={"/my-account"}>
+                  <p>{props.name}</p>
+                </Link> : ""
             }
             <GoogleLogin />
           </div>
@@ -80,7 +80,7 @@ function Navbar(props) {
 
 function mapStateToProps(state) {
   return {
-      isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+    isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id, cartQuantity: state.cartQuantity
   }
 }
 

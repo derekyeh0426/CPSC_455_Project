@@ -11,7 +11,7 @@ export default class About extends React.Component {
                 <div className="about-header">
                     <img src={image} className="about-image" alt="FF Logo"/>
                     <br/>
-                    <text className="card_header">Fresh Furniture</text>
+                    <p className="card_header">Fresh Furniture</p>
                 </div>
                 <br />
                 <div className="about-center">

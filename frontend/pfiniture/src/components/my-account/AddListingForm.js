@@ -129,7 +129,6 @@ export default function AddListingForm(props) {
                             </Col>
                         </Form.Group>
 
-
                         <div className="add-image-container">
                             <input type="file" id="myFile" name="filename" onChange={onFileChange} />
                             <Button variant="outline-dark" onClick={onAddImage}>Add Image</Button>
@@ -162,17 +161,17 @@ export default function AddListingForm(props) {
     function onAddListing() {
         let reg = /^-?\d+\.?\d*$/;
         if (name === "" || price === "" || type === "") {
-            NotificationManager.error("please fill in all the form", "", TIME_OUT)
+            NotificationManager.error("Please fill in all the form!", "", TIME_OUT)
             return;
         }
 
         if (!reg.test(price)){
-            NotificationManager.error("please input price as number without white space", "", TIME_OUT)
+            NotificationManager.error("Please input price as number without white space!", "", TIME_OUT)
             return;
         }
 
         if (parseFloat(price) > MAX_PRICE_RANGE) {
-            NotificationManager.error("This item is too expensive we don't sell it here. Maximum is 1000", "", TIME_OUT)
+            NotificationManager.error("This item is too expensive; we don't sell it here... Maximum is $1000!", "", TIME_OUT)
             return;
         }
         client.image.addImages(imageFiles).then((imageResponse) => {

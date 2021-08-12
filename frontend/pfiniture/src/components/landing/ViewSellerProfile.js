@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {Button,Modal,Backdrop,Fade,Typography,Tabs,Tab,} from '@material-ui/core';
 import client from "../../API/api";
-import SellerListings from './SellerListings';
+import DisplayListings from './DisplayListings';
 import SellerReviews from './SellerReviews';
 import ReviewSeller from "../my-account/order-history/ReviewSeller"
 
@@ -94,9 +94,11 @@ export default function ViewSellerProfile(props) {
     const [comments, setComments] = useState([]);
     const [listings, setListings] = useState([]);
     const [tab, setTab] = useState(0);
+    const [viewFromCart, setViewFromCart] = useState(props.userInfo);
 
     const handleOpen = () => {
         setOpen(true);
+        setViewFromCart(props.viewFromCart)
         client.listing.getListingByUserId(user.id).then(listings => {
             setListings(listings.data);
             client.user.getUserById(user.id).then(userInfo => {
@@ -121,11 +123,11 @@ export default function ViewSellerProfile(props) {
     const getTabs = (tab) => {
         switch (tab) {
             case 0:
-                return <SellerListings listings={listings} userInfo={user} />
+                return <DisplayListings page={"seller"} listings={listings} userInfo={user} viewFromCart={viewFromCart}/>
             case 1:
                 return <SellerReviews isOpen={open} ratings={ratings} comments={comments} userInfo={user} />
             default:
-                return <SellerListings userInfo={user} />
+                return <DisplayListings page={"seller"} userInfo={user} viewFromCart={viewFromCart}/>
         }
     }
 
