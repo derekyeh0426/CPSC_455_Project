@@ -1,6 +1,6 @@
 import React from 'react';
 import './DisplayAllFurniture.css';
-import {Container,IconButton} from '@material-ui/core'
+import {Container} from '@material-ui/core'
 import DisplayIndividualFurniture from "./DisplayIndividualFurniture"
 
 
