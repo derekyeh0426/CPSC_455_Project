@@ -16,6 +16,7 @@ function userReducer(state = initialState, action) {
             name: action.payload.name,
             email:action.payload.email,
             id: action.payload.id,
+            cartQuantity: action.payload.cartQuantity
         }
 
         case "Log_Out": 
@@ -24,7 +25,8 @@ function userReducer(state = initialState, action) {
             isLogIn:false,
             name:null,
             email:null,
-            id: null
+            id: null,
+            cartQuantity: 0
         }
 
         case "Add_Item": 

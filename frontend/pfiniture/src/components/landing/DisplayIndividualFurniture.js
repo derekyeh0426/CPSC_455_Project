@@ -13,6 +13,7 @@ import ViewSellerProfile from "./ViewSellerProfile"
 import { store } from '../../redux/store';
 import './DisplayAllFurniture.css';
 import { LOCATIONS, FURNITURE_TYPES } from '../../constants'
+import UserAddCartItem from '../../redux/users/UserAddCartItem'
 
 const useStyles = makeStyles((theme) => ({
     alignCenter: {
@@ -290,7 +291,7 @@ function DisplayIndividualFurniture(props) {
                                                 {!cartListings
                                                     ?
                                                     <Button size="small" color="primary"
-                                                        onClick={() => onAddToCart(listing.id, buyerId)}>
+                                                        onClick={() => {props.UserAddCartItem(); onAddToCart(listing.id, buyerId)}}>
                                                         Add to Cart
                                                     </Button>
                                                     :
@@ -305,7 +306,7 @@ function DisplayIndividualFurniture(props) {
                                                             :
                                                             <Button
                                                                 size="small" color="primary"
-                                                                onClick={() => onAddToCart(listing.id, buyerId, props)}>
+                                                                onClick={() => {props.UserAddCartItem();onAddToCart(listing.id, buyerId)}}>
                                                                 Add to Cart
                                                             </Button>
                                                         }
@@ -327,10 +328,15 @@ function DisplayIndividualFurniture(props) {
 
 function mapStateToProps(state) {
     return {
-        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id
+        isLogIn: state.isLogIn, name: state.name, email: state.email, id: state.id, cartQuantity: state.cartQuantity
     }
+}
+
+const mapDispatchToProps = {
+    UserAddCartItem
 }
 
 export default connect(
     mapStateToProps,
+    mapDispatchToProps
 )(DisplayIndividualFurniture)

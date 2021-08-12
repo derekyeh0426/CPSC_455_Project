@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, Typography, Paper, ButtonBase, } from '@material-ui/core';
 import { onAddToCart, updateToCart } from '../../helpers';
 import ViewSellerProfile from '../landing/ViewSellerProfile';
+import client from '../../API/api'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,6 +64,19 @@ export default function DisplayListings(props) {
         }
     }, [props.userInfo, props.listings, props.page, props.viewFromCart, props.cardId])
 
+    const removeFromCart = (listingId) => {
+        updateToCart(listingId, listings, cartId);
+        client.cart.getCartById(cartId).then(cartInfo => {
+            Promise.all(
+                // console.log(cartInfo.data)
+                cartInfo.data.listings.map((listing) =>
+                    client.listing.getListingById(listing))).then((listings) =>
+                        setListings(listings.map(({ data }) => {
+                            return data;
+                        })))
+        })
+    }
+
     const getButtons = (page, listing) => {
         switch (page) {
             case "seller":
@@ -83,7 +97,7 @@ export default function DisplayListings(props) {
                         <Button 
                             size="small" 
                             color="secondary" 
-                            onClick={() => updateToCart(listing.id, listings, cartId)}
+                            onClick={() => removeFromCart(listing.id)}
                         >
                             Remove
                         </Button>

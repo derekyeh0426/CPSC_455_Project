@@ -9,7 +9,8 @@ import './LogInForm.css'
 import { refreshTokenSetup } from '../../utility';
 import { GOOGLE_CLIENT_ID } from '../../googleID'
 import {NotificationManager} from "react-notifications";
-import { TIME_OUT } from '../../constants'
+import { TIME_OUT } from '../../constants';
+import { getCartQuantity } from '../../helpers';
 require('dotenv').config()
 const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
 
@@ -39,15 +40,23 @@ class GoogleLogIn extends React.Component {
 
 
         client.user.addUsers(newUser).then(res => {
-            const reduxUser = {
-                name: response.profileObj.name,
-                email: response.profileObj.email,
-                id: res.data.id
-            }
-            this.props.logIn(reduxUser);    
-            this.setState({ accessToken: newUser.token, isLogined: true });
-            client.user.getAllUsers().then(res => {
+            client.user.getUserById(res.data.id).then(buyerInfo => {
+                let cartNum = 0;
+                const cart = buyerInfo.data.cart;
+                if (!cart) {
+                    cartNum = 0;
+                } else {
+                    cartNum = cart.listings.length;
+                }
+                const reduxUser = {
+                    name: response.profileObj.name,
+                    email: response.profileObj.email,
+                    id: res.data.id,
+                    cartQuantity: cartNum
+                }
+                this.props.logIn(reduxUser)
             })
+            this.setState({ accessToken: newUser.token, isLogined: true });
         });
     }
 
