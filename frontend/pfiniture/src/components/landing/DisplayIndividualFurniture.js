@@ -43,10 +43,6 @@ const useStyles = makeStyles((theme) => ({
         width: 400,
         maxHeight: 600
     },
-    filterButtons: {
-        right: '20vh',
-        position: 'absolute'
-    },
     formControl: {
         minWidth: 130,
         marginRight: theme.spacing(1),
@@ -219,7 +215,7 @@ function DisplayIndividualFurniture(props) {
                 </FormControl>
                 </div>
                     
-                <div className={classes.filterButtons}>
+                <div>
                     <Button color="primary" className={classes.buttonMargin} onClick={handleSearch}>Search</Button>
                     <Button color="primary" onClick={resetSearch}>Clear Filters</Button>
                 </div>

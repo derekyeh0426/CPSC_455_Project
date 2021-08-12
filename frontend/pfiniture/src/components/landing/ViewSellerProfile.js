@@ -5,18 +5,11 @@ import {
     Modal,
     Backdrop,
     Fade,
-    Grid,
     Typography,
-    Paper,
-    ButtonBase,
-    Radio,
-    TextField,
     Tabs,
     Tab,
-    Typography
 } from '@material-ui/core';
 import client from "../../API/api";
-import { RATINGS } from "../../constants"
 import SellerListings from './SellerListings';
 import SellerReviews from './SellerReviews';
 import ReviewSeller from "../my-account/order-history/ReviewSeller"
@@ -107,8 +100,6 @@ export default function ViewSellerProfile(props) {
     const [ratings, setRatings] = React.useState([]);
     const [sellerRating, setSellerRating] = React.useState(0);
     const [comments, setComments] = React.useState([]);
-    const [ratingValue, setRatingValue] = React.useState(0);
-    const [comment, setComment] = React.useState('');
     const [listings, setListings] = React.useState([]);
     const [tab, setTab] = React.useState(0);
 
@@ -128,17 +119,7 @@ export default function ViewSellerProfile(props) {
 
     const handleClose = () => {
         setOpen(false);
-        setRatingValue(0);
-        setComment('');
         setTab(0);
-    };
-
-    const handleRatingChange = (event) => {
-        setRatingValue(event.target.value);
-    };
-
-    const handleCommentChange = (event) => {
-        setComment(event.target.value);
     };
 
     const handleTabChange = (event, newTab) => {
