@@ -48,6 +48,8 @@ I worked on the frontend and backend but the frontend mostly. I set up react-rou
 Yukie(a9r2b):
 I worked on review ratings and sellers so that user can provide their feedback when they buy items and other users can see it. I also work on implementing checkout and cart so that upon intitialization of PayPal payment system, the items reflected in the carts are accurate. I also worked on order history so that users can check what they previously ordered in our web-app.
 
+Daniel (m1b3b):
+I mostly worked on backend side code alongside with Peter. We set up the server and connection to database together. I implemented image endpoints for uploading and downloading images with Amazon S3 so we can use images just with image url provided by S3 saved in our database. I also implemented adding/removing/updating cart items, order history as well as furnitures. I also helped fix any problems and made quality of life changes for the frontend to easily implement user interface.
 
 ------
 
